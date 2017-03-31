@@ -1,0 +1,26 @@
+.main-pages.ng-enter {
+  transition: 1s;
+  opacity: 0;
+}
+
+.main-pages.ng-enter-active {
+  opacity: 1;
+}
+
+.sub-pages.ng-enter {
+  transition: 0.5s;
+  opacity: 0;
+}
+
+.sub-pages.ng-enter-active {
+  opacity: 1;
+}
+
+.table-container.ng-enter {
+  transition: 0.5s;
+  opacity: 0;
+}
+
+.table-container.ng-enter-active {
+  opacity: 1;
+}

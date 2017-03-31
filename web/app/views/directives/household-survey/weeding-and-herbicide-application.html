@@ -1,0 +1,331 @@
+<div ng-form="waha" novalidate>
+  <div class="form-group required" ng-class="validateField(waha, 'control_weed')">
+    <label class="control-label" for="previous_crop" translate>
+      What you did in the crop growing period to control weed?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in weedingHerbicide">
+      <input required type="radio"
+        id="control_weed_{{$index}}"
+        ng-value="n.value"
+        name="control_weed"
+        ng-model="$parent.data.control_weed">
+      <label class="control-label" for="control_weed_{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="waha" name="'control_weed'"></form-messages>
+  </div>
+
+  <div class="form-group" ng-if="data.control_weed === 3">
+    <label translate>Manual Weeding</translate>
+  </div>
+
+  <div ng-if="data.control_weed === 1 || data.control_weed === 3">
+    <div class="form-group required" ng-class="validateField(waha, 'weeding_carried_out')">
+      <label class="control-label" for="weeding_carried_out" translate>
+        When the weeding was carried out?
+      </label>
+      <input required type="text" class="form-control"
+        id="weeding_carried_out"
+        name="weeding_carried_out"
+        datepicker-localdate
+        uib-datepicker-popup="yyyy-MM-dd"
+        data-ng-model="data.weeding_carried_out"
+        ng-click="weeding_carried_out.opened = true"
+        data-is-open="weeding_carried_out.opened"
+        value="{{formatDate(data.weeding_carried_out)}}"
+        datepicker-options="{minDate: addDate(season.sowing_date, (period - 1) * 14), maxDate: addDate(season.sowing_date, period * 14)}" />
+      <form-messages form="waha" name="'weeding_carried_out'"></form-messages>
+      <form-messages form="waha"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(waha, 'total_labor_weeding')">
+      <label class="control-label" for="total_labor_weeding" translate>
+        How much was the total labor and other input costs paid for weeding?
+      </label>
+      <input required type="number" class="form-control" name="total_labor_weeding" id="total_labor_weeding"
+        ng-model="data.total_labor_weeding" >
+      <form-messages form="waha" name="'total_labor_weeding'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(waha, 'weeding_labor')">
+      <label class="control-label" for="fertilizer_labor_type" translate>
+        Who did the weeding work?
+      </label>
+      <div class="radio radio-success" ng-repeat="n in laborTypes">
+        <input required type="radio"
+          id="weeding_labor{{$index}}"
+          ng-value="n.value"
+          name="weeding_labor"
+          ng-model="$parent.data.weeding_labor">
+        <label class="control-label" for="weeding_labor{{$index}}">{{n.name}}</label>
+      </div>
+      <form-messages form="waha" name="'weeding_labor'"></form-messages>
+    </div>
+
+    <div ng-if="data.weeding_labor">
+      <div class="form-group required" ng-class="validateField(waha, 'weeding_male_labor')">
+        <label class="control-label" for="weeding_male_labor" translate>
+          How many were the male labor?
+        </label>
+        <input required type="number" class="form-control" name="weeding_male_labor"
+          id="weeding_male_labor" ng-model="data.weeding_male_labor" min="0">
+        <form-messages form="waha" name="'weeding_male_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(waha, 'weeding_female_labor')">
+        <label class="control-label" for="weeding_female_labor" translate>
+          How many were the female labor?
+        </label>
+        <input required type="number" class="form-control" name="weeding_female_labor"
+          id="weeding_female_labor" ng-model="data.weeding_female_labor" min="0">
+        <form-messages form="waha" name="'weeding_female_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(waha, 'weeding_above_18_years')">
+        <label class="control-label" for="weeding_above_18_years" translate>
+          How many were above 18 years old?
+        </label>
+        <input required type="number" class="form-control" name="weeding_above_18_years"
+          id="weeding_above_18_years" ng-model="data.weeding_above_18_years" min="0">
+        <form-messages form="waha" name="'weeding_above_18_years'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(waha, 'weeding_below_18_years')">
+        <label class="control-label" for="weeding_below_18_years" translate>
+          How many were below 18 years old?
+        </label>
+        <input required type="number" class="form-control" name="weeding_below_18_years"
+          id="weeding_below_18_years" ng-model="data.weeding_below_18_years" min="0">
+        <form-messages form="waha" name="'weeding_below_18_years'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(waha, 'weeding_wage_rate_male')">
+        <label class="control-label" for="weeding_wage_rate_male" translate>
+          How much was the wage rate per day for a male labor used for weeding?
+        </label>
+        <input required type="number" class="form-control" name="weeding_wage_rate_male" min="0"
+          id="weeding_wage_rate_male" ng-model="data.weeding_wage_rate_male">
+        <form-messages form="waha" name="'weeding_wage_rate_male'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(waha, 'weeding_wage_rate_female')">
+        <label class="control-label" for="weeding_wage_rate_female" translate>
+          How much was the wage rate per day for a female labor used for weeding?
+        </label>
+        <input required type="number" class="form-control" name="weeding_wage_rate_female" min="0"
+          id="weeding_wage_rate_female" ng-model="data.weeding_wage_rate_female">
+        <form-messages form="waha" name="'weeding_wage_rate_female'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(waha, 'labor_total_cost')">
+        <label class="control-label" for="labor_total_cost" translate>
+          How much was the total cost of labor?
+        </label>
+        <input required type="number" class="form-control" name="labor_total_cost" min="0"
+          id="labor_total_cost" ng-model="data.labor_total_cost" >
+        <form-messages form="waha" name="'labor_total_cost'"></form-messages>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group" ng-if="data.control_weed === 3">
+    <label translate>Herbicide application</translate>
+  </div>
+
+  <div ng-if="data.control_weed === 2 || data.control_weed === 3">
+    <div class="form-group required" ng-class="validateField(waha, 'herbicide_count')">
+      <label class="control-label" for="herbicide_count" translate>
+        How many times the herbicide was applied during the crop growing period?
+      </label>
+      <input required type="number" class="form-control" name="herbicide_count" min="0"
+        id="herbicide_count" ng-model="data.herbicide_count" max="15">
+      <form-messages form="waha" name="'herbicide_count'" data="{max: 15}"></form-messages>
+    </div>
+
+    <div ng-if="data.herbicide_count > 0">
+      <div class="form-group">
+        <label class="control-label" for="rice_area">
+          <span class="label-note" translate>
+            Note: If mixed application of more than 1 herbicide, please count them as seperate application and fill up the table below.
+          </span>
+        </label>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(waha, 'direct_sowing_method')">
+        <table class="tables tables-default no-more-tables form-group">
+          <thead>
+            <tr>
+              <th class="text-center" translate>Application date</th>
+              <th class="text-center" translate>Herbicide commercial name</th>
+              <th class="text-center" translate>Herbicide technical name</th>
+              <th class="text-center" translate>Active ingredient (%) content in the herbicide</th>
+              <th class="text-center" translate>How many bottles were applied?</th>
+              <th class="text-center" translate>How much was the amount in 1 bottle (ml)</th>
+              <th class="text-center" translate>Was there any herbicide leftover in the bottle?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="n in range(1, data.herbicide_count)" ng-form="ff">
+              <td data-title="{{ 'Application date' | translate }}">
+                <input required type="text" class="form-control"
+                  datepicker-localdate
+                  uib-datepicker-popup="yyyy-MM-dd"
+                  data-ng-model="data.herbicideProduct[$index].date"
+                  ng-click="data.herbicideProduct[$index].date_opened = true"
+                  data-is-open="data.herbicideProduct[$index].date_opened"
+                  value="{{formatDate(data.herbicideProduct[$index].date)}}"
+                  datepicker-options="{minDate: addDate(season.sowing_date, (period - 1) * 14), maxDate: addDate(season.sowing_date, period * 14)}"
+                  name="application"
+                   />
+                <form-messages form="ff"></form-messages>
+                <form-messages form="ff" name="'application'"></form-messages>
+              </td>
+              <td data-title="{{ 'Herbicide commercial name' | translate }}">
+                <input required type="text" class="form-control"
+                  ng-model="data.herbicideProduct[$index].name"
+                  name="commercial" />
+                <form-messages form="ff" name="'commercial'"></form-messages>
+              </td>
+              <td data-title="{{ 'Herbicide technical name' | translate }}">
+                <input required type="text" class="form-control"
+                  ng-model="data.herbicideProduct[$index].technical_name"
+                  name="herbicide_name" />
+                <form-messages form="ff" name="'herbicide_name'"></form-messages>
+              </td>
+              <td data-title="{{ 'Active ingredient (%) content in the herbicide' | translate }}">
+                <input required type="number" class="form-control"
+                  ng-model="data.herbicideProduct[$index].active_ingredient"
+                  name="ingredient" />
+                <form-messages form="ff" name="'ingredient'"></form-messages>
+              </td>
+              <td data-title="{{ 'How many bottles were applied?' | translate }}">
+                <input required type="number" class="form-control"
+                  ng-model="data.herbicideProduct[$index].bottles_applied"
+                  name="bottles_applied" />
+                <form-messages form="ff" name="'bottles_applied'"></form-messages>
+              </td>
+              <td data-title="{{ 'How much was the amount in 1 bottle (ml)' | translate }}">
+                <input required type="number" class="form-control"
+                  ng-model="data.herbicideProduct[$index].ml"
+                  name="bottles_applied" />
+                <form-messages form="ff" name="'bottles_applied'"></form-messages>
+              </td>
+              <td data-title="{{ 'Was there any herbicide leftover in the bottle?' | translate }}">
+                <select class="form-control"
+                  ng-model="data.herbicideProduct[$index].leftover"
+                  ng-options="n.value as n.name for n in herbicideLeftOver"
+                  name="leftover"
+                  required>
+                </select>
+                <form-messages form="ff" name="'leftover'"></form-messages>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(waha, 'herbicide_cost')">
+      <label class="control-label" for="herbicide_cost" translate>
+        How much was the total cost paid for the herbicide?
+      </label>
+      <input required type="number" class="form-control" name="herbicide_cost" min="0"
+        id="herbicide_cost" ng-model="data.herbicide_cost" >
+      <form-messages form="waha" name="'herbicide_cost'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(waha, 'herbicide_labor')">
+      <label class="control-label" for="herbicide_labor" translate>
+        Who did the herbicide application work?
+      </label>
+      <div class="radio radio-success" ng-repeat="n in laborTypes">
+        <input required type="radio"
+          id="herbicide_labor{{$index}}"
+          ng-value="n.value"
+          name="herbicide_labor"
+          ng-model="$parent.data.herbicide_labor">
+        <label class="control-label" for="herbicide_labor{{$index}}">{{n.name}}</label>
+      </div>
+      <form-messages form="waha" name="'herbicide_labor'"></form-messages>
+    </div>
+
+    <div ng-if="data.herbicide_labor">
+      <div class="form-group required" ng-class="validateField(waha, 'herbicide_male_labor')">
+        <label class="control-label" for="herbicide_male_labor" translate>
+          How many were the male labor?
+        </label>
+        <input required type="number" class="form-control" name="herbicide_male_labor"
+          id="herbicide_male_labor" ng-model="data.herbicide_male_labor" min="0">
+        <form-messages form="waha" name="'herbicide_male_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(waha, 'herbicide_female_labor')">
+        <label class="control-label" for="herbicide_female_labor" translate>
+          How many were the female labor?
+        </label>
+        <input required type="number" class="form-control" name="herbicide_female_labor"
+          id="herbicide_female_labor" ng-model="data.herbicide_female_labor" min="0">
+        <form-messages form="waha" name="'herbicide_female_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(waha, 'herbicide_above_18_years')">
+        <label class="control-label" for="herbicide_above_18_years" translate>
+          How many were above 18 years old?
+        </label>
+        <input required type="number" class="form-control" name="herbicide_above_18_years"
+          id="herbicide_above_18_years" ng-model="data.herbicide_above_18_years" min="0">
+        <form-messages form="waha" name="'herbicide_above_18_years'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(waha, 'herbicide_below_18_years')">
+        <label class="control-label" for="herbicide_below_18_years" translate>
+          How many were below 18 years old?
+        </label>
+        <input required type="number" class="form-control" name="herbicide_below_18_years"
+          id="herbicide_below_18_years" ng-model="data.herbicide_below_18_years" min="0">
+        <form-messages form="waha" name="'herbicide_below_18_years'"></form-messages>
+      </div>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(waha, 'herbicide_total_labor_cost')">
+      <label class="control-label" for="herbicide_total_labor_cost" translate>
+        If labor was used, how much total cost paid for the labors and other inputs, e.g., custom hiring of the sprayer used for herbicide application?
+      </label>
+      <input required type="number" class="form-control" name="herbicide_total_labor_cost" min="0"
+        id="herbicide_total_labor_cost" ng-model="data.herbicide_total_labor_cost" >
+      <form-messages form="waha" name="'herbicide_total_labor_cost'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(waha, 'knowDominantWeed')">
+      <label class="control-label" for="knowDominantWeed" translate>
+        Can you mention the name of the dominant weed species in the field at the time of herbicide application?
+      </label>
+      <select required class="form-control"
+        id="knowDominantWeed"
+        name="knowDominantWeed"
+        ng-model="data.dominant_weed"
+        ng-options="n.value as n.name for n in yesNo">
+      </select>
+      <form-messages form="waha" name="'knowDominantWeed'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="{'has-error': (waha.weeds.$dirty || waha.weeds.$touched) && !hasSuppliedNames()}" ng-if="data.dominant_weed === 1">
+      <table class="tables tables-default no-more-tables form-group">
+        <thead>
+          <tr>
+            <th class="text-center" translate>Weed name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="n in range(1, 5)">
+            <td data-title="{{'Weed name' | translate}}">
+              <input ng-required="!hasSuppliedNames()" type="text" name="weeds" ng-model="data.weedNames[$index].name" class="form-control" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="help-block" ng-if="(waha.weeds.$dirty || waha.weeds.$touched) && !hasSuppliedNames()">
+        <span translate>Please specify at least one dominant weed.</span>
+      </div>
+    </div>
+  </div>
+</div>

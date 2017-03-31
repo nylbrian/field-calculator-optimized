@@ -1,0 +1,1262 @@
+<h5 class="farmer-identifier no-print">
+  <span translate>Farmer:</span>
+  <a href="#/main/farmers/edit-farmer/{{asc.farmer.id}}">
+    {{asc.farmer.first_name}} {{asc.farmer.last_name}}
+  </a>
+</h5>
+<h3 class="page-title no-print">Assessment and Suggestion</h3>
+
+<div class="row table-page">
+  <div class="col-md-9">
+    <div id="printThisElement">
+      <div class="alert alert-success assessment-title" translate>
+        Field Calculator: Assessment and Suggestion for Sustainable Rice Production
+      </div>
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <span translate>Name</span>: {{asc.farmer.first_name}} {{asc.farmer.last_name}}
+          </div>
+          <div class="col-md-6">
+            <span translate>Country</span>: {{asc.farmer.country_name}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            Season:
+            <span translate ng-if="asc.season.seasons_id == 1">Wet</span>
+            <span translate ng-if="asc.season.seasons_id == 2">Dry</span>
+            <span translate ng-if="asc.season.seasons_id == 3">Early</span>
+            <span translate ng-if="asc.season.seasons_id == 4">Late</span>
+            <span translate ng-if="asc.season.seasons_id == 5">Moonsoon</span>
+            <span translate ng-if="asc.season.seasons_id == 6">Summer</span> -  {{asc.season.year}}
+          </div>
+          <div class="col-md-6">
+            <!-- <span translate>Year</span>: -->
+            Sowing date: {{asc.displayDate(asc.season.sowing_date)}}
+          </div>
+        </div>
+        <!-- <div class="row">
+          <div class="col-md-6">
+
+          </div>
+          <div class="col-md-6">
+            Suggestion generated date: {{asc.displayDate()}}
+          </div>
+        </div> -->
+      </div>
+      <div class="alert alert-info assessment-suggestion" translate>
+        Please read the following findings from your diary and our recommendation for the next season to make your rice production more profitable and sustainable
+      </div>
+
+      <div class="visible-sm visible-md visible-xs no-print">
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Grain Yield (kg/ha)</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Grain Yield (kg/ha)</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.grain_yield.toFixed(2)}}</span>
+                <div class="chart-bar no-print" ng-if="asc.suggestion.grain_yield_info.aveSDV.average && (asc.suggestion.grain_yield_info.aveSDV.average + asc.suggestion.grain_yield_info.aveSDV.standard_deviation - asc.suggestion.grain_yield) > asc.suggestion.grain_yield">
+                  <div class="chart-bar-container">
+                    <div class="bar-item bar-item-upper"></div>
+                    <div class="bar-item bar-item-middle"></div>
+                    <div class="bar-item bar-item-lower"></div>
+                  </div>
+                  <span class="chart-bar-indicator glyphicon glyphicon-arrow-left"
+                    aria-hidden="true" style="top: {{asc.getPercent((asc.suggestion.grain_yield_info.aveSDV.average + asc.suggestion.grain_yield_info.aveSDV.standard_deviation - asc.suggestion.grain_yield), asc.suggestion.grain_yield_info.rank.max)}}%" translate>
+                    Target
+                  </span>
+                  <span class="chart-bar-indicator glyphicon glyphicon-arrow-left"
+                    aria-hidden="true" style="top: {{asc.getPercent(asc.suggestion.grain_yield_info.rank.rank, asc.suggestion.grain_yield_info.rank.total)}}%" translate>
+                    You
+                  </span>
+                </div>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p>
+                  <div ng-if="asc.suggestion.grain_yield_info.aveSDV.average > 0">
+                    <span translate>
+                      The best performing farmer in your region is getting {{asc.suggestion.grain_yield_info.aveSDV.average}} kg/ha grain yield.
+                    </span>
+                    <span translate
+                    ng-if="(asc.suggestion.grain_yield_info.aveSDV.average + asc.suggestion.grain_yield_info.aveSDV.standard_deviation - asc.suggestion.grain_yield) > asc.suggestion.grain_yield">
+                      You can increase rice production in this season at least by {{(asc.suggestion.grain_yield_info.aveSDV.average + asc.suggestion.grain_yield_info.aveSDV.standard_deviation - asc.suggestion.grain_yield)}} kg/ha.
+                    </span>
+                    <span translate
+                      ng-if="(asc.suggestion.grain_yield_info.aveSDV.average + asc.suggestion.grain_yield_info.aveSDV.standard_deviation - asc.suggestion.grain_yield) <= asc.suggestion.grain_yield">
+                      Keep it up for the next season.
+                    </span>
+                  </div>
+                  <div ng-if="!asc.suggestion.grain_yield_info.aveSDV || asc.suggestion.grain_yield_info.aveSDV.average <= 0" translate>
+                    Keep it up for the next season.
+                  </div>
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Net profit ($/ha)</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Net profit ($/ha)</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.net_profit.toFixed(2)}}</span>
+                <div class="chart-bar no-print" ng-if="asc.suggestion.net_profit_info.aveSDV.average && (asc.suggestion.net_profit_info.aveSDV.average + asc.suggestion.net_profit_info.aveSDV.standard_deviation - asc.suggestion.net_profit) > asc.suggestion.net_profit">
+                    <div class="chart-bar-container">
+                      <div class="bar-item bar-item-upper"></div>
+                      <div class="bar-item bar-item-middle"></div>
+                      <div class="bar-item bar-item-lower"></div>
+                    </div>
+                    <span class="chart-bar-indicator glyphicon glyphicon-arrow-left"
+                      aria-hidden="true" style="top: {{asc.getPercent((asc.suggestion.net_profit_info.aveSDV.average + asc.suggestion.net_profit_info.aveSDV.standard_deviation - asc.suggestion.net_profit), asc.suggestion.net_profit_info.rank.max)}}%" translate>
+                      Target
+                    </span>
+                    <span class="chart-bar-indicator glyphicon glyphicon-arrow-left"
+                      aria-hidden="true" style="top: {{asc.getPercent(asc.suggestion.net_profit_info.rank.rank, asc.suggestion.net_profit_info.rank.total)}}%" translate>
+                      You
+                    </span>
+                  </div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p>
+                  <div ng-if="asc.suggestion.net_profit_info.aveSDV.average > 0">
+                    <span translate>
+                      The best performing farmer in your region is getting {{asc.suggestion.net_profit_info.aveSDV.average}} $/ha grain yield.
+                    </span>
+                    <span translate
+                    ng-if="(asc.suggestion.net_profit_info.aveSDV.average + asc.suggestion.net_profit_info.aveSDV.standard_deviation - asc.suggestion.net_profit) > asc.suggestion.net_profit">
+                      You can increase net profit in rice production in this season at least by {{(asc.suggestion.net_profit_info.aveSDV.average + asc.suggestion.net_profit_info.aveSDV.standard_deviation - asc.suggestion.net_profit)}} $/ha.
+                    </span>
+                    <span translate
+                      ng-if="(asc.suggestion.net_profit_info.aveSDV.average + asc.suggestion.net_profit_info.aveSDV.standard_deviation - asc.suggestion.net_profit) <= asc.suggestion.net_profit">
+                      Keep it up for the next season.
+                    </span>
+                  </div>
+                  <div ng-if="!asc.suggestion.net_profit_info.aveSDV || asc.suggestion.net_profit_info.aveSDV.average <= 0" translate>
+                    Keep it up for the next season.
+                  </div>
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Number of labor use (labors/ha)</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Number of labor use (labors/ha)</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.total_labor}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.total_labor > 50">
+                  Please consider the use of proper machines in next season rice production. Use laser land leveler for levelling the land.
+                </p>
+                <p translate ng-if="(asc.suggestion.land_preparation_cost + asc.suggestion.seed_cost) > 350">
+                  The costs for land preparation and crop establishment are high, please use rice transplanting machine, drum seeder, zero-till seed drill.
+                </p>
+                <p translate ng-if="asc.suggestion.irrigation_cost > 200">
+                  The cost for irrigation is high, consider using cheaper method of irrigation.
+                </p>
+                <p translate ng-if="asc.suggestion.fertilizer_application_cost > 250">
+                  The cost for fertilizer application is high, please think whether that much of fertilizer was needed to apply or not?
+                </p>
+                <p translate ng-if="asc.suggestion.weeding_cost > 200">
+                  The cost for weed control is high, please consider how to decrease this cost in the next season.
+                </p>
+                <p translate ng-if="asc.suggestion.pesticide_cost > 200">
+                  The cost of pesticide application is high. Please consider to decrease pesticide application and apply it only if really needed.
+                </p>
+                <p translate
+                  ng-if="(asc.suggestion.harvesting_threshing_cost + asc.suggestion.pesticide_cost) > 300">
+                  The costs of harvesting and threshing and cleaning and drying are high. Please consider using combine harvester, rice thresher, solar dryer, bubble dryer etc in the next season.
+                </p>
+                <p translate ng-if="asc.suggestion.total_labor < 50">
+                  Even if the number of labor used is low, you still can consider to explore the use of efficient machines for the different operations in rice production.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Food safety</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Food safety</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span ng-if="asc.suggestion.aware_food_safety_risk === 1" translate>
+                  Yes
+                </span>
+                <span ng-if="asc.suggestion.aware_food_safety_risk === 0" translate>
+                  No
+                </span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.aware_food_safety_risk === 1">
+                  Please consult with the nearby agriculture service centers for the reclamation of your soil and for the future crop production strategies, and soil and water management practices.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Nitrogen application (kg/ha)</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Nitrogen application (kg/ha)</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.nitrogen_amount.toFixed(2)}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.nitrogen_use_efficiency > 100">
+                  Please consider increasing nitrogen fertilizer rate in the next season.
+                </p>
+                <p translate ng-if="asc.suggestion.nitrogen_use_efficiency < 40">
+                  Please consider decreasing urea fertilizer rate in the next season.
+                </p>
+                <p translate ng-if="asc.suggestion.nitrogen_use_efficiency >= 40 && asc.suggestion.nitrogen_use_efficiency <= 100">
+                  Your nitrogen application seems correct.
+                </p>
+
+                <div ng-if="asc.suggestion.nitrogen_recommendation">
+                  <p translate>To increase nitrogen use efficiency, please consider the following:</p>
+                  <ul>
+                    <li translate ng-if="asc.suggestion.nitrogen_recommendation.apply_before">
+                      Please apply N fertilizer before {{asc.suggestion.nitrogen_recommendation.apply_before}} days
+                    </li>
+                    <li translate ng-if="asc.suggestion.nitrogen_recommendation.splits">
+                      Please consider to apply N fertilizer in more splits.
+                    </li>
+                    <li translate ng-if="asc.suggestion.nitrogen_recommendation.high_amount">
+                      You may not need to apply high amount of N fertilizer at the time of crop establishment. Please consider more amount of N application after 10 days after crop establishment.
+                    </li>
+                    <li translate>Try to follow the government recommended fertilizer rate or fertilizer recommendation using Field Calculator or Rice Crop Manager or Leaf Color Chart.</li>
+                    <li translate>For uniform fertilizer application, use fertilizer spreader.</li>
+                  </ul>
+                </div>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Phosphorus application (kg/ha)</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Phosphorus application (kg/ha)</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.phosphorus_amount.toFixed(2)}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.phosphorus_use_efficiency > 300">
+                  Please consider increasing phosphorus fertilizer (e.g. DAP) rate in the next season rice.
+                </p>
+                <p translate ng-if="asc.suggestion.phosphorus_use_efficiency < 100">
+                  Please consider decreasing DAP fertilizer rate in the next season rice.
+                </p>
+                <p translate ng-if="asc.suggestion.phosphorus_use_efficiency >= 100 && asc.suggestion.phosphorus_use_efficiency <= 300">
+                  Your phosphorus application seems correct.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Potassium application (kg/ha)</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Potassium application (kg/ha)</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.potassium_amount.toFixed(2)}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.potassium_use_efficiency > 250">
+                  Please consider decreasing potassium fertilizer rate in the next season rice in the next season rice.
+                </p>
+                <p translate ng-if="asc.suggestion.potassium_use_efficiency < 100">
+                  Please consider increasing potassium fertilizer rate in the next season rice.
+                </p>
+                <p translate ng-if="asc.suggestion.potassium_use_efficiency >= 100 && asc.suggestion.potassium_use_efficiency <= 250">
+                  Your potassium application seems correct.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Zinc application (kg/ha)</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Zinc application (kg/ha)</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.zn_application.toFixed(2)}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.zn_application <= 0">
+                  If your soil has zinc deficiency or Khaira disease of rice is prevalent, you can consider application of zinc in rice at the time of crop establishment @ 20 kg ZnSO4/ha or it can be top-dressed after transplanting or sowing.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Irrigation application (liter water per kg grain)</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Irrigation application (liter water per kg grain)</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.total_water_productivity_litre_water.toFixed(2)}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.total_water_productivity_litre_water >= 5000">
+                  You could consider decreasing irrigation water application in the next but the same season rice.
+                </p>
+                <p translate ng-if="asc.suggestion.total_water_productivity_litre_water <= 2500">
+                  You could consider increasing number and amount of irrigation application (if available) to protect the crop from drought stress in the next but the same season rice.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Weed control</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Weed control</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>
+                  <span translate ng-if="asc.suggestion.weeding_control == 3">
+                    Both manual and herbicide application
+                  </span>
+                  <span translate ng-if="asc.suggestion.weeding_control == 2">
+                    Herbicide application
+                  </span>
+                  <span translate ng-if="asc.suggestion.weeding_control == 1">
+                    Manual application
+                  </span>
+                </span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p ng-if="asc.suggestion.weeding_infestation" translate>
+                  The weed infestation in your field is high. You may consider to apply pre- or post-emergence herbicide in the next season rice.
+                </p>
+                <p ng-if="asc.suggestion.herbicide_application_count" translate>
+                  Please consider application of herbicides less than 4 times during the crop growing period. Apply reliable good quality herbicide and keep the field moist (saturated) during the time of herbicide application.
+                </p>
+                <p ng-if="asc.suggestion.weed_control_inefficiency" translate>
+                  The weed control could be in-efficient, please try to create weed free condition at the time of crop establishment and make better water management in next season.
+                </p>
+                <p ng-if="asc.suggestion.herbicide_application_date" translate>
+                  Please consider application of herbicide within 40 days after crop establishment. If weed infestation exists after 40 days after crop establishment, you could consider using manual labor. Early period weed free (keep crop weed free within 40 days) is very important for the better yield of the crop.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Insecticide (for insect) use</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Insecticide (for insect) use</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.total_number_insecticide_application.toFixed(2)}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.total_number_insecticide_application > 2">
+                  Please consider application of insecticides not more than 2 times during the crop growing period.
+                </p>
+                <p translate ng-if="asc.suggestion.insecticide_less_40 === true">
+                  Please consider application of insecticide between 40 to 70 days of sowing or transplanting.
+                </p>
+                <p translate ng-if="asc.suggestion.insecticide_greater_70 === true">
+                  Please consider application of insecticide between 40 to 70 days of sowing or transplanting. For herbicide and other pesticide application, use motorized boom and power sprayer.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Fungicide (for disease) use</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Fungicide (for disease) use</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.total_number_fungicide_application.toFixed(2)}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.total_number_fungicide_application > 2">
+                  Please consider application of fungicides not more than 2 times during the crop growing period.
+                </p>
+                <p translate ng-if="asc.suggestion.fungicide_greater_70 === true">
+                  Please consider application of fungicide within 70 days of crop establishment.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Molluscicide (for snail) use</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Molluscicide (for snail) use</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.total_number_molluscicide_application.toFixed(2)}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.total_number_molluscicide_application > 1">
+                  Please consider application of molluscicide not more than 1 times during the crop growing period.
+                </p>
+                <p translate ng-if="asc.suggestion.molluscicide_greater_30 === true">
+                  Please consider application of molluscicide within 30 days of crop establishment.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Rodenticide (for rat) use</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Rodenticide (for rat) use</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.total_number_rodenticide_application.toFixed(2)}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.total_number_rodenticide_application > 1">
+                  Please consider application of molluscicide not more than 1 times during the crop growing period.
+                </p>
+                <p translate ng-if="asc.suggestion.rodenticide_greater_70 === true">
+                  Please consider application of rodenticide within 70 days of crop establishment.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Greenhouse gas emission</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Greenhouse gas emission</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.co2_equivalent.toFixed(2)}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p ng-if="asc.suggestion.incorporate_straw <= 30" translate>
+                  Please incorporate the straw of the previous crop more than 30 days before rice planting.
+                </p>
+                <p translate ng-if="asc.suggestion.water_regime === 3">
+                  Please do not keep the field flooded for more than 30 days before rice cultivation.
+                </p>
+                <p translate ng-if="asc.suggestion.greenhouse_gas === 1">
+                  You could decrease greenhouse gas emission significantly if you could implement irrigation with multiple or at least single aeration (drainage) during the crop growing period.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Workers health and safety</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Workers health and safety</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.worker_health_and_safety_rank}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.worker_health_and_safety_score < 50">
+                  Please consider paying attention in the proper pesticide management, handling of equipment, calibration of equipment, and government rules and regulation for the application of banned pesticides.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Child labor</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Child labor</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.child_labor_rank}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.child_labor_score < 50">
+                  Labor below the age of 14 are doing more work in your farming. In the next season, please consider to avoid child labor in rice production.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+        <uib-accordion close-others="false">
+          <div uib-accordion-group class="panel-success" is-open="form.opened" ng-init="form.opened = true">
+            <uib-accordion-heading>
+              <div>
+                <span translate>Women empowerment</span>
+                <i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': form.opened,
+                    'glyphicon-chevron-right': !form.opened}">
+                </i>
+              </div>
+            </uib-accordion-heading>
+            <uib-accordion-body>
+              <div>
+                <span translate class="bold">Sustainability Indicators</span>:
+                <span translate>Women empowerment</span>
+              </div>
+              <div>
+                <span translate class="bold">Farmers current practices</span>:
+                <span>{{asc.suggestion.women_empowerment_rank}}</span>
+              </div>
+              <div>
+                <span translate class="bold">Next season suggestions</span>:
+                <p translate ng-if="asc.suggestion.women_empowerment_score < 50">
+                  Female are doing more work in your farming. In the next season, please consider gender balance in rice production.
+                </p>
+              </div>
+            </uib-accordion-body>
+          </div>
+        </uib-accordion>
+
+      </div>
+
+      <div class="hidden-md hidden-xs hidden-sm">
+        <table class="tables tables-default no-more-tables">
+          <thead>
+            <tr>
+              <th translate width="200px">Sustainability Indicators</th>
+              <th translate width="200px">Farmers current practices</th>
+              <th translate>Next season suggestions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <span translate>Grain yield (kg/ha)</span>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.grain_yield.toFixed(2)}}
+                <div class="chart-bar no-print" ng-if="asc.suggestion.grain_yield_info.aveSDV.average && (asc.suggestion.grain_yield_info.aveSDV.average + asc.suggestion.grain_yield_info.aveSDV.standard_deviation - asc.suggestion.grain_yield) > asc.suggestion.grain_yield">
+                  <div class="chart-bar-container">
+                    <div class="bar-item bar-item-upper"></div>
+                    <div class="bar-item bar-item-middle"></div>
+                    <div class="bar-item bar-item-lower"></div>
+                  </div>
+                  <span class="chart-bar-indicator glyphicon glyphicon-arrow-left"
+                    aria-hidden="true" style="top: {{asc.getPercent((asc.suggestion.grain_yield_info.aveSDV.average + asc.suggestion.grain_yield_info.aveSDV.standard_deviation - asc.suggestion.grain_yield), asc.suggestion.grain_yield_info.rank.max)}}%" translate>
+                    Target
+                  </span>
+                  <span class="chart-bar-indicator glyphicon glyphicon-arrow-left"
+                    aria-hidden="true" style="top: {{asc.getPercent(asc.suggestion.grain_yield_info.rank.rank, asc.suggestion.grain_yield_info.rank.total)}}%" translate>
+                    You
+                  </span>
+                </div>
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <div ng-if="asc.suggestion.grain_yield_info.aveSDV.average > 0">
+                  <span translate>
+                    The best performing farmer in your region is getting {{asc.suggestion.grain_yield_info.aveSDV.average}} kg/ha grain yield.
+                  </span>
+                  <span translate
+                  ng-if="(asc.suggestion.grain_yield_info.aveSDV.average + asc.suggestion.grain_yield_info.aveSDV.standard_deviation - asc.suggestion.grain_yield) > asc.suggestion.grain_yield">
+                    You can increase rice production in this season at least by {{(asc.suggestion.grain_yield_info.aveSDV.average + asc.suggestion.grain_yield_info.aveSDV.standard_deviation - asc.suggestion.grain_yield)}} kg/ha.
+                  </span>
+                  <span translate
+                    ng-if="(asc.suggestion.grain_yield_info.aveSDV.average + asc.suggestion.grain_yield_info.aveSDV.standard_deviation - asc.suggestion.grain_yield) <= asc.suggestion.grain_yield">
+                    Keep it up for the next season.
+                  </span>
+                </div>
+                <div ng-if="!asc.suggestion.grain_yield_info.aveSDV || asc.suggestion.grain_yield_info.aveSDV.average <= 0" translate>
+                  Keep it up for the next season.
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <span translate>
+                  Net profit ($/ha)
+                </span>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.net_profit.toFixed(2)}}
+                <div class="chart-bar no-print" ng-if="asc.suggestion.net_profit_info.aveSDV.average && (asc.suggestion.net_profit_info.aveSDV.average + asc.suggestion.net_profit_info.aveSDV.standard_deviation - asc.suggestion.net_profit) > asc.suggestion.net_profit">
+                  <div class="chart-bar-container">
+                    <div class="bar-item bar-item-upper"></div>
+                    <div class="bar-item bar-item-middle"></div>
+                    <div class="bar-item bar-item-lower"></div>
+                  </div>
+                  <span class="chart-bar-indicator glyphicon glyphicon-arrow-left"
+                    aria-hidden="true" style="top: {{asc.getPercent((asc.suggestion.net_profit_info.aveSDV.average + asc.suggestion.net_profit_info.aveSDV.standard_deviation - asc.suggestion.net_profit), asc.suggestion.net_profit_info.rank.max)}}%" translate>
+                    Target
+                  </span>
+                  <span class="chart-bar-indicator glyphicon glyphicon-arrow-left"
+                    aria-hidden="true" style="top: {{asc.getPercent(asc.suggestion.net_profit_info.rank.rank, asc.suggestion.net_profit_info.rank.total)}}%" translate>
+                    You
+                  </span>
+                </div>
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <div ng-if="asc.suggestion.net_profit_info.aveSDV.average > 0">
+                  <span translate>
+                    The best performing farmer in your region is getting {{asc.suggestion.net_profit_info.aveSDV.average}} $/ha grain yield.
+                  </span>
+                  <span translate
+                  ng-if="(asc.suggestion.net_profit_info.aveSDV.average + asc.suggestion.net_profit_info.aveSDV.standard_deviation - asc.suggestion.net_profit) > asc.suggestion.net_profit">
+                    You can increase net profit in rice production in this season at least by {{(asc.suggestion.net_profit_info.aveSDV.average + asc.suggestion.net_profit_info.aveSDV.standard_deviation - asc.suggestion.net_profit)}} $/ha.
+                  </span>
+                  <span translate
+                    ng-if="(asc.suggestion.net_profit_info.aveSDV.average + asc.suggestion.net_profit_info.aveSDV.standard_deviation - asc.suggestion.net_profit) <= asc.suggestion.net_profit">
+                    Keep it up for the next season.
+                  </span>
+                </div>
+                <div ng-if="!asc.suggestion.net_profit_info.aveSDV || asc.suggestion.net_profit_info.aveSDV.average <= 0" translate>
+                  Keep it up for the next season.
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <span translate>Number of labor use (labors/ha)</span>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.total_labor.toFixed(2)}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.total_labor > 50">
+                  Please consider the use of proper machines in next season rice production. Use laser land leveler for levelling the land.
+                </p>
+                <p translate ng-if="(asc.suggestion.land_preparation_cost + asc.suggestion.seed_cost) > 350">
+                  The costs for land preparation and crop establishment are high, please use rice transplanting machine, drum seeder, zero-till seed drill.
+                </p>
+                <p translate ng-if="asc.suggestion.irrigation_cost > 200">
+                  The cost for irrigation is high, consider using cheaper method of irrigation.
+                </p>
+                <p translate ng-if="asc.suggestion.fertilizer_application_cost > 250">
+                  The cost for fertilizer application is high, please think whether that much of fertilizer was needed to apply or not?
+                </p>
+                <p translate ng-if="asc.suggestion.weeding_cost > 200">
+                  The cost for weed control is high, please consider how to decrease this cost in the next season.
+                </p>
+                <p translate ng-if="asc.suggestion.pesticide_cost > 200">
+                  The cost of pesticide application is high. Please consider to decrease pesticide application and apply it only if really needed.
+                </p>
+                <p translate
+                  ng-if="(asc.suggestion.harvesting_threshing_cost + asc.suggestion.pesticide_cost) > 300">
+                  The costs of harvesting and threshing and cleaning and drying are high. Please consider using combine harvester, rice thresher, solar dryer, bubble dryer etc in the next season.
+                </p>
+                <p translate ng-if="asc.suggestion.total_labor < 50">
+                  Even if the number of labor used is low, you still can consider to explore the use of efficient machines for the different operations in rice production.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Food safety
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                <p translate ng-if="asc.suggestion.aware_food_safety_risk === 1">Yes</p>
+                <p translate ng-if="asc.suggestion.aware_food_safety_risk === 0">No</p>
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.aware_food_safety_risk === 1">
+                  Please consult with the nearby agriculture service centers for the reclamation of your soil and for the future crop production strategies, and soil and water management practices.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Nitrogen application (kg/ha)
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.nitrogen_amount.toFixed(2)}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.nitrogen_use_efficiency > 100">
+                  Please consider increasing nitrogen fertilizer rate in the next season.
+                </p>
+                <p translate ng-if="asc.suggestion.nitrogen_use_efficiency < 40">
+                  Please consider decreasing urea fertilizer rate in the next season.
+                </p>
+                <p translate ng-if="asc.suggestion.nitrogen_use_efficiency >= 40 && asc.suggestion.nitrogen_use_efficiency <= 100">
+                  Your nitrogen application seems correct.
+                </p>
+
+                <div ng-if="asc.suggestion.nitrogen_recommendation">
+                  <p translate>To increase nitrogen use efficiency, please consider the following:</p>
+                  <ul>
+                    <li translate ng-if="asc.suggestion.nitrogen_recommendation.apply_before">
+                      Please apply N fertilizer before {{asc.suggestion.nitrogen_recommendation.apply_before}} days
+                    </li>
+                    <li translate ng-if="asc.suggestion.nitrogen_recommendation.splits">
+                      Please consider to apply N fertilizer in more splits.
+                    </li>
+                    <li translate ng-if="asc.suggestion.nitrogen_recommendation.high_amount">
+                      You may not need to apply high amount of N fertilizer at the time of crop establishment. Please consider more amount of N application after 10 days after crop establishment.
+                    </li>
+                    <li translate>Try to follow the government recommended fertilizer rate or fertilizer recommendation using Field Calculator or Rice Crop Manager or Leaf Color Chart.</li>
+                    <li translate>For uniform fertilizer application, use fertilizer spreader.</li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Phosphorus application (kg/ha)
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.phosphorus_amount.toFixed(2)}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.phosphorus_use_efficiency > 300">
+                  Please consider increasing phosphorus fertilizer (e.g. DAP) rate in the next season rice.
+                </p>
+                <p translate ng-if="asc.suggestion.phosphorus_use_efficiency < 100">
+                  Please consider decreasing DAP fertilizer rate in the next season rice.
+                </p>
+                <p translate ng-if="asc.suggestion.phosphorus_use_efficiency >= 100 && asc.suggestion.phosphorus_use_efficiency <= 300">
+                  Your phosphorus application seems correct.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Potassium application (kg/ha)
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.potassium_amount.toFixed(2)}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.potassium_use_efficiency > 250">
+                  Please consider decreasing potassium fertilizer rate in the next season rice in the next season rice.
+                </p>
+                <p translate ng-if="asc.suggestion.potassium_use_efficiency < 100">
+                  Please consider increasing potassium fertilizer rate in the next season rice.
+                </p>
+                <p translate ng-if="asc.suggestion.potassium_use_efficiency >= 100 && asc.suggestion.potassium_use_efficiency <= 250">
+                  Your potassium application seems correct.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Zinc application (kg/ha)
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.zn_application.toFixed(2)}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.zn_application <= 0">
+                  If your soil has zinc deficiency or Khaira disease of rice is prevalent, you can consider application of zinc in rice at the time of crop establishment @ 20 kg ZnSO4/ha or it can be top-dressed after transplanting or sowing.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Irrigation application (liter water per kg grain)
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.total_water_productivity_litre_water.toFixed(2)}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.total_water_productivity_litre_water >= 5000">
+                  You could consider decreasing irrigation water application in the next but the same season rice.
+                </p>
+                <p translate ng-if="asc.suggestion.total_water_productivity_litre_water <= 2500">
+                  You could consider increasing number and amount of irrigation application (if available) to protect the crop from drought stress in the next but the same season rice.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Weed control
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                <p translate ng-if="asc.suggestion.weeding_control == 3">
+                  Both manual and herbicide application
+                </p>
+                <p translate ng-if="asc.suggestion.weeding_control == 2">
+                  Herbicide application
+                </p>
+                <p translate ng-if="asc.suggestion.weeding_control == 1">
+                  Manual application
+                </p>
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p ng-if="asc.suggestion.weeding_infestation" translate>
+                  The weed infestation in your field is high. You may consider to apply pre- or post-emergence herbicide in the next season rice.
+                </p>
+                <p ng-if="asc.suggestion.herbicide_application_count" translate>
+                  Please consider application of herbicides less than 4 times during the crop growing period. Apply reliable good quality herbicide and keep the field moist (saturated) during the time of herbicide application.
+                </p>
+                <p ng-if="asc.suggestion.weed_control_inefficiency" translate>
+                  The weed control could be in-efficient, please try to create weed free condition at the time of crop establishment and make better water management in next season.
+                </p>
+                <p ng-if="asc.suggestion.herbicide_application_date" translate>
+                  Please consider application of herbicide within 40 days after crop establishment. If weed infestation exists after 40 days after crop establishment, you could consider using manual labor. Early period weed free (keep crop weed free within 40 days) is very important for the better yield of the crop.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Insecticide (for insect) use
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.total_number_insecticide_application.toFixed(2)}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.total_number_insecticide_application > 2">
+                  Please consider application of insecticides not more than 2 times during the crop growing period.
+                </p>
+                <p translate ng-if="asc.suggestion.insecticide_less_40 === true">
+                  Please consider application of insecticide between 40 to 70 days of sowing or transplanting.
+                </p>
+                <p translate ng-if="asc.suggestion.insecticide_greater_70 === true">
+                  Please consider application of insecticide between 40 to 70 days of sowing or transplanting. For herbicide and other pesticide application, use motorized boom and power sprayer.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Fungicide (for disease) use
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.total_number_fungicide_application.toFixed(2)}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.total_number_fungicide_application > 2">
+                  Please consider application of fungicides not more than 2 times during the crop growing period.
+                </p>
+                <p translate ng-if="asc.suggestion.fungicide_greater_70 === true">
+                  Please consider application of fungicide within 70 days of crop establishment.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Molluscicide (for snail) use
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.total_number_molluscicide_application.toFixed(2)}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.total_number_molluscicide_application > 1">
+                  Please consider application of molluscicide not more than 1 times during the crop growing period.
+                </p>
+                <p translate ng-if="asc.suggestion.molluscicide_greater_30 === true">
+                  Please consider application of molluscicide within 30 days of crop establishment.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Rodenticide (for rat) use
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.total_number_rodenticide_application.toFixed(2)}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.total_number_rodenticide_application > 1">
+                  Please consider application of molluscicide not more than 1 times during the crop growing period.
+                </p>
+                <p translate ng-if="asc.suggestion.rodenticide_greater_70 === true">
+                  Please consider application of rodenticide within 70 days of crop establishment.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Greenhouse gas emission
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.co2_equivalent.toFixed(2)}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p ng-if="asc.suggestion.incorporate_straw <= 30" translate>
+                  Please incorporate the straw of the previous crop more than 30 days before rice planting.
+                </p>
+                <p translate ng-if="asc.suggestion.water_regime === 3">
+                  Please do not keep the field flooded for more than 30 days before rice cultivation.
+                </p>
+                <p translate ng-if="asc.suggestion.greenhouse_gas === 1">
+                  You could decrease greenhouse gas emission significantly if you could implement irrigation with multiple or at least single aeration (drainage) during the crop growing period.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Workers health and safety
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.worker_health_and_safety_rank}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.worker_health_and_safety_score < 50">
+                  Please consider paying attention in the proper pesticide management, handling of equipment, calibration of equipment, and government rules and regulation for the application of banned pesticides.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Child labor
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.child_labor_rank}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.child_labor_score < 50">
+                  Labor below the age of 14 are doing more work in your farming. In the next season, please consider to avoid child labor in rice production.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td data-title="{{'Sustainability Indicators' | translate}}">
+                <p translate>
+                  Women empowerment
+                </p>
+              </td>
+              <td data-title="{{'Farmers current practices' | translate}}">
+                {{asc.suggestion.women_empowerment_rank}}
+              </td>
+              <td data-title="{{'Next season suggestions' | translate}}">
+                <p translate ng-if="asc.suggestion.women_empowerment_score < 50">
+                  Female are doing more work in your farming. In the next season, please consider gender balance in rice production.
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="additional-suggestions" translate>
+        Besides above points, for sustainably increasing rice production and net profits, please also consider the following point in the next season:
+      </div>
+
+      <ul>
+        <li translate ng-if="asc.suggestion.seed_type !== 1">
+          You consider to use high yielding inbred or hybrid varieties.
+        </li>
+        <li translate ng-if="asc.suggestion.seed_certified != 1">
+          You consider to use certified seed.
+        </li>
+        <li translate ng-if="asc.suggestion.seedling_age > 22">
+          Please try to use nursery seedling of 14-22 days old.
+        </li>
+        <li translate ng-if="asc.suggestion.seed_rate > 100">
+          You may consider using lower seed rate. In this season, the seed rate which you used seems too high which increased cost of production too.
+        </li>
+        <li translate ng-if="asc.suggestion.nitrogen_amount <= 1 && asc.suggestion.potassium_amount <= 1 && asc.suggestion.phosphorus_amount <= 1">
+          Please consider application of fertilizer.
+        </li>
+        <li translate ng-if="asc.suggestion.irrigation_total < 1">
+          Please consider application of irrigation, if the crop was suffered due to drought, please irrigate at least during panicle initiation, flowering and milking stages and at the time of fertilizer application.
+        </li>
+        <li translate ng-if="asc.suggestion.timely_threshing > 10">
+          Please consider timely threshing of rice. Drying of un-threshed rice for very long period could increase the post-harvest loss and decrease rice grain quality.
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- right content -->
+  <div class="col-md-3 no-print">
+    <div class="panel panel-default">
+      <div class="panel-heading" translate>
+        Actions
+      </div>
+      <div class="panel-body">
+        <button type="button"
+          class="btn btn-warning btn-block"
+          ng-click="asc.printPage()" translate>
+            Print
+        </button>
+        <a href="#/main/farmer-options/{{asc.farmer.id}}/{{asc.season.id}}"
+          class="btn btn-default btn-block" translate>
+            Back
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

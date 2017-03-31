@@ -1,0 +1,12 @@
+<div class="help-block form-message-error" ng-messages="item.$error" ng-if="!parent && (item.$touched || item.$dirty)">
+  <span ng-message="required" translate>This field is required.</span>
+  <span ng-message="min">Minimum should be {{data.min}}.</span>
+  <span ng-message="max">Maximum should be {{data.max}}.</span>
+  <span ng-message="number">A number is required.</span>
+  <span ng-message="date">A valid date is required.</span>
+  <span ng-message="dateDisabled">Select a non-disabled date.</span>
+</div>
+
+<div class="help-block form-message-error" ng-messages="item.$error" ng-if="parent && item.$invalid">
+  <span ng-message="dateDisabled">Select a non-disabled date.</span>
+</div>

@@ -1,0 +1,674 @@
+<div ng-form="har" novalidate>
+  <div class="form-group required" ng-class="validateField(har, 'harvesting_method')">
+    <label class="control-label" for="harvesting_method" translate>
+      What was the method of harvesting and threshing?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in harvestingMethod">
+      <input required type="radio"
+        id="harvesting_method{{$index}}"
+        ng-value="n.value"
+        name="harvesting_method"
+        ng-model="$parent.data.harvesting_method">
+      <label class="control-label" for="harvesting_method{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="har" name="'harvesting_method'"></form-messages>
+  </div>
+
+  <!-- combine harvest -->
+  <div ng-if="data.harvesting_method === 1">
+    <div class="form-group required" ng-class="validateField(har, 'crop_harvest_date')">
+      <label class="control-label" for="crop_harvest_date" translate>
+        When the crop was harvested?
+      </label>
+      <input required type="text" class="form-control"
+        id="crop_harvest_date"
+        name="crop_harvest_date"
+        datepicker-localdate
+        uib-datepicker-popup="yyyy-MM-dd"
+        data-ng-model="data.crop_harvest_date"
+        ng-click="crop_harvest_date.opened = true"
+        data-is-open="crop_harvest_date.opened"
+        value="{{formatDate(data.crop_harvest_date)}}"
+        datepicker-options="{minDate: addDate(season.sowing_date, 85), maxDate: addDate(season.sowing_date, 160)}"/>
+      <form-messages form="har" name="'crop_harvest_date'"></form-messages>
+      <form-messages form="har"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'combine_harvesting_total')">
+      <label class="control-label" for="combine_harvesting_total" translate>
+        How much total cost paid for the combine harvesting?
+      </label>
+      <input required type="text" class="form-control"
+        name="combine_harvesting_total" id="combine_harvesting_total"
+        ng-model="data.combine_harvesting_total" />
+      <form-messages form="har" name="'combine_harvesting_total'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'harvesting_completion_time')">
+      <label class="control-label" for="harvesting_completion_time" translate>
+        How much time did combine take to complete the harvesting?
+      </label>
+      <div class="input-group">
+        <input required type="text" class="form-control"
+          name="harvesting_completion_time" id="harvesting_completion_time"
+          ng-model="data.harvesting_completion_time" />
+        <div class="input-group-addon" translate>hour(s)</div>
+      </div>
+      <form-messages form="har" name="'harvesting_completion_time'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'combine_harvester_horse_power')">
+      <label class="control-label" for="combine_harvester_horse_power" translate>
+        What was the horse power of the combine harvester?
+      </label>
+      <div class="input-group">
+        <input required type="text" class="form-control"
+          name="combine_harvester_horse_power" id="combine_harvester_horse_power"
+          ng-model="data.combine_harvester_horse_power" />
+        <div class="input-group-addon" translate>hp</div>
+      </div>
+      <form-messages form="har" name="'combine_harvester_horse_power'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'combine_harvester_cutting_width')">
+      <label class="control-label" for="combine_harvester_cutting_width" translate>
+        What was the cutting width of the combine harvester?
+      </label>
+      <div class="input-group">
+        <input required type="text" class="form-control"
+          name="combine_harvester_cutting_width" id="combine_harvester_cutting_width"
+          ng-model="data.combine_harvester_cutting_width" />
+        <div class="input-group-addon" translate>m</div>
+      </div>
+      <form-messages form="har" name="'combine_harvester_cutting_width'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'labor_type')">
+      <label class="control-label" for="harvesting_labor_type" translate>
+        Besides combine harvester, do you use any other labor during harvesting & threshing?
+      </label>
+      <div class="radio radio-success" ng-repeat="n in laborTypes">
+        <input required type="radio"
+          id="labor_type{{$index}}"
+          ng-value="n.value"
+          name="labor_type"
+          ng-model="$parent.data.labor_type">
+        <label class="control-label" for="labor_type{{$index}}">{{n.name}}</label>
+      </div>
+      <form-messages form="har" name="'labor_type'"></form-messages>
+    </div>
+
+    <div ng-if="data.labor_type">
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_male_labor')">
+        <label class="control-label" for="harvesting_male_labor" translate>
+          How many were the male labor?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_male_labor"
+          id="harvesting_male_labor" ng-model="data.male_labor" min="0">
+        <form-messages form="har" name="'harvesting_male_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_female_labor')">
+        <label class="control-label" for="harvesting_female_labor" translate>
+          How many were the female labor?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_female_labor"
+          id="harvesting_female_labor" ng-model="data.female_labor" min="0">
+        <form-messages form="har" name="'harvesting_female_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_above_18_years_old')">
+        <label class="control-label" for="harvesting_above_18_years_old" translate>
+          How many were above 18 years old?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_above_18_years_old"
+          id="harvesting_above_18_years_old" ng-model="data.above_18_years_old" min="0">
+        <form-messages form="har" name="'harvesting_above_18_years_old'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_below_18_years_old')">
+        <label class="control-label" for="harvesting_below_18_years_old" translate>
+          How many were below 18 years old?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_below_18_years_old"
+          id="harvesting_below_18_years_old" ng-model="data.below_18_years_old" min="0">
+        <form-messages form="har" name="'harvesting_below_18_years_old'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'additional_labor')">
+        <label class="control-label" for="additional_labor" translate>
+          Did you pay additional cost for the labor for the harvesting, threshing, hauling and transportation?
+        </label>
+        <select required class="form-control"
+          id="additional_labor"
+          name="additional_labor"
+          ng-model="data.additional_labor"
+          ng-options="n.value as n.name for n in yesNo">
+        </select>
+        <form-messages form="har" name="'additional_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'additional_labor_cost')" ng-if="data.additional_labor === 1">
+        <label class="control-label" for="additional_labor_cost" translate>
+          How much was the additional cost paid to the labors used for harvesting, threshing, hauling and transportation?
+        </label>
+        <input required type="text" class="form-control" name="additional_labor_cost"
+          id="additional_labor_cost" ng-model="data.additional_labor_cost">
+        <form-messages form="har" name="'additional_labor_cost'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_application_other')" ng-if="data.harvesting_application === 6">
+        <label class="control-label" for="harvesting_application_other" translate>
+          Other fertilizer application
+        </label>
+        <input required type="text" class="form-control" name="harvesting_application_other"
+          id="harvesting_application_other" ng-model="data.harvesting_application_other">
+        <form-messages form="har" name="'harvesting_application_other'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'combine_harvester_owner')">
+        <label class="control-label" for="combine_harvester_owner" translate>
+          Who owns this combine harvester?
+        </label>
+        <div class="radio radio-success" ng-repeat="n in combineHarvester">
+          <input required type="radio"
+            id="combine_harvester_owner{{$index}}"
+            ng-value="n.value"
+            name="combine_harvester_owner"
+            ng-model="$parent.data.combine_harvester_owner">
+          <label class="control-label" for="combine_harvester_owner{{$index}}">{{n.name}}</label>
+        </div>
+        <form-messages form="har" name="'combine_harvester_owner'"></form-messages>
+      </div>
+    </div>
+  </div>
+
+  <!-- manual cutting manual threshing -->
+  <div ng-if="data.harvesting_method === 2">
+    <div class="form-group required" ng-class="validateField(har, 'crop_harvest_date')">
+      <label class="control-label" for="crop_harvest_date" translate>
+        When the crop was harvested?
+      </label>
+      <input required type="text" class="form-control"
+        id="crop_harvest_date"
+        name="crop_harvest_date"
+        datepicker-localdate
+        uib-datepicker-popup="yyyy-MM-dd"
+        data-ng-model="data.crop_harvest_date"
+        ng-click="crop_harvest_date.opened = true"
+        data-is-open="crop_harvest_date.opened"
+        value="{{formatDate(data.crop_harvest_date)}}"
+         />
+      <form-messages form="har" name="'crop_harvest_date'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'threshing_date')">
+      <label class="control-label" for="threshing_date" translate>
+        When was the threshing date?
+      </label>
+      <input required type="text" class="form-control"
+        id="threshing_date"
+        name="threshing_date"
+        datepicker-localdate
+        uib-datepicker-popup="yyyy-MM-dd"
+        data-ng-model="data.threshing_date"
+        ng-click="threshing_date.opened = true"
+        data-is-open="threshing_date.opened"
+        value="{{formatDate(data.threshing_date)}}" />
+      <form-messages form="har" name="'threshing_date'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'manual_cutting_labor_count')">
+      <label class="control-label" for="manual_cutting_labor_count" translate>
+        How many labors were used for manual cutting and manual threshing (together)?
+      </label>
+      <input required type="text" class="form-control" name="manual_cutting_labor_count"
+        id="manual_cutting_labor_count" ng-model="data.manual_cutting_labor_count">
+      <form-messages form="har" name="'manual_cutting_labor_count'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'labor_type')">
+      <label class="control-label" for="harvesting_labor_type" translate>
+        Who did the cutting and threshing work?
+      </label>
+      <div class="radio radio-success" ng-repeat="n in laborTypes">
+        <input required type="radio"
+          id="labor_type{{$index}}"
+          ng-value="n.value"
+          name="labor_type"
+          ng-model="$parent.data.labor_type">
+        <label class="control-label" for="labor_type{{$index}}">{{n.name}}</label>
+      </div>
+      <form-messages form="har" name="'labor_type'"></form-messages>
+    </div>
+
+    <div ng-if="data.labor_type">
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_male_labor')">
+        <label class="control-label" for="harvesting_male_labor" translate>
+          How many were the male labor?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_male_labor"
+          id="harvesting_male_labor" ng-model="data.male_labor" min="0">
+        <form-messages form="har" name="'harvesting_male_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_female_labor')">
+        <label class="control-label" for="harvesting_female_labor" translate>
+          How many were the female labor?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_female_labor"
+          id="harvesting_female_labor" ng-model="data.female_labor" min="0">
+        <form-messages form="har" name="'harvesting_female_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_above_18_years_old')">
+        <label class="control-label" for="harvesting_above_18_years_old" translate>
+          How many were above 18 years old?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_above_18_years_old"
+          id="harvesting_above_18_years_old" ng-model="data.above_18_years_old" min="0">
+        <form-messages form="har" name="'harvesting_above_18_years_old'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_below_18_years_old')">
+        <label class="control-label" for="harvesting_below_18_years_old" translate>
+          How many were below 18 years old?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_below_18_years_old"
+          id="harvesting_below_18_years_old" ng-model="data.below_18_years_old" min="0">
+        <form-messages form="har" name="'harvesting_below_18_years_old'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'total_labor_cost')">
+        <label class="control-label" for="total_labor_cost" translate>
+          How much was the total cost paid to the labors and other inputs, e.g. breakfast to the labors used for cutting?
+        </label>
+        <input required type="number" class="form-control" name="total_labor_cost"
+          id="total_labor_cost" ng-model="data.total_labor_cost" min="0">
+        <form-messages form="har" name="'total_labor_cost'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'amount_paid')">
+        <label class="control-label" for="amount_paid" translate>
+          How much amount of money was paid to the labors and other inputs for threshing?
+        </label>
+        <input required type="number" class="form-control" name="amount_paid"
+          id="amount_paid" ng-model="data.amount_paid" min="0">
+        <form-messages form="har" name="'amount_paid'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'wage_rate_male')">
+        <label class="control-label" for="wage_rate_male" translate>
+          How much was the wage rate per day for a male labor used for cutting and threshing?
+        </label>
+        <input required type="number" class="form-control" name="wage_rate_male"
+          id="wage_rate_male" ng-model="data.wage_rate_male" min="0">
+        <form-messages form="har" name="'wage_rate_male'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'wage_rate_female')">
+        <label class="control-label" for="wage_rate_female" translate>
+          How much was the wage rate per day for a female labor used for cutting and threshing?
+        </label>
+        <input required type="number" class="form-control" name="wage_rate_female"
+          id="wage_rate_female" ng-model="data.wage_rate_female" min="0">
+        <form-messages form="har" name="'wage_rate_female'"></form-messages>
+      </div>
+    </div>
+  </div>
+
+  <!-- manual cutting mechanical threshing -->
+  <div ng-if="data.harvesting_method === 3">
+    <div class="form-group required" ng-class="validateField(har, 'labor_count_manual_cutting')">
+      <label class="control-label" for="labor_count_manual_cutting" translate>
+        How many labors were used for the manual cutting?
+      </label>
+      <input required type="number" class="form-control" name="labor_count_manual_cutting"
+        id="labor_count_manual_cutting" ng-model="data.labor_count_manual_cutting" min="0">
+      <form-messages form="har" name="'labor_count_manual_cutting'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'labor_type')">
+      <label class="control-label" for="harvesting_labor_type" translate>
+        Who did the cutting work?
+      </label>
+      <div class="radio radio-success" ng-repeat="n in laborTypes">
+        <input required type="radio"
+          id="labor_type{{$index}}"
+          ng-value="n.value"
+          name="labor_type"
+          ng-model="$parent.data.labor_type">
+        <label class="control-label" for="labor_type{{$index}}">{{n.name}}</label>
+      </div>
+      <form-messages form="har" name="'labor_type'"></form-messages>
+    </div>
+
+    <div ng-if="data.labor_type">
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_male_labor')">
+        <label class="control-label" for="harvesting_male_labor" translate>
+          How many were the male labor?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_male_labor"
+          id="harvesting_male_labor" ng-model="data.male_labor" min="0">
+        <form-messages form="har" name="'harvesting_male_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_female_labor')">
+        <label class="control-label" for="harvesting_female_labor" translate>
+          How many were the female labor?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_female_labor"
+          id="harvesting_female_labor" ng-model="data.female_labor" min="0">
+        <form-messages form="har" name="'harvesting_male_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_above_18_years_old')">
+        <label class="control-label" for="harvesting_above_18_years_old" translate>
+          How many were above 18 years old?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_above_18_years_old"
+          id="harvesting_above_18_years_old" ng-model="data.above_18_years_old" min="0">
+        <form-messages form="har" name="'harvesting_above_18_years_old'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_below_18_years_old')">
+        <label class="control-label" for="harvesting_below_18_years_old" translate>
+          How many were below 18 years old?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_below_18_years_old"
+          id="harvesting_below_18_years_old" ng-model="data.below_18_years_old" min="0">
+        <form-messages form="har" name="'harvesting_below_18_years_old'"></form-messages>
+      </div>
+    </div>
+  </div>
+
+  <!-- manual cutting mechanical threshing, mechanical cutting mechanical threshing -->
+  <div ng-if="data.harvesting_method === 3 || data.harvesting_method === 4">
+    <div class="form-group required" ng-class="validateField(har, 'crop_harvest_date')" ng-if="data.harvesting_method === 3">
+      <label class="control-label" for="crop_harvest_date" translate>
+        When was the harvesting date?
+      </label>
+      <input required type="text" class="form-control"
+        id="crop_harvest_date"
+        name="crop_harvest_date"
+        datepicker-localdate
+        uib-datepicker-popup="yyyy-MM-dd"
+        data-ng-model="data.crop_harvest_date"
+        ng-click="crop_harvest_date.opened = true"
+        data-is-open="crop_harvest_date.opened"
+        value="{{formatDate(data.crop_harvest_date)}}" />
+      <form-messages form="har" name="'crop_harvest_date'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'threshing_date')" ng-if="data.harvesting_method === 3">
+      <label class="control-label" for="threshing_date" translate>
+        When was the threshing date?
+      </label>
+      <input required type="text" class="form-control"
+        id="threshing_date"
+        name="threshing_date"
+        datepicker-localdate
+        uib-datepicker-popup="yyyy-MM-dd"
+        data-ng-model="data.threshing_date"
+        ng-click="threshing_date.opened = true"
+        data-is-open="threshing_date.opened"
+        value="{{formatDate(data.threshing_date)}}" />
+      <form-messages form="har" name="'threshing_date'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'crop_harvest_date')" ng-if="data.harvesting_method === 4">
+      <label class="control-label" for="threshing_date" translate>
+        When was the threshing date?
+      </label>
+      <input required type="text" class="form-control"
+        id="crop_harvest_date"
+        name="crop_harvest_date"
+        datepicker-localdate
+        uib-datepicker-popup="yyyy-MM-dd"
+        data-ng-model="data.crop_harvest_date"
+        ng-click="crop_harvest_date.opened = true"
+        data-is-open="crop_harvest_date.opened"
+        value="{{formatDate(data.crop_harvest_date)}}"/>
+      <form-messages form="har" name="'crop_harvest_date'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'thresher_operating_minute')">
+      <label class="control-label" for="thresher_operating_minute" translate>
+        How many minute thresher operated to complete threshing?
+      </label>
+      <div class="input-group">
+        <input required type="number" class="form-control" name="thresher_operating_minute"
+          id="thresher_operating_minute" ng-model="data.thresher_operating_minute" min="0">
+        <div class="input-group-addon" translate>minute(s)</div>
+      </div>
+      <form-messages form="har" name="'thresher_operating_minute'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'threshing_machine_horse_power')">
+      <label class="control-label" for="threshing_machine_horse_power" translate>
+        What was the horse power of the threshing machine used?
+      </label>
+      <div class="input-group">
+        <input required type="number" class="form-control"
+          id="threshing_machine_horse_power" name="threshing_machine_horse_power"
+          ng-model="data.threshing_machine_horse_power">
+        <div class="input-group-addon" translate>hp</div>
+      </div>
+      <form-messages form="har" name="'threshing_machine_horse_power'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'total_cost_manual_cutting')">
+      <label class="control-label" for="total_cost_manual_cutting" translate>
+        What was the total cost paid to the labor for manual cutting?
+      </label>
+      <div class="input-group">
+        <input required type="number" class="form-control"
+          id="total_cost_manual_cutting" name="total_cost_manual_cutting"
+          ng-model="data.total_cost_manual_cutting">
+        <div class="input-group-addon" translate>hp</div>
+      </div>
+      <form-messages form="har" name="'total_cost_manual_cutting'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'threshing_total_cost')">
+      <label class="control-label" for="threshing_total_cost" translate>
+        How much was the total cost paid to the threshing machine and for the labors (if involved any) for threshing?
+      </label>
+      <input required type="number" class="form-control"
+        id="threshing_total_cost" name="threshing_total_cost"
+        ng-model="data.threshing_total_cost">
+      <form-messages form="har" name="'threshing_total_cost'"></form-messages>
+    </div>
+  </div>
+
+  <!-- manual cutting mechanical threshing  -->
+  <div ng-if="data.harvesting_method == 3">
+    <div class="form-group required" ng-class="validateField(har, 'wage_rate_male_labor')">
+      <label class="control-label" for="wage_rate_male_labor" translate>
+        How much was the wage rate per day for a male labor used for cutting?
+      </label>
+      <input required type="number" class="form-control"
+        id="wage_rate_male_labor" name="wage_rate_male_labor"
+        ng-model="data.wage_rate_male_labor">
+      <form-messages form="har" name="'wage_rate_male_labor'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'wage_rate_female_labor')">
+      <label class="control-label" for="wage_rate_female_labor" translate>
+        How much was the wage rate per day for a female labor used for cutting?
+      </label>
+      <input required type="number" class="form-control"
+        id="wage_rate_female_labor" name="wage_rate_female_labor"
+        ng-model="data.wage_rate_female_labor">
+      <form-messages form="har" name="'wage_rate_female_labor'"></form-messages>
+    </div>
+  </div>
+
+  <!-- mechanical cutting mechanical threshing  -->
+  <div ng-if="data.harvesting_method == 4">
+    <div class="form-group required" ng-class="validateField(har, 'cutting_date')">
+      <label class="control-label" for="cutting_date" translate>
+        When was the threshing date?
+      </label>
+      <input required type="text" class="form-control"
+        id="cutting_date"
+        name="cutting_date"
+        datepicker-localdate
+        uib-datepicker-popup="yyyy-MM-dd"
+        data-ng-model="data.cutting_date"
+        ng-click="cutting_date.opened = true"
+        data-is-open="cutting_date.opened"
+        value="{{formatDate(data.cutting_date)}}"
+         />
+      <form-messages form="har" name="'cutting_date'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'machine_cutting_name')">
+      <label class="control-label" for="machine_cutting_name" translate>
+        What was the name of the machine used for cutting?
+      </label>
+      <input required type="text" class="form-control"
+        id="machine_cutting_name" name="machine_cutting_name"
+        ng-model="data.machine_cutting_name">
+      <form-messages form="har" name="'machine_cutting_name'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'total_cost_cutting')">
+      <label class="control-label" for="total_cost_cutting" translate>
+        How much was the total cost paid for cutting?
+      </label>
+      <input required type="number" class="form-control"
+        id="total_cost_cutting" name="total_cost_cutting"
+        ng-model="data.total_cost_cutting">
+      <form-messages form="har" name="'total_cost_cutting'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'labor_count_cutting_rice')">
+      <label class="control-label" for="labor_count_cutting_rice" translate>
+        Besides machine, how many labor were used for cutting rice?
+      </label>
+      <input required type="number" class="form-control"
+        id="labor_count_cutting_rice" name="labor_count_cutting_rice"
+        ng-model="data.labor_count_cutting_rice">
+      <form-messages form="har" name="'labor_count_cutting_rice'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'labor_type')">
+      <label class="control-label" for="harvesting_labor_type" translate>
+        Who did the labor work during cutting and threshing?
+      </label>
+      <div class="radio radio-success" ng-repeat="n in laborTypes">
+        <input required type="radio"
+          id="labor_type{{$index}}"
+          ng-value="n.value"
+          name="labor_type"
+          ng-model="$parent.data.labor_type">
+        <label class="control-label" for="labor_type{{$index}}">{{n.name}}</label>
+      </div>
+      <form-messages form="har" name="'labor_type'"></form-messages>
+    </div>
+
+    <div ng-if="data.labor_type">
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_male_labor')">
+        <label class="control-label" for="harvesting_male_labor" translate>
+          How many were the male labor?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_male_labor"
+          id="harvesting_male_labor" ng-model="data.male_labor" min="0">
+        <form-messages form="har" name="'harvesting_male_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_female_labor')">
+        <label class="control-label" for="harvesting_female_labor" translate>
+          How many were the female labor?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_female_labor"
+          id="harvesting_female_labor" ng-model="data.female_labor" min="0">
+        <form-messages form="har" name="'harvesting_female_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_above_18_years_old')">
+        <label class="control-label" for="harvesting_above_18_years_old" translate>
+          How many were above 18 years old?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_above_18_years_old"
+          id="harvesting_above_18_years_old" ng-model="data.above_18_years_old" min="0">
+        <form-messages form="har" name="'harvesting_above_18_years_old'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'harvesting_below_18_years_old')">
+        <label class="control-label" for="harvesting_below_18_years_old" translate>
+          How many were below 18 years old?
+        </label>
+        <input required type="number" class="form-control" name="harvesting_below_18_years_old"
+          id="harvesting_below_18_years_old" ng-model="data.below_18_years_old" min="0">
+        <form-messages form="har" name="'harvesting_below_18_years_old'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'male_cutting_wage_rate')">
+        <label class="control-label" for="male_cutting_wage_rate" translate>
+          How much was the wage rate per day for a male labor used for cutting?
+        </label>
+        <input required type="number" class="form-control"
+          id="male_cutting_wage_rate" name="male_cutting_wage_rate"
+          ng-model="data.male_cutting_wage_rate">
+        <form-messages form="har" name="'male_cutting_wage_rate'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(har, 'female_cutting_wage_rate')">
+        <label class="control-label" for="female_cutting_wage_rate" translate>
+          How much was the wage rate per day for a female labor used for cutting?
+        </label>
+        <input required type="number" class="form-control"
+          id="female_cutting_wage_rate" name="female_cutting_wage_rate"
+          ng-model="data.female_cutting_wage_rate">
+        <form-messages form="har" name="'female_cutting_wage_rate'"></form-messages>
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="data.harvesting_method">
+    <div class="form-group required" ng-class="validateField(har, 'rice_managed')">
+      <label class="control-label" for="rice_managed" translate>
+        How the rice was harvested and straw management?
+      </label>
+      <div class="radio radio-success" ng-repeat="n in riceStrawHarvestManagement">
+        <input required type="radio"
+          id="rice_managed{{$index}}"
+          ng-value="n.value"
+          name="rice_managed"
+          ng-model="$parent.data.rice_managed">
+        <label class="control-label" for="rice_managed{{$index}}">{{n.name}}</label>
+      </div>
+      <form-messages form="har" name="'rice_managed'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'removed_straw')" ng-if="data.rice_managed === 3">
+      <label class="control-label" for="removed_straw" translate>
+        For what you used the removed straw?
+      </label>
+      <div class="radio radio-success" ng-repeat="n in removedStraw">
+        <input required type="radio"
+          id="removed_straw{{$index}}"
+          ng-value="n.value"
+          name="removed_straw"
+          ng-model="$parent.data.removed_straw">
+        <label class="control-label" for="removed_straw{{$index}}">{{n.name}}</label>
+      </div>
+      <form-messages form="har" name="'removed_straw'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(har, 'grain_moisture_content')">
+      <label class="control-label" for="grain_moisture_content" translate>
+        How much was the grain moisture content on threshing day?
+      </label>
+      <div class="input-group">
+        <input required type="number" class="form-control"
+          id="grain_moisture_content" name="grain_moisture_content"
+          ng-model="data.grain_moisture_content" min="10" max="40">
+        <div class="input-group-addon" translate>%</div>
+      </div>
+      <form-messages form="har" name="'grain_moisture_content'" data="{min: 10, max: 40}"></form-messages>
+    </div>
+  </div>
+</div>

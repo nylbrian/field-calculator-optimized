@@ -1,0 +1,242 @@
+<h3 class="page-title" translate>Household Survey - Download Data</h3>
+
+<div class="row table-page">
+  <div class="col-md-9">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-6 control-label" for="country" translate>
+              Country
+            </label>
+            <div class="col-md-6">
+              <multiselect ng-model="dl.data.country_ids"
+                options="item.id as item.name for item in dl.countries | orderObjectBy:'name':false"
+                data-compare-by="id"
+                data-multiple="true"
+                scroll-after-rows="5"
+                filter-after-rows="5"
+                max-width="100"
+                change="dl.countryUpdated()">
+              </multiselect>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-6 control-label" for="country" translate>
+              Region / Province
+            </label>
+            <div class="col-md-6">
+              <multiselect ng-model="sl.region_ids"
+                options="item.name as item.name for item in dl.countries | orderObjectBy:'name':false"
+                data-compare-by="id"
+                data-multiple="true"
+                scroll-after-rows="5"
+                filter-after-rows="5"
+                max-width="100">
+              </multiselect>
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-6 control-label" for="country" translate>
+              Province / District / State / Cities
+            </label>
+            <div class="col-md-6">
+              <multiselect ng-model="sl.province_ids"
+                options="item.name as item.name for item in dl.countries | orderObjectBy:'name':false"
+                data-compare-by="id"
+                data-multiple="true"
+                scroll-after-rows="5"
+                filter-after-rows="5"
+                max-width="100">
+              </multiselect>
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-6 control-label" for="country" translate>
+              District / Sub-district / Municipality / Township
+            </label>
+            <div class="col-md-6">
+              <multiselect ng-model="sl.district_ids"
+                options="item.name as item.name for item in dl.countries | orderObjectBy:'name':false"
+                data-compare-by="id"
+                data-multiple="true"
+                scroll-after-rows="5"
+                filter-after-rows="5"
+                max-width="100">
+              </multiselect>
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-6 control-label" for="country" translate>
+              Village
+            </label>
+            <div class="col-md-6">
+              <multiselect ng-model="sl.village_ids"
+                options="item.name as item.name for item in dl.countries | orderObjectBy:'name':false"
+                data-compare-by="id"
+                data-multiple="true"
+                scroll-after-rows="5"
+                filter-after-rows="5"
+                max-width="100">
+              </multiselect>
+            </div>
+          </div>
+        </div> -->
+        <div class="form-horizontal" ng-if="dl.regions">
+          <div class="form-group">
+            <label class="col-md-6 control-label" for="country" translate>
+              Region
+            </label>
+            <div class="col-md-6">
+              <multiselect
+                data-compare-by="id"
+                ng-model="dl.data.region_ids"
+                options="item.id as item.name for item in dl.regions | orderObjectBy:'name':false"
+                data-multiple="true"
+                scroll-after-rows="5"
+                filter-after-rows="5"
+                max-width="100"
+                change="dl.regionUpdated()">
+              </multiselect>
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal" ng-if="dl.provinces">
+          <div class="form-group">
+            <label class="col-md-6 control-label" for="country" translate>
+              Province
+            </label>
+            <div class="col-md-6">
+              <multiselect
+                data-compare-by="id"
+                ng-model="dl.data.province_ids"
+                options="item.id as item.name for item in dl.provinces | orderObjectBy:'name':false"
+                data-multiple="true"
+                scroll-after-rows="5"
+                filter-after-rows="5"
+                max-width="100"
+                change="dl.provinceUpdated()">
+              </multiselect>
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal" ng-if="dl.districts">
+          <div class="form-group">
+            <label class="col-md-6 control-label" for="country" translate>
+              District
+            </label>
+            <div class="col-md-6">
+              <multiselect
+                data-compare-by="id"
+                ng-model="dl.data.district_ids"
+                options="item.id as item.name for item in dl.districts | orderObjectBy:'name':false"
+                data-multiple="true"
+                scroll-after-rows="5"
+                filter-after-rows="5"
+                max-width="100"
+                change="dl.districtUpdated()">
+              </multiselect>
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal" ng-if="dl.villages">
+          <div class="form-group">
+            <label class="col-md-6 control-label" for="country" translate>
+              Village
+            </label>
+            <div class="col-md-6">
+              <multiselect
+                data-compare-by="id"
+                ng-model="dl.data.village_ids"
+                options="item.id as item.name for item in dl.villages | orderObjectBy:'name':false"
+                data-multiple="true"
+                scroll-after-rows="5"
+                filter-after-rows="5"
+                max-width="100"
+                change="dl.villageUpdated()">
+              </multiselect>
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal" ng-if="dl.years">
+          <div class="form-group">
+            <label class="col-md-6 control-label" for="country" translate>
+              Year
+            </label>
+            <div class="col-md-6">
+              <multiselect
+                data-compare-by="id"
+                ng-model="dl.data.year_ids"
+                options="item.id as item.name for item in dl.years | orderObjectBy:'name':false"
+                data-multiple="true"
+                scroll-after-rows="5"
+                filter-after-rows="5"
+                max-width="100"
+                change="dl.yearUpdated()">
+              </multiselect>
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal" ng-if="dl.seasons">
+          <div class="form-group">
+            <label class="col-md-6 control-label" for="country" translate>
+              Season
+            </label>
+            <div class="col-md-6">
+              <multiselect ng-model="dl.data.season_ids"
+                options="item.id as item.name for item in dl.seasons | orderObjectBy:'name':false"
+                data-compare-by="id"
+                data-multiple="true"
+                scroll-after-rows="5"
+                filter-after-rows="5"
+                max-width="100">
+              </multiselect>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-md-6 control-label" for="country" translate>
+              Farmer's Group
+            </label>
+            <div class="col-md-6">
+              <multiselect ng-model="sl.farmer_group_ids"
+                options="item.name as item.name for item in dl.countries | orderObjectBy:'name':false"
+                data-compare-by="id"
+                data-multiple="true"
+                scroll-after-rows="5"
+                filter-after-rows="5"
+                max-width="100">
+              </multiselect>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading" translate>
+        Options
+      </div>
+      <div class="panel-body">
+        <button type="button" ng-disabled="!dl.canSubmit()" ng-click="dl.download()"
+          class="btn btn-warning btn-block" translate>
+            Download
+        </button>
+        <a href="#/main"
+          class="btn btn-default btn-block" translate>
+            Cancel
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

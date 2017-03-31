@@ -1,0 +1,388 @@
+* {
+  font-family: -apple-system, Roboto, BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+body {
+  background-color: #f0f0f0;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.main-nav {
+  background-color: #58AE25;
+  background-image: none;
+}
+
+.main-nav .navbar-toggle:focus,
+.main-nav .navbar-toggle:hover {
+  background-color: #fff566;
+}
+
+.main-nav .navbar-toggle {
+  border-color: #eee8aa;
+}
+
+.main-nav .navbar-toggle .icon-bar {
+  background-color: #eee8aa;
+}
+
+.main-nav .navbar-toggle:hover .icon-bar,
+.main-nav .navbar-toggle:focus .icon-bar {
+  background-color: #999;
+}
+
+.main-pages {
+  margin-bottom: 100px;
+}
+
+.bottom-nav {
+  background-color: #777;
+  background-image: none;
+}
+
+.main-nav .navbar-brand,
+.main-nav .navbar-brand:hover,
+.main-nav .navbar-brand:focus {
+  color: #fff566;
+  text-shadow: 2px 3px 2px rgba(100, 100, 100, 1);
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.main-nav .navbar-nav li a {
+  color: #fff;
+}
+
+.main-nav .navbar-nav li a:focus {
+  color: #fff;
+}
+
+.navbar-nav > li > a:hover {
+  color: #fff566 !important;
+}
+
+.main-nav .navbar-nav .dropdown-menu li a:hover {
+  color: #58AE25 ;
+  background-color: #fff566 !important;
+  background-image: none !important;
+}
+
+.main-breadcrumb {
+  background-color: #f5f5f5;
+  background-color: #fff;
+  margin-top: 50px;
+  margin-bottom: 0px;
+  -webkit-box-shadow: 0 0 4px 0 rgba(0,0,0,.08),0 2px 4px 0 rgba(0,0,0,.12);
+  -moz-box-shadow: 0 0 4px 0 rgba(0,0,0,.08),0 2px 4px 0 rgba(0,0,0,.12);
+  box-shadow: 0 0 4px 0 rgba(0,0,0,.08),0 2px 4px 0 rgba(0,0,0,.12);
+  position: fixed;
+  z-index: 1029;
+  width: 100%;
+}
+
+.main-breadcrumb .breadcrumb {
+  background: transparent;
+  margin-bottom: 0;
+  padding: 8px 0;
+}
+
+.main-content-image {
+  -webkit-box-shadow: 6px 6px 24px -1px rgba(136,136,136,1);
+  -moz-box-shadow: 6px 6px 24px -1px rgba(136,136,136,1);
+  box-shadow: 6px 6px 24px -1px rgba(136,136,136,1);
+  margin: 20px auto;
+  display: block;
+}
+
+.sub-pages {
+  padding: 86px 15px 70px;
+}
+
+.page-title {
+  margin-bottom: 15px;
+}
+
+.table-controls {
+  margin-bottom: 10px;
+}
+
+.side-helper .btn-lg {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.side-helper .panel-alternate {
+  margin-bottom: 15px;
+}
+
+.side-helper .panel-alternate.last {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.side-helper .panel-alternate.allowance {
+  margin: 15px 0;
+}
+
+.side-helper .panel-alternate-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.side-helper .panel-alternate-content {
+  text-align: center;
+}
+
+.side-helper .panel-alternate-content.divider {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+select {
+  width: auto;
+}
+
+.table-fields div {
+  margin-bottom: 5px;
+}
+
+.pagination > li > a,
+.pagination > li > a:focus,
+.pagination > li > a:hover {
+  color: #333;
+}
+
+.pagination > li.active > a,
+.pagination > li.active > a:hover {
+    z-index: 3;
+    color: #fff;
+    background-color: #4D525B;
+    border-color: #4D525B;
+}
+
+.table-page .pagination {
+  margin-top: 10px;
+}
+
+.navbar-nav > li > .dropdown-menu {
+  background-color: #58AE25 !important;
+  padding: 0 !important;
+}
+
+.dropdown.open .dropdown-toggle {
+  background-color: #fff566 !important;
+  color: #58AE25 !important;
+  background-image: none !important;
+}
+
+.dropdown-menu > li > a {
+  padding: 7px 20px;
+}
+
+.navbar-collapse {
+  overflow: hidden;
+}
+
+.bs-docs-sidenav a.active {
+  font-weight: bold;
+  border-left: 2px solid #23527c;
+}
+
+.bs-docs-sidenav a {
+  padding: 7px 15px !important;
+}
+
+.label-note {
+  color: #aaa !important;
+  font-weight: normal;
+  font-style: italic;
+  display: block;
+}
+
+.top-buffer {
+  margin-top: 50px;
+}
+
+.left-buffer {
+  margin-left: 50px;
+}
+
+.padding-sides-30 {
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+.farmer-identifier {
+  float: right !important;
+  margin-top: 25px;
+  margin-right: 5px;
+}
+
+.assessment-title {
+  text-align: center;
+  font-size: 1.6rem;
+  padding: 12px;
+}
+
+.assessment-suggestion {
+  padding: 10px;
+  margin: 15px 0;
+}
+
+.additional-suggestions {
+  margin: 15px 0;
+  font-weight: bold;
+}
+
+.graphics-title {
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.graphics-main {
+  background-color: #FFFBE7;
+}
+
+.chart-bar {
+  width: 100px;
+  height: 200px;
+  position: relative;
+}
+.chart-bar-container {
+  float: left;
+  margin-right: 10px;
+  width: 50px;
+  height: 200px;
+  display: list-item;
+  list-style: none;
+  background-color: red;
+}
+
+.bar-item {
+  width: 50px;
+}
+
+.bar-item-upper {
+  height: 10%;
+  background-color: green;
+}
+
+.bar-item-middle {
+  height: 80%;
+  background-color: orange;
+}
+
+.bar-item-lower {
+  height: 10%;
+  background-color: red;
+}
+
+.chart-bar-indicator {
+  position: absolute;
+  text-indent: 5px;
+  /*margin-top: -16px;*/
+}
+
+.inputWrapper {
+  height: auto;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  /*Using a background color, but you can use a background image to represent a button*/
+
+}
+.fileInput {
+  cursor: pointer;
+  height: 100%;
+  position:absolute;
+  top: 0;
+  right: 0;
+  z-index: 99;
+  /*This makes the button huge. If you want a bigger button, increase the font size*/
+  font-size:50px;
+  /*Opacity settings for all browsers*/
+  opacity: 0;
+  -moz-opacity: 0;
+  filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0)
+}
+
+.form-group.required > .control-label:after {
+  content:" *";
+  color:red;
+}
+
+
+/* modal */
+.modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+  margin-top: -130px;
+}
+
+td .ng-invalid {
+  border-color: #a94442;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+.ng-invalid:focus {
+  border-color: #843534;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483;
+}
+
+.form-message-error {
+  color: #a94442;
+}
+
+td .help-block {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+.irri-logo-container {
+  float: right;
+  width: 15%;
+  margin: 0 0 10px 20px;
+}
+
+.irri-logo {
+  border: 0 none;
+  float: right;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.sponsors {
+  display: inline-block;
+  text-align: center;
+}
+
+.home-banner {
+  border: 10px solid #58AE25;
+  -webkit-box-shadow: 12px 12px 12px -2px rgba(119,119,119,1);
+  -moz-box-shadow: 12px 12px 12px -2px rgba(119,119,119,1);
+  box-shadow: 12px 12px 12px -2px rgba(119,119,119,1);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}

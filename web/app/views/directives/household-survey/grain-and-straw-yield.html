@@ -1,0 +1,107 @@
+<div ng-form="gstry" novalidate>
+  <div class="form-group required" ng-class="validateField(gstry, 'rice_amount')">
+    <label class="control-label" for="rice_amount" translate>
+      How much amount of rice was produced in the last season in this parcel/land?
+    </label>
+    <div class="input-group">
+      <input required type="number" class="form-control" name="rice_amount"
+        id="rice_amount" ng-model="data.rice_amount" min="1" max="50000">
+      <div class="input-group-addon" translate>kg</div>
+    </div>
+    <form-messages form="gstry" name="'rice_amount'" data="{min: 1, max: 50000}"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gstry, 'grain_amount')">
+    <label class="control-label" for="grain_amount" translate>
+      How much amount of grain was sold?
+    </label>
+    <input required type="number" class="form-control" name="grain_amount"
+      id="grain_amount" ng-model="data.grain_amount"  min="1" max="50000">
+    <form-messages form="gstry" name="'grain_amount'" data="{min: 1, max: 50000}"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gstry, 'rice_selling_price')">
+    <label class="control-label" for="rice_selling_price" translate>
+      What was the selling price of rice grain? (price per kg)
+    </label>
+    <input required type="number" class="form-control" name="rice_selling_price"
+      id="rice_selling_price" ng-model="data.rice_selling_price"
+      min="1" max="50000">
+    <form-messages form="gstry" name="'rice_selling_price'" data="{min: 1, max: 50000}"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gstry, 'straw_sold')">
+    <label class="control-label" for="straw_sold" translate>
+      Did you sell the straw?
+    </label>
+    <select required class="form-control"
+      id="straw_sold"
+      name="straw_sold"
+      ng-model="data.straw_sold"
+      ng-options="n.value as n.name for n in yesNo">
+    </select>
+    <form-messages form="gstry" name="'straw_sold'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(straw_total_price, 'gender')" ng-if="data.straw_sold === 1">
+    <label class="control-label" for="straw_total_price" translate>
+      How much was the total income from straw selling?
+    </label>
+    <input required type="number" class="form-control" name="straw_total_price"
+      id="straw_total_price" ng-model="data.straw_total_price">
+    <form-messages form="gstry" name="'straw_total_price'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gstry, 'irrigation_method')">
+    <label class="control-label" for="irrigation_method" translate>
+      What was the irrigation method used in this parcel/plot during the rice cultivation period?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in irrigationMethod">
+      <input required type="radio"
+        id="irrigation_method{{$index}}"
+        ng-value="n.value"
+        name="irrigation_method"
+        ng-model="$parent.data.irrigation_method">
+      <label class="control-label" for="irrigation_method{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gstry" name="'irrigation_method'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gstry, 'straw_handled')" ng-if="data.straw_sold === 0">
+    <label class="control-label" for="straw_handled" translate>
+      What you did with this straw?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in strawUsage">
+      <input required type="radio"
+        id="straw_handled{{$index}}"
+        ng-value="n.value"
+        name="straw_handled"
+        ng-model="$parent.data.straw_handled">
+      <label class="control-label" for="straw_handled{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gstry" name="'straw_handled'"></form-messages>
+    <!-- <input required type="text" class="form-control" name="straw_handled"
+      id="straw_handled" ng-model="data.straw_handled"> -->
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gstry, 'grain_moisture_content')">
+    <label class="control-label" for="grain_moisture_content" translate>
+      What was the grain moisture content (%) at the time of taking final weight?
+    </label>
+    <input required type="number" class="form-control" name="grain_moisture_content"
+      id="grain_moisture_content" ng-model="data.grain_moisture_content">
+    <form-messages form="gstry" name="'grain_moisture_content'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gstry, 'total_rainfall')">
+    <label class="control-label" for="total_rainfall" translate>
+      How much was the total rainfall during the rice growing period?
+    </label>
+    <div class="input-group">
+      <input required type="number" class="form-control" name="total_rainfall"
+        id="total_rainfall" ng-model="data.total_rainfall" min="1" max="3000">
+      <div class="input-group-addon" translate>mm</div>
+    </div>
+    <form-messages form="gstry" name="'total_rainfall'" data="{min: 1, max: 3000}"></form-messages>
+  </div>
+</div>

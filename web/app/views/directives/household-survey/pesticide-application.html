@@ -1,0 +1,317 @@
+<div ng-form="pa" novalidate>
+  <div class="form-group required"
+    ng-class="{'has-error': (pa.$dirty || pa.$touched) && !hasSelectedProblems()}" >
+    <label class="control-label" for="pesticideProblems" translate>
+      What were the problems in this rice field during the crop growing period?
+    </label>
+    <div id="pesticideProblems" class="checkbox checkbox-success" ng-repeat="n in riceFieldProblems">
+      <input type="checkbox"
+        id="riceFieldProblems{{$index}}"
+        ng-value="n.value"
+        name="riceFieldProblems"
+        ng-model="$parent.data.riceFieldProblems[n.value].checked"
+        ng-required="!hasSelectedProblems()">
+      <label class="control-label" for="riceFieldProblems{{$index}}">{{n.name}}</label>
+    </div>
+    <div class="checkbox checkbox-success">
+      <input type="checkbox"
+        id="otherPests"
+        value="other"
+        name="otherPests"
+        ng-model="data.otherPests"
+        ng-required="!hasSelectedProblems()">
+      <label class="control-label" for="otherPests" translate>Other (specify)</label>
+    </div>
+    <div class="help-block" ng-if="(pa.$dirty || pa.$touched) && !hasSelectedProblems()">
+      <span translate>Please select at least one item.</span>
+    </div>
+  </div>
+
+  <div class="form-group" ng-if="data.otherPests" ng-repeat="n in data.otherRiceFieldProblems">
+    <input type="text" class="form-control" ng-model="n.name"
+      ng-blur="n.value = n.name; updateOtherProblems(n.name, $index)"/>
+  </div>
+
+  <div ng-if="hasSelectedProblems()">
+    <div class="form-group">
+      <label for="rice_area">
+        <span class="label-note" translate>
+          Note: If mixed application of more than 1 pesticide, please count them as seperate application and fill up the table below.
+        </span>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <table class="tables tables-default no-more-tables form-group">
+        <thead>
+          <tr>
+            <th class="text-center" translate>Pests problem</th>
+            <th class="text-center" translate>Pesticide category</th>
+            <th class="text-center" translate>When was the application date?</th>
+            <th class="text-center" translate>How many bottles were applied?</th>
+            <th class="text-center" translate>How much was the pesticide amount in 1 bottle (ml)?</th>
+            <th class="text-center" translate>Was there any pesticide leftover in the bottle?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="(key, problem) in data.riceFieldProblems" ng-if="problem.checked === true"
+            ng-form="ff">
+            <td data-title="{{'Pests problem' | translate}}">
+              {{getProblemName(key)}}
+            </td>
+            <td data-title="{{'Pesticide category' | translate}}">
+              <select class="form-control"
+                ng-model="data.problemsRiceField[key].brand_applied"
+                ng-options="n.value as n.name for n in pesticideCategory"
+                name="category"
+                required>
+              </select>
+              <form-messages form="ff" name="'category'"></form-messages>
+            </td>
+            <td data-title="{{'When was the application date?' | translate}}">
+              <input type="text" class="form-control"
+                datepicker-localdate
+                uib-datepicker-popup="yyyy-MM-dd"
+                data-ng-model="data.problemsRiceField[key].applied_date"
+                ng-click="data.problemsRiceField[key].date_opened = true"
+                data-is-open="data.problemsRiceField[key].date_opened"
+                ng-value="{{formatDate(data.problemsRiceField[key].applied_date)}}"
+                datepicker-options="{minDate: addDate(season.sowing_date, (period - 1) * 14), maxDate: addDate(season.sowing_date, period * 14)}"
+                name="date"
+                required />
+              <form-messages form="ff" name="'date'"></form-messages>
+              <form-messages form="ff"></form-messages>
+            </td>
+            <td data-title="{{'How many bottles were applied?' | translate}}">
+              <input type="number" class="form-control"
+                ng-model="data.problemsRiceField[key].applied"
+                name="bottles"
+                min="0"
+                required/>
+              <form-messages form="ff" name="'bottles'" data="{min: 0}"></form-messages>
+            </td>
+            <td data-title="{{'How much was the pesticide amount in 1 bottle (ml)?' | translate}}">
+              <input type="number" class="form-control"
+                min="1" max="1500"
+                required name="pesticide_amount"
+                ng-model="data.problemsRiceField[key].amount" />
+              <form-messages form="ff" name="'pesticide_amount'" data="{min: 1, max: 1500}"></form-messages>
+            </td>
+            <td data-title="{{'Was there any pesticide leftover in the bottle?' | translate}}">
+              <select class="form-control col-sm-1"
+                ng-model="data.problemsRiceField[key].leftover"
+                ng-options="n.value as n.name for n in herbicideLeftOver"
+                name="pesticide_leftover"
+                required>
+              </select>
+              <form-messages form="ff" name="'pesticide_leftover'"></form-messages>
+            </td>
+          </tr>
+
+          <tr ng-repeat="problem in data.otherRiceFieldProblems" ng-if="problem.isChecked && problem.name"
+            ng-form="ff">
+            <td data-title="{{'Pests problem' | translate}}">
+              {{problem.name}}
+            </td>
+            <td data-title="{{'Pesticide category' | translate}}">
+              <select class="form-control"
+                ng-model="data.otherProblemsRiceField[problem.name].brand_applied"
+                ng-options="n.value as n.name for n in pesticideCategory"
+                name="category"
+                required>
+              </select>
+              <form-messages form="ff" name="'category'"></form-messages>
+            </td>
+            <td data-title="{{'When was the application date?' | translate}}">
+              <input type="text" class="form-control"
+                datepicker-localdate
+                uib-datepicker-popup="yyyy-MM-dd"
+                data-ng-model="data.otherProblemsRiceField[problem.name].applied_date"
+                ng-click="data.otherProblemsRiceField[problem.name].date_opened = true"
+                data-is-open="data.otherProblemsRiceField[problem.name].date_opened"
+                value="{{formatDate(data.otherProblemsRiceField[problem.name].applied_date)}}"
+                name="date"
+                required />
+              <form-messages form="ff" name="'date'"></form-messages>
+            </td>
+            <td data-title="{{'How many bottles were applied?' | translate}}">
+              <input type="number" class="form-control"
+                ng-model="data.otherProblemsRiceField[problem.name].applied"
+                required name="bottles_applied" min="0" />
+              <form-messages form="ff" name="'bottles_applied'" data="{min: 0}"></form-messages>
+            </td>
+            <td data-title="{{'How much was the pesticide amount in 1 bottle (ml)?' | translate}}">
+              <input type="number" class="form-control" min="1" max="1500"
+                ng-model="data.otherProblemsRiceField[problem.name].amount"
+                required name="pesticide_amount"/>
+              <form-messages form="ff" name="'pesticide_amount'" data="{min: 1, max: 1500}"></form-messages>
+            </td>
+            <td data-title="{{'Was there any pesticide leftover in the bottle?' | translate}}">
+              <select class="form-control"
+                ng-model="data.otherProblemsRiceField[problem.name].leftover"
+                ng-options="n.value as n.name for n in herbicideLeftOver"
+                name="pesticide_leftover"
+                required>
+              </select>
+              <form-messages form="ff" name="'pesticide_leftover'"></form-messages>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="form-group required"
+      ng-class="{'has-error': (pa.protective_equipments.$dirty || pa.protective_equipments.$touched) && !hasSelectedProtectiveEquipment()}">
+      <label class="control-label" for="protectiveEquipments" translate>
+        What personal protective equipments were used during the pesticide application?
+      </label>
+      <div class="checkbox checkbox-success" ng-repeat="n in protectiveEquipments">
+        <input type="checkbox"
+          id="protectiveEquipments{{$index}}"
+          ng-value="n.value"
+          name="protective_equipments"
+          ng-model="$parent.data.protective_equipments[$index]"
+          ng-required="!hasSelectedProtectiveEquipment()">
+        <label class="control-label" for="protectiveEquipments{{$index}}">{{n.name}}</label>
+      </div>
+      <div class="help-block" ng-if="(pa.protective_equipments.$dirty || pa.protective_equipments.$touched) && !hasSelectedProtectiveEquipment()">
+        <span translate>Please select at least one item.</span>
+      </div>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(pa, 'appliedPesticides')">
+      <label class="control-label" for="appliedPesticides" translate>
+        How you applied these pesticides?
+      </label>
+      <select required class="form-control"
+        id="appliedPesticides"
+        name="appliedPesticides"
+        ng-model="data.applied_pesticide"
+        ng-options="n.value as n.name for n in pesticideApplication">
+      </select>
+      <form-messages form="pa" name="'appliedPesticides'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(pa, 'applied_pesticide_other')"
+      ng-if="data.applied_pesticide === 5">
+      <label class="control-label" for="appliedPesticides" translate>
+        Other pesticide application
+      </label>
+      <input required  type="text" name="applied_pesticide_other"
+        class="form-control" ng-model="data.applied_pesticide_other" />
+      <form-messages form="pa" name="'applied_pesticide_other'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(pa, 'pesticide_registered')">
+      <label class="control-label" for="pesticide_registered" translate>
+        All these pestices applied are registered in your country?
+      </label>
+      <select required class="form-control"
+        id="pesticide_registered"
+        name="pesticide_registered"
+        ng-model="data.pesticide_registered"
+        ng-options="n.value as n.name for n in yesNo">
+      </select>
+      <form-messages form="pa" name="'pesticide_registered'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(pa, 'pesticide_forbidden')">
+      <label class="control-label" for="pesticide_forbidden" translate>
+        Is there any pesticide which you applied is forbidden in your country?
+      </label>
+      <select required class="form-control"
+        id="pesticide_forbidden"
+        name="pesticide_forbidden"
+        ng-model="data.pesticide_forbidden"
+        ng-options="n.value as n.name for n in yesNo">
+      </select>
+      <form-messages form="pa" name="'pesticide_forbidden'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(pa, 'pesticide_calibrated')">
+      <label class="control-label" for="pesticide_calibrated" translate>
+        When the pesticide application sprayer was last calibrated?
+      </label>
+      <div class="radio radio-success" ng-repeat="n in pesticideCalibrated">
+        <input required  type="radio"
+          id="pesticide_calibrated{{$index}}"
+          ng-value="n.value"
+          name="pesticide_calibrated"
+          ng-model="data.pesticide_calibrated">
+        <label class="control-label" for="pesticide_calibrated{{$index}}">{{n.name}}</label>
+      </div>
+      <form-messages form="pa" name="'pesticide_calibrated'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(pa, 'total_cost_paid')">
+      <label class="control-label" for="total_cost_paid" translate>
+        How much was the total cost paid for the pesticides? Please add costs of all pesticides
+      </label>
+      <input required  type="number" ng-model="data.total_cost_paid" id="total_cost_paid"
+          name="total_cost_paid" class="form-control" />
+      <form-messages form="pa" name="'total_cost_paid'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(pa, 'pesticide_labor_type')">
+      <label class="control-label" for="pesticide_labor_type" translate>
+        Who did the pesticide application?
+      </label>
+      <div class="radio radio-success" ng-repeat="n in laborTypes">
+        <input required  type="radio"
+          id="pesticide_labor_type_{{$index}}"
+          ng-value="n.value"
+          name="pesticide_labor_type"
+          ng-model="$parent.data.labor_type">
+        <label class="control-label" for="pesticide_labor_type_{{$index}}">{{n.name}}</label>
+      </div>
+      <form-messages form="pa" name="'pesticide_labor_type'"></form-messages>
+    </div>
+
+    <div ng-if="data.labor_type">
+      <div class="form-group required" ng-class="validateField(pa, 'pesticide_male_labor')">
+        <label class="control-label" for="pesticide_male_labor" translate>
+          How many were the male labor?
+        </label>
+        <input required  type="number" class="form-control" name="pesticide_male_labor"
+          id="pesticide_male_labor" ng-model="data.male_labor" min="0">
+        <form-messages form="pa" name="'pesticide_male_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(pa, 'pesticide_female_labor')">
+        <label class="control-label" for="pesticide_female_labor" translate>
+          How many were the female labor?
+        </label>
+        <input required  type="number" class="form-control" name="pesticide_female_labor"
+          id="pesticide_female_labor" ng-model="data.female_labor" min="0">
+        <form-messages form="pa" name="'pesticide_female_labor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(pa, 'above_18_years_old')">
+        <label class="control-label" for="pesticide_above_18_years_old" translate>
+          How many were above 18 years old?
+        </label>
+        <input required  type="number" class="form-control" name="pesticide_above_18_years_old"
+          id="pesticide_above_18_years_old" ng-model="data.above_18_years_old" min="0">
+        <form-messages form="pa" name="'above_18_years_old'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(pa, 'pesticide_below_18_years_old')">
+        <label class="control-label" for="pesticide_below_18_years_old" translate>
+          How many were below 18 years old?
+        </label>
+        <input required  type="number" class="form-control" name="pesticide_below_18_years_old"
+          id="pesticide_below_18_years_old" ng-model="data.below_18_years_old" min="0">
+        <form-messages form="pa" name="'pesticide_below_18_years_old'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(pa, 'pesticide_labor_total_cost')">
+        <label class="control-label" for="pesticide_labor_total_cost" translate>
+          How much was the total cost paid to the labors used for pesticide application?
+        </label>
+        <input required  type="number" class="form-control" name="pesticide_labor_total_cost"
+          id="pesticide_labor_total_cost" ng-model="data.pesticide_labor_total_cost" min="0" required>
+        <form-messages form="pa" name="'pesticide_labor_total_cost'"></form-messages>
+      </div>
+  </div>
+</div>

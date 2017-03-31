@@ -1,0 +1,660 @@
+<div ng-form="sot" novalidate>
+
+  <div ng-if="!landPreparation.crop_establishment" ng-init="sot.$valid = false" class="form-group required has-error">
+    <label class="control-label" translate>
+      Please select a crop establishment first on land preparation.
+    </label>
+  </div>
+
+  <div ng-if="landPreparation.crop_establishment">
+
+    <!-- Direct Sowing -->
+    <div ng-if="landPreparation.crop_establishment === 1">
+      <div class="form-group required" ng-class="validateField(sot, 'direct_sowing_method')">
+        <label class="control-label" for="direct_sowing_method" translate>
+          Which method of direct sowing did you use?
+        </label>
+        <select class="form-control"
+          id="direct_sowing_method"
+          name="direct_sowing_method"
+          ng-model="data.direct_sowing_method"
+          ng-options="n.value as n.name for n in directSowingMethod" required>
+        </select>
+        <form-messages form="sot" name="'direct_sowing_method'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(sot, 'sowing_date')">
+        <label class="control-label" for="sowing_date" translate>
+          When was the sowing date?
+        </label>
+        <input type="text" class="form-control"
+          id="sowing_date"
+          name="sowing_date"
+          datepicker-localdate
+          uib-datepicker-popup="yyyy-MM-dd"
+          data-ng-model="data.sowing_date"
+          ng-click="sowing_date.opened = true"
+          data-is-open="sowing_date.opened"
+          required />
+        <form-messages form="sot" name="'sowing_date'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(sot, 'total_cost_paid_tractor')">
+        <label class="control-label" for="total_cost_paid_tractor" translate>
+          How much was the total cost paid for the tractor or animal power used at the time of sowing?
+        </label>
+        <input type="number" class="form-control" name="total_cost_paid_tractor"
+          id="total_cost_paid_tractor" ng-model="data.total_cost_paid_tractor" required>
+        <form-messages form="sot" name="'total_cost_paid_tractor'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(sot, 'sowing_labor_total_cost')">
+        <label class="control-label" for="sowing_labor_sowing" translate>
+          Who did the labor work during seed sowing?
+        </label>
+        <div class="radio radio-success" ng-repeat="n in laborTypes">
+          <input type="radio"
+            id="sowing_labor_sowing{{$index}}"
+            ng-value="n.value"
+            name="sowing_labor_total_cost"
+            ng-model="$parent.data.labor_type"
+            required>
+          <label class="control-label" for="sowing_labor_sowing{{$index}}">{{n.name}}</label>
+        </div>
+        <form-messages form="sot" name="'sowing_labor_total_cost'"></form-messages>
+      </div>
+
+      <div ng-if="data.labor_type">
+        <div class="form-group required" ng-class="validateField(sot, 'sowing_male_labor')">
+          <label class="control-label" for="sowing_male_labor" translate>
+            How many were the male labor?
+          </label>
+          <input type="number" class="form-control" name="sowing_male_labor"
+            id="sowing_male_labor" ng-model="data.male_labor" required>
+          <form-messages form="sot" name="'sowing_male_labor'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'sowing_female_labor')">
+          <label class="control-label" for="sowing_female_labor" translate>
+            How many were the female labor?
+          </label>
+          <input type="number" class="form-control" name="sowing_female_labor"
+            id="sowing_female_labor" ng-model="data.female_labor" required>
+          <form-messages form="sot" name="'sowing_female_labor'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'sowing_above_18_years_old')">
+          <label class="control-label" for="sowing_above_18_years_old" translate>
+            How many were above 18 years old?
+          </label>
+          <input type="number" class="form-control" name="sowing_above_18_years_old"
+            id="sowing_above_18_years_old" ng-model="data.above_18_years_old" required>
+          <form-messages form="sot" name="'sowing_above_18_years_old'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'sowing_below_18_years_old')">
+          <label class="control-label" for="sowing_below_18_years_old" translate>
+            How many were below 18 years old?
+          </label>
+          <input type="number" class="form-control" name="sowing_below_18_years_old"
+            id="sowing_below_18_years_old" ng-model="data.below_18_years_old" required>
+          <form-messages form="sot" name="'sowing_below_18_years_old'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'sowing_total_seed_cost')">
+          <label class="control-label" for="sowing_total_seed_cost" translate>
+            How much was the total cost of the seed?
+          </label>
+          <input type="number" class="form-control" name="sowing_total_seed_cost"
+            id="sowing_total_seed_cost" ng-model="data.total_seed_cost" required>
+          <form-messages form="sot" name="'sowing_total_seed_cost'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'sowing_labor_total_cost')">
+          <label class="control-label" for="sowing_labor_total_cost" translate>
+            How much total cost was paid for the labors used for seed sowing?
+          </label>
+          <input type="number" class="form-control" name="sowing_labor_total_cost"
+            id="sowing_labor_total_cost" ng-model="data.labor_total_cost" required>
+          <form-messages form="sot" name="'sowing_labor_total_cost'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'sowing_wage_rate_per_day_male')">
+          <label class="control-label" for="sowing_wage_rate_per_day_male" translate>
+            How much was the wage rate per day for a male labor used for seed sowing?
+          </label>
+          <input type="number" class="form-control" name="sowing_wage_rate_per_day_male"
+            id="sowing_wage_rate_per_day_male" ng-model="data.wage_rate_male" min="1" required>
+          <form-messages form="sot" name="'sowing_wage_rate_per_day_male'" data="{min: 1}"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'sowing_wage_rate_per_day_female')">
+          <label class="control-label" for="sowing_wage_rate_per_day_female" translate>
+            How much was the wage rate per day for a female labor used for seed sowing?
+          </label>
+          <input type="number" class="form-control" name="sowing_wage_rate_per_day_female"
+            id="sowing_wage_rate_per_day_female" ng-model="data.wage_rate_female" min="1" required>
+          <form-messages form="sot" name="'sowing_wage_rate_per_day_female'" data="{min: 1}"></form-messages>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transplanting -->
+    <div ng-if="landPreparation.crop_establishment === 2">
+      <div class="form-group required" ng-class="validateField(sot, 'transplanting_method')">
+        <label class="control-label" for="transplanting_method" translate>
+          Which method of transplanting did you use?
+        </label>
+        <select class="form-control"
+          id="transplanting_method"
+          name="transplanting_method"
+          ng-model="data.transplanting_method"
+          ng-options="n.value as n.name for n in transplantingMethod"
+          required>
+        </select>
+        <form-messages form="sot" name="'transplanting_method'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(sot, 'transplanting_carried_out')" ng-if="data.transplanting_method === 2">
+        <label class="control-label" for="transplanting_carried_out" translate>
+          How the transplanting work was carried out?
+        </label>
+        <select class="form-control"
+          id="transplanting_carried_out"
+          name="transplanting_carried_out"
+          ng-model="data.transplanting_carried_out"
+          ng-options="n.value as n.name for n in transplantingType"
+          required>
+        </select>
+        <form-messages form="sot" name="'transplanting_carried_out'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(sot, 'total_cost_tractor')">
+        <label class="control-label" for="total_cost_tractor" translate>
+          How much was the total cost paid for the tractor or animal power for ploughing and other operations during transplanting? (if any)
+        </label>
+        <input type="number" class="form-control" name="total_cost_tractor"
+          id="total_cost_tractor" ng-model="data.total_cost_tractor" required>
+        <form-messages form="sot" name="'total_cost_tractor'"></form-messages>
+      </div>
+
+      <!-- non custom transplanting -->
+      <div ng-if="data.transplanting_carried_out && data.transplanting_carried_out !== 3">
+        <div class="form-group required" ng-class="validateField(sot, 'transplanting_labor_count')">
+          <label class="control-label" for="transplanting_labor_count" translate>
+            How many labors were used during transplanting?
+          </label>
+          <input type="number" class="form-control" name="transplanting_labor_count"
+            id="transplanting_labor_count" ng-model="data.transplanting_labor_count" required>
+        </div>
+        <form-messages form="sot" name="'transplanting_labor_count'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(sot, 'sowing_labor_type')">
+        <label class="control-label" for="transplanting_labor" translate>
+          Who did the transplanting work?
+        </label>
+        <div class="radio radio-success" ng-repeat="n in laborTypes">
+          <input type="radio"
+            id="transplanting_labor{{$index}}"
+            ng-value="n.value"
+            name="sowing_labor_type"
+            ng-model="$parent.data.labor_type"
+            required>
+          <label class="control-label" for="transplanting_labor{{$index}}">{{n.name}}</label>
+        </div>
+        <form-messages form="sot" name="'sowing_labor_type'"></form-messages>
+      </div>
+
+      <div ng-if="data.labor_type">
+        <div class="form-group required" ng-class="validateField(sot, 'transplanting_male_labor')">
+          <label class="control-label" for="transplanting_male_labor" translate>
+            How many were the male labor?
+          </label>
+          <input type="number" class="form-control" name="transplanting_male_labor"
+            id="transplanting_male_labor" ng-model="data.male_labor" required>
+          <form-messages form="sot" name="'transplanting_male_labor'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'transplanting_female_labor')">
+          <label class="control-label" for="transplanting_female_labor" translate>
+            How many were the female labor?
+          </label>
+          <input type="number" class="form-control" name="transplanting_female_labor"
+            id="transplanting_female_labor" ng-model="data.female_labor" required>
+          <form-messages form="sot" name="'transplanting_female_labor'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'transplanting_above_18_years_old')">
+          <label class="control-label" for="transplanting_above_18_years_old" translate>
+            How many were above 18 years old?
+          </label>
+          <input type="number" class="form-control" name="transplanting_above_18_years_old"
+            id="transplanting_above_18_years_old" ng-model="data.above_18_years_old" required>
+          <form-messages form="sot" name="'transplanting_above_18_years_old'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'transplanting_below_18_years_old')">
+          <label class="control-label" for="transplanting_below_18_years_old" translate>
+            How many were below 18 years old?
+          </label>
+          <input type="number" class="form-control" name="transplanting_below_18_years_old"
+            id="transplanting_below_18_years_old" ng-model="data.below_18_years_old" required>
+          <form-messages form="sot" name="'transplanting_below_18_years_old'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'crop_establishment')">
+          <label class="control-label" for="transplanting_labor_total_cost" translate>
+            How much was the total cost paid for the labors used for transplanting?
+          </label>
+          <input type="number" class="form-control" name="transplanting_labor_total_cost"
+            id="transplanting_labor_total_cost" ng-model="data.labor_total_cost" required>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'transplanting_wage_rate_per_day_male')">
+          <label class="control-label" for="transplanting_wage_rate_per_day_male" translate>
+            How much was the wage rate per day for a male labor used for transplanting?
+          </label>
+          <input type="number" class="form-control" name="transplanting_wage_rate_per_day_male"
+            id="transplanting_wage_rate_per_day_male" ng-model="data.wage_rate_male" min="1" required>
+          <form-messages form="sot" name="'transplanting_wage_rate_per_day_male'" data="{min: 1}"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'transplanting_wage_rate_per_day_female')">
+          <label class="control-label" for="transplanting_wage_rate_per_day_female" translate>
+            How much was the wage rate per day for a female labor used for transplanting?
+          </label>
+          <input type="number" class="form-control" name="transplanting_wage_rate_per_day_female"
+            id="transplanting_wage_rate_per_day_female" ng-model="data.wage_rate_female" min="1"
+            required>
+          <form-messages form="sot" name="'transplanting_wage_rate_per_day_female'" data="{min: 1}"></form-messages>
+        </div>
+      </div>
+
+      <!-- custom transplanting -->
+      <div ng-if="data.transplanting_carried_out && data.transplanting_carried_out === 3">
+        <div class="form-group required" ng-class="validateField(sot, 'total_cost_paid_service_provider')">
+          <label class="control-label" for="total_cost_paid_service_provider" translate>
+            How much total cost paid to the service provider for the transplanting operation?
+          </label>
+          <input type="number" class="form-control" name="total_cost_paid_service_provider"
+            id="total_cost_paid_service_provider" ng-model="data.total_cost_paid_service_provider"
+            required>
+          <form-messages form="sot" name="'total_cost_paid_service_provider'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'custom_extra_labor')">
+          <label class="control-label" for="custom_extra_labor" translate>
+            Do you use any extra labor also?
+          </label>
+          <select class="form-control"
+            id="custom_extra_labor"
+            name="custom_extra_labor"
+            ng-model="data.custom_extra_labor"
+            ng-options="n.value as n.name for n in yesNo"
+            required>
+          </select>
+          <form-messages form="sot" name="'custom_extra_labor'"></form-messages>
+        </div>
+
+        <div ng-if="data.custom_extra_labor === 1">
+          <div class="form-group required" ng-class="validateField(sot, 'custom_other_labor_count')">
+            <label class="control-label" for="custom_other_labor_count" translate>
+              How many other labor were used?
+            </label>
+            <input type="number" class="form-control" name="custom_other_labor_count"
+              id="custom_other_labor_count" ng-model="data.custom_other_labor_count" required>
+            <form-messages form="sot" name="'custom_other_labor_count'"></form-messages>
+          </div>
+
+          <div class="form-group required" ng-class="validateField(sot, 'other_work')">
+            <label class="control-label" for="transplanting_labor_sowing" translate>
+              Who did the other work?
+            </label>
+            <div class="radio radio-success" ng-repeat="n in laborTypes">
+              <input type="radio"
+                id="other_work_{{$index}}"
+                ng-value="n.value"
+                name="other_work"
+                ng-model="$parent.data.labor_type"
+                required>
+              <label class="control-label" for="other_work_{{$index}}">{{n.name}}</label>
+            </div>
+            <form-messages form="sot" name="'other_work'"></form-messages>
+          </div>
+
+          <div ng-if="data.labor_type">
+            <div class="form-group required" ng-class="validateField(sot, 'transplanting_male_labor')">
+              <label class="control-label" for="transplanting_male_labor" translate>
+                How many were the male labor?
+              </label>
+              <input type="number" class="form-control" name="transplanting_male_labor"
+                id="transplanting_male_labor" ng-model="data.male_labor" required>
+              <form-messages form="sot" name="'transplanting_male_labor'"></form-messages>
+            </div>
+
+            <div class="form-group required" ng-class="validateField(sot, 'transplanting_female_labor')">
+              <label class="control-label" for="transplanting_female_labor" translate>
+                How many were the female labor?
+              </label>
+              <input type="number" class="form-control" name="transplanting_female_labor"
+                id="transplanting_female_labor" ng-model="data.female_labor" required>
+              <form-messages form="sot" name="'transplanting_female_labor'"></form-messages>
+            </div>
+
+            <div class="form-group required" ng-class="validateField(sot, 'transplanting_above_18_years_old')">
+              <label class="control-label" for="transplanting_above_18_years_old" translate>
+                How many were above 18 years old?
+              </label>
+              <input type="number" class="form-control" name="transplanting_above_18_years_old"
+                id="transplanting_above_18_years_old" ng-model="data.above_18_years_old" required>
+              <form-messages form="sot" name="'transplanting_above_18_years_old'"></form-messages>
+            </div>
+
+            <div class="form-group required" ng-class="validateField(sot, 'transplanting_below_18_years_old')">
+              <label class="control-label" for="transplanting_below_18_years_old" translate>
+                How many were below 18 years old?
+              </label>
+              <input type="number" class="form-control" name="transplanting_below_18_years_old"
+                id="transplanting_below_18_years_old" ng-model="data.below_18_years_old" required>
+              <form-messages form="sot" name="'transplanting_below_18_years_old'"></form-messages>
+            </div>
+
+            <div class="form-group required" ng-class="validateField(sot, 'transplanting_labor_total_cost')">
+              <label class="control-label" for="transplanting_labor_total_cost" translate>
+                How much total extra cost you paid for the other work during transplanting?
+              </label>
+              <input type="number" class="form-control" name="transplanting_labor_total_cost"
+                id="transplanting_labor_total_cost" ng-model="data.labor_total_cost" required>
+              <form-messages form="sot" name="'transplanting_labor_total_cost'"></form-messages>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="data.transplanting_method === 2 &&
+        (data.transplanting_carried_out === 1 || data.transplanting_carried_out === 2)">
+        <div class="form-group required" ng-class="validateField(sot, 'prepared_nursery')">
+          <label class="control-label" for="prepared_nursery" translate>
+            Did you prepare the nursery yourself for machine transplanting?
+          </label>
+          <select class="form-control"
+            id="prepared_nursery"
+            name="prepared_nursery"
+            ng-model="data.prepared_nursery"
+            ng-options="n.value as n.name for n in transplantingNurserySelf"
+            required>
+          </select>
+          <form-messages form="sot" name="'prepared_nursery'"></form-messages>
+        </div>
+      </div>
+
+      <div ng-if="data.transplanting_method === 1 ||
+        (data.transplanting_method === 2)">
+        <div class="form-group required" ng-class="validateField(sot, 'nursery_sowing_date')">
+          <label class="control-label" for="nursery_establishment_date" translate>
+            When was the nursery establishment date?
+          </label>
+          <input type="text" class="form-control"
+            id="sowing_date"
+            name="nursery_sowing_date"
+            datepicker-localdate
+            uib-datepicker-popup="yyyy-MM-dd"
+            data-ng-model="data.nursery_establishment_date"
+            ng-click="nursery_establishment_date.opened = true"
+            data-is-open="nursery_establishment_date.opened"
+            value="{{formatDate(data.nursery_establishment_date)}}"
+            datepicker-options="{minDate: addDate(season.sowing_date, 0), maxDate: addDate(season.sowing_date,60)}"
+            required />
+          <form-messages form="sot" name="'nursery_sowing_date'"></form-messages>
+        </div>
+        <div class="form-group required" ng-class="validateField(sot, 'transplanting_sowing_date')">
+          <label class="control-label" for="transplanting_date" translate>
+            When was the transplanting date?
+          </label>
+          <input type="text" class="form-control"
+            id="sowing_date"
+            name="transplanting_sowing_date"
+            datepicker-localdate
+            uib-datepicker-popup="yyyy-MM-dd"
+            data-ng-model="data.transplanting_date"
+            ng-click="transplanting_date.opened = true"
+            data-is-open="transplanting_date.opened"
+            value="{{formatDate(data.transplanting_date)}}"
+            datepicker-options="{minDate: addDate(season.sowing_date, 0), maxDate: addDate(season.sowing_date,60)}"
+            required />
+          <form-messages form="sot" name="'transplanting_sowing_date'"></form-messages>
+        </div>
+      </div>
+
+      <div ng-if="data.transplanting_method === 2 &&
+        (data.transplanting_carried_out === 1 || data.transplanting_carried_out === 2) &&
+        data.prepared_nursery === 1">
+        <div class="form-group required" ng-class="validateField(sot, 'trays_seedling_count')">
+          <label class="control-label" for="trays_seedling_count" translate>
+            In how many trays seedling were prepared for the above area?
+          </label>
+          <input type="number" class="form-control" name="trays_seedling_count"
+            id="trays_seedling_count" ng-model="data.trays_seedling_count" required>
+          <form-messages form="sot" name="'trays_seedling_count'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'trays_seedling_count')">
+          <label class="control-label" for="total_seed_cost" translate>
+            How much was the total cost of the seed?
+          </label>
+          <input type="number" class="form-control" name="total_seed_cost"
+            id="total_seed_cost" ng-model="data.total_seed_cost" required>
+          <form-messages form="sot" name="'trays_seedling_cout'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'fertilizer_total_cost')">
+          <label class="control-label" for="fertilizer_total_cost" translate>
+            How much was the total cost for the different materials used for preparing the seedling, e.g., tray, compost, fertilizer, soil etc?
+          </label>
+          <input type="number" class="form-control" name="fertilizer_total_cost"
+            id="fertilizer_total_cost" ng-model="data.fertilizer_total_cost" required>
+          <form-messages form="sot" name="'fertilizer_total_cost'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'total_labor_cost_seedling')">
+          <label class="control-label" for="total_labor_cost_seedling" translate>
+            How much was the total labor cost for preparing the seedling for machine transplanting?
+          </label>
+          <input type="number" class="form-control" name="total_labor_cost_seedling"
+            id="total_labor_cost_seedling" ng-model="data.total_labor_cost_seedling" required>
+          <form-messages form="sot" name="'total_labor_cost_seedling'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'seedling_labor')">
+          <label class="control-label" for="transplanting_labor_sowing" translate>
+            Who prepared the seedlings?
+          </label>
+          <div class="radio radio-success" ng-repeat="n in laborTypes">
+            <input type="radio"
+              id="seedling_labor_{{$index}}"
+              ng-value="n.value"
+              name="seedling_labor"
+              ng-model="$parent.data.seedling_labor_type"
+              required>
+            <label class="control-label" for="seedling_labor_{{$index}}">{{n.name}}</label>
+          </div>
+          <form-messages form="sot" name="'seedling_labor'"></form-messages>
+        </div>
+
+        <div ng-if="data.labor_type">
+          <div class="form-group required" ng-class="validateField(sot, 'transplanting_male_labor')">
+            <label class="control-label" for="transplanting_male_labor" translate>
+              How many were the male labor?
+            </label>
+            <input type="number" class="form-control" name="transplanting_male_labor"
+              id="transplanting_male_labor" ng-model="data.seedling_male_labor" required>
+            <form-messages form="sot" name="'transplanting_male_labor'"></form-messages>
+          </div>
+
+          <div class="form-group required" ng-class="validateField(sot, 'transplanting_female_labor')">
+            <label class="control-label" for="transplanting_female_labor" translate>
+              How many were the female labor?
+            </label>
+            <input type="number" class="form-control" name="transplanting_female_labor"
+              id="transplanting_female_labor" ng-model="data.seedling_female_labor" required>
+            <form-messages form="sot" name="'transplanting_female_labor'"></form-messages>
+          </div>
+
+          <div class="form-group required" ng-class="validateField(sot, 'transplanting_above_18_years_old')">
+            <label class="control-label" for="transplanting_above_18_years_old" translate>
+              How many were above 18 years old?
+            </label>
+            <input type="number" class="form-control" name="transplanting_above_18_years_old"
+              id="transplanting_above_18_years_old" ng-model="data.seedling_above_18_years_old"
+              required>
+            <form-messages form="sot" name="'transplanting_above_18_years_old'"></form-messages>
+          </div>
+
+          <div class="form-group required" ng-class="validateField(sot, 'transplanting_below_18_years_old')">
+            <label class="control-label" for="transplanting_below_18_years_old" translate>
+              How many were below 18 years old?
+            </label>
+            <input type="number" class="form-control" name="transplanting_below_18_years_old"
+              id="transplanting_below_18_years_old" ng-model="data.seedling_below_18_years_old"
+              required>
+            <form-messages form="sot" name="'transplanting_below_18_years_old'"></form-messages>
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="data.transplanting_method === 2 &&
+        (data.transplanting_carried_out === 1 || data.transplanting_carried_out === 2) &&
+        data.prepared_nursery === 0">
+        <div class="form-group required" ng-class="validateField(sot, 'total_cost_seedling_transport')">
+          <label class="control-label" for="total_cost_seedling_transport" translate>
+            How much was the total cost paid for the seedling  for this area, seedling transportation etc?
+          </label>
+          <input type="number" class="form-control" name="total_cost_seedling_transport"
+            id="total_cost_seedling_transport" ng-model="data.total_cost_seedling_transport" required>
+          <form-messages form="sot" name="'total_cost_seedling_transport'"></form-messages>
+        </div>
+      </div>
+
+      <div ng-if="data.transplanting_method === 1">
+        <div class="form-group required" ng-class="validateField(sot, 'nursery_area')">
+          <label class="control-label" for="nursery_area" translate>
+            How much was the nursery area (m2)?
+          </label>
+          <input type="number" class="form-control" name="nursery_area"
+            id="nursery_area" ng-model="data.nursery_area" required>
+          <form-messages form="sot" name="'nursery_area'"></form-messages>
+        </div>
+
+        <div class="form-group required" ng-class="validateField(sot, 'nursery_field_area')">
+          <label class="control-label" for="nursery_field_area" translate>
+            Did you prepare the nursery area together with the main field or separately?
+          </label>
+          <select class="form-control"
+            id="nursery_field_area"
+            name="nursery_field_area"
+            ng-model="data.nursery_field_area"
+            ng-options="n.value as n.name for n in nurseryAreaField"
+            required>
+          </select>
+          <form-messages form="sot" name="'nursery_field_area'"></form-messages>
+        </div>
+
+        <div ng-if="data.nursery_field_area">
+          <div class="form-group required" ng-class="validateField(sot, 'tractor_total_minute')" ng-if="data.nursery_field_area === 2">
+            <label class="control-label" for="tractor_total_minute" translate>
+              How many minute in total the tractor was used (e.g., ploughing, levelling, seed sowing etc)?
+            </label>
+            <input type="number" class="form-control" name="tractor_total_minute"
+              id="tractor_total_minute" ng-model="data.tractor_total_minute" required>
+            <form-messages form="sot" name="'tractor_total_minute'"></form-messages>
+          </div>
+
+          <div class="form-group required" ng-class="validateField(sot, 'total_seed_cost')">
+            <label class="control-label" for="total_seed_cost" translate>
+              How much was the total cost of the seed?
+            </label>
+            <input type="number" class="form-control" name="total_seed_cost"
+              id="total_seed_cost" ng-model="data.total_seed_cost" required>
+            <form-messages form="sot" name="'total_seed_cost'"></form-messages>
+          </div>
+
+          <div class="form-group required" ng-class="validateField(sot, 'seedling_labor_total_cost')">
+            <label class="control-label" for="seedling_labor_total_cost" translate>
+              How much total cost was paid for the labor, machinery, fertilizer and other inputs for the seedling raising for the above area?
+            </label>
+            <input type="number" class="form-control" name="seedling_labor_total_cost"
+              id="seedling_labor_total_cost" ng-model="data.seedling_labor_total_cost" required>
+            <form-messages form="sot" name="'seedling_labor_total_cost'"></form-messages>
+          </div>
+
+          <div class="form-group required" ng-class="validateField(sot, 'nursery_labor')">
+            <label class="control-label" for="nursery_labor_" translate>
+              Who did the labor work for nursery establishment and management?
+            </label>
+            <div class="radio radio-success" ng-repeat="n in laborTypes">
+              <input type="radio"
+                id="nursery_labor_{{$index}}"
+                ng-value="n.value"
+                name="nursery_labor"
+                ng-model="$parent.data.nursery_labor_type"
+                required>
+              <label class="control-label" for="nursery_labor_{{$index}}">{{n.name}}</label>
+            </div>
+            <form-messages form="sot" name="'nursery_labor'"></form-messages>
+          </div>
+
+          <div ng-if="data.labor_type">
+            <div class="form-group required" ng-class="validateField(sot, 'nursery_male_labor')">
+              <label class="control-label" for="nursery_male_labor" translate>
+                How many were the male labor?
+              </label>
+              <input type="number" class="form-control" name="nursery_male_labor"
+                id="nursery_male_labor" ng-model="data.nursery_male_labor" required>
+              <form-messages form="sot" name="'nursery_male_labor'"></form-messages>
+            </div>
+
+            <div class="form-group required" ng-class="validateField(sot, 'nursery_female_labor')">
+              <label class="control-label" for="nursery_female_labor" translate>
+                How many were the female labor?
+              </label>
+              <input type="number" class="form-control" name="nursery_female_labor"
+                id="nursery_female_labor" ng-model="data.nursery_female_labor" required>
+              <form-messages form="sot" name="'nursery_female_labor'"></form-messages>
+            </div>
+
+            <div class="form-group required" ng-class="validateField(sot, 'nursery_above_18_years_old')">
+              <label class="control-label" for="nursery_above_18_years_old" translate>
+                How many were above 18 years old?
+              </label>
+              <input type="number" class="form-control" name="nursery_above_18_years_old"
+                id="nursery_above_18_years_old" ng-model="data.nursery_above_18_years_old" required>
+              <form-messages form="sot" name="'nursery_above_18_years_old'"></form-messages>
+            </div>
+
+            <div class="form-group required" ng-class="validateField(sot, 'nursery_below_18_years_old')">
+              <label class="control-label" for="nursery_below_18_years_old" translate>
+                How many were below 18 years old?
+              </label>
+              <input type="number" class="form-control" name="nursery_below_18_years_old"
+                id="nursery_below_18_years_old" ng-model="data.nursery_below_18_years_old" required>
+              <form-messages form="sot" name="'nursery_below_18_years_old'"></form-messages>
+            </div>
+
+            <div class="form-group required" ng-class="validateField(sot, 'nursery_labor_total_cost')">
+              <label class="control-label" for="nursery_labor_total_cost" translate>
+                How much total extra cost you paid for the other work during transplanting?
+              </label>
+              <input type="number" class="form-control" name="nursery_labor_total_cost"
+                id="nursery_labor_total_cost" ng-model="data.nursery_labor_total_cost" required>
+              <form-messages form="sot" name="'nursery_labor_total_cost'"></form-messages>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

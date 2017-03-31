@@ -1,0 +1,40 @@
+.hidden-md.hidden-xs.hidden-sm {
+  display: block !important;
+  visibility: visible !important;
+}
+
+.no-print {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.offline-ui {
+  display: none
+}
+
+.sub-pages {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+table td, table th {
+  border: 1px solid #000 !important;
+}
+
+.assessment-suggestion {
+  background-color: #9acfea;
+}
+
+.visible-sm.visible-md.visible-xs {
+  display: none;
+  visibility: hidden;
+}
+
+.visible-sm.visible-md.visible-xs.no-print {
+  display: none !important;
+  visibility: hidden !important;
+}

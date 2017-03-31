@@ -1,0 +1,262 @@
+<div ng-form="lp" novalidate>
+  <div class="form-group required" ng-class="validateField(lp, 'crop_establishment')">
+    <label class="control-label" for="crop_establishment" translate>
+      How you established the crop?
+    </label>
+    <select class="form-control"
+      id="crop_establishment"
+      name="crop_establishment"
+      ng-model="data.crop_establishment"
+      ng-options="n.value as n.name for n in landCropEstablishment"
+      required>
+    </select>
+    <form-messages form="lp" name="'crop_establishment'"></form-messages>
+  </div>
+
+  <div ng-if="data.crop_establishment">
+
+    <div class="form-group required" ng-class="validateField(lp, 'land_preparation_started')">
+      <label class="control-label" for="land_preparation_started" translate ng-if="data.crop_establishment === 1">
+        When you started the land preparation for direct sowing?
+      </label>
+      <label class="control-label" for="land_preparation_started" translate ng-if="data.crop_establishment === 2">
+        When you started the land preparation for transplanting?
+      </label>
+      <input type="text" class="form-control"
+        id="land_preparation_started"
+        name="land_preparation_started"
+        datepicker-localdate
+        uib-datepicker-popup="yyyy-MM-dd"
+        data-ng-model="data.land_preparation_started"
+        ng-click="sowing_date.opened = true"
+        data-is-open="sowing_date.opened"
+        value="{{formatDate(data.land_preparation_started)}}"
+        datepicker-options="{minDate: addDate(season.sowing_date, -100), maxDate: addDate(season.sowing_date, 0)}"
+        required />
+      <form-messages form="lp" name="'land_preparation_started'"></form-messages>
+      <form-messages form="lp"></form-messages>
+    </div>
+
+    <div class="form-group required">
+      <label class="control-label" for="land_preparation_started" translate ng-if="data.crop_establishment === 1">
+        What operations were conducted and which power source were used during the land preparation for direct sowing?
+      </label>
+      <label class="control-label" for="land_preparation_started" translate ng-if="data.crop_establishment === 2">
+        What operations were conducted and which power source were used during the land preparation for transplanting?
+      </label>
+    </div>
+
+    <div class="form-group">
+      <table class="tables tables-default no-more-tables">
+        <thead>
+          <tr>
+            <th translate>
+              Operation name
+            </th>
+            <th translate>
+              When the operation was conducted?
+            </th>
+            <th translate>
+              What power source was used for this operation?
+            </th>
+            <th translate>
+              What was the horsepower of the tractor used? (hp)
+            </th>
+            <th translate>
+              How many hours this tractor or carabao / bullock was used? (hour)
+            </th>
+            <th translate>
+              What was the soil condition at the time of this operations?
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="(index, o) in data.operations" ng-form="ff">
+            <td data-title="Operation name">
+              <select class="form-control"
+                ng-model="data.operations[$index].name"
+                ng-options="n.value as n.name for n in operationName"
+                name="operation_name"
+                required>
+              </select>
+              <form-messages form="ff" name="'operation_name'"></form-messages>
+            </td>
+            <td data-title="When the operation was conducted?">
+              <input type="text" class="form-control"
+                datepicker-localdate
+                uib-datepicker-popup="yyyy-MM-dd"
+                data-ng-model="data.operations[$index].date"
+                ng-click="data.operations[$index].opened = true"
+                data-is-open="data.operations[$index].opened"
+                value="{{formatDate(data.operations[$index].date)}}"
+                datepicker-options="{minDate: addDate(season.sowing_date, -100), maxDate: addDate(season.sowing_date,0)}"
+                name="operation"
+                required />
+              <form-messages form="ff" name="'operation'"></form-messages>
+              <form-messages form="ff"></form-messages>
+            </td>
+            <td data-title="What power source was used for this operation?">
+              <select class="form-control"
+                ng-model="data.operations[$index].power_source"
+                ng-options="n.value as n.name for n in sowingPowerSource"
+                name="power_source"
+                required>
+              </select>
+              <input type="text" class="form-control" style="margin-top: 5px;"
+                ng-model="data.operations[$index].power_source_other"
+                ng-if="data.operations[$index].power_source === 4"
+                name="other_power_source"
+                required>
+              <form-messages form="ff" name="'power_source'"></form-messages>
+              <form-messages form="ff" name="'other_power_source'"></form-messages>
+            </td>
+            <td data-title="What was the horsepower of the tractor used? (hp)">
+              <input type="text" class="form-control" min="1"
+                name="horsepower"
+                ng-model="data.operations[$index].tractor_horsepower"
+                ng-disabled="!(data.operations[$index].power_source === 2 ||
+                  data.operations[$index].power_source === 3)"
+                ng-required="(data.operations[$index].power_source === 2 ||
+                  data.operations[$index].power_source === 3)">
+              <form-messages form="ff" name="'horsepower'"></form-messages>
+            </td>
+            <td data-title="How many hours this tractor or carabao / bullock was used? (hour)">
+              <input type="text" class="form-control" ng-model="data.operations[$index].tractor_hour_usage"
+                ng-disabled="!(data.operations[$index].power_source === 2 ||
+                  data.operations[$index].power_source === 3)"
+                ng-required="(data.operations[$index].power_source === 2 ||
+                  data.operations[$index].power_source === 3)"
+                  name="tractor_hour">
+                <form-messages form="ff" name="'tractor_hour'"></form-messages>
+            </td>
+            <td data-title="What was the soil condition at the time of this operations?">
+              <select class="form-control"
+                name="soil_condition"
+                id="incorporate_organic_material"
+                name="incorporate_organic_material"
+                ng-model="data.operations[$index].soil_condition"
+                ng-options="n.value as n.name for n in soilCondition"
+                required>
+              </select>
+              <form-messages form="ff" name="'soil_condition'"></form-messages>
+            </td>
+            <td data-title="">
+              <button class="btn btn-xs btn-danger"
+                ng-click="removeOperation(index)" title="{{'Delete' | translate}}">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="cell-footer" colspan="7" style="text-align: right;">
+              <button class="btn btn-sm btn-warning" ng-click="addOperation()" translate>
+                Add Row
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(lp, 'tractor_cost')">
+      <label class="control-label" for="tractor_cost" translate>
+        How much was the total cost paid for the tractor or animal power for the land preparation?
+      </label>
+      <input type="number" class="form-control" name="tractor_cost"
+          id="tractor_cost" ng-model="data.tractor_cost" required >
+      <form-messages form="lp" name="'tractor_cost'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(lp, 'land_labor_type')">
+      <label class="control-label" for="land_labor_type" translate>
+        Who did the labor work during land preparation?
+      </label>
+      <div class="radio radio-success" ng-repeat="n in laborTypes">
+        <input type="radio"
+          id="land_labor_type_{{$index}}"
+          ng-value="n.value"
+          name="land_labor_type"
+          ng-model="$parent.data.labor_type" required>
+        <label class="control-label" for="land_labor_type_{{$index}}">{{n.name}}</label>
+      </div>
+      <form-messages form="lp" name="'land_labor_type'"></form-messages>
+    </div>
+
+    <div ng-if="data.labor_type">
+
+      <div class="form-group required" ng-class="validateField(lp, 'land_male_labor_count')">
+        <label class="control-label" for="land_male_labor_count" translate>
+          How many were the male labor?
+        </label>
+        <input type="number" class="form-control" name="land_male_labor_count"
+          id="land_male_labor_count" ng-model="data.male_labor_count" required>
+        <form-messages form="lp" name="'land_male_labor_count'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(lp, 'land_female_labor_count')">
+        <label class="control-label" for="land_female_labor_count" translate>
+          How many were the female labor?
+        </label>
+        <input type="number" class="form-control" name="land_female_labor_count"
+          id="land_female_labor_count" ng-model="data.female_labor_count" required>
+        <form-messages form="lp" name="'land_female_labor_count'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(lp, 'land_above_18_years_old_count')">
+        <label class="control-label" for="land_above_18_years_old_count" translate>
+          How many were above 18 years old?
+        </label>
+        <input type="number" class="form-control" name="land_above_18_years_old_count"
+          id="land_above_18_years_old_count" ng-model="data.above_18_years_old_count"
+          min="0" ng-max="data.female_labor_count + data.male_labor_count"
+          required>
+        <form-messages form="lp" name="'land_above_18_years_old_count'"
+          data="{'min': 0, 'max': data.male_labor_count + data.female_labor_count}"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(lp, 'land_below_18_years_old_count')">
+        <label class="control-label" for="land_below_18_years_old_count" translate>
+          How many were below 18 years old?
+        </label>
+        <input type="number" class="form-control" name="land_below_18_years_old_count"
+          id="land_below_18_years_old_count" ng-model="data.below_18_years_old_count"
+          min="0" ng-max="data.female_labor_count + data.male_labor_count"
+          required>
+        <form-messages form="lp" name="'land_below_18_years_old_count'"
+          data="{'min': 0, 'max': data.male_labor_count + data.female_labor_count}"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(lp, 'land_labor_total_cost')">
+        <label class="control-label" for="land_labor_total_cost" translate>
+          How much total cost was paid for the labors used for land preparation?
+        </label>
+        <input type="number" class="form-control" name="land_labor_total_cost"
+          id="land_labor_total_cost" ng-model="data.labor_total_cost" required>
+        <form-messages form="lp" name="'land_labor_total_cost'"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(lp, 'land_wage_rate_per_day_male')">
+        <label class="control-label" for="land_wage_rate_per_day_male" translate>
+          How much was the wage rate per day for a male labor used for land preparation?
+        </label>
+        <input type="number" class="form-control" name="land_wage_rate_per_day_male"
+          id="land_wage_rate_per_day_male" ng-model="data.wage_rate_per_day_male"
+          min="1" max="90000" required>
+        <form-messages form="lp" name="'land_wage_rate_per_day_male'" data="{min: 1, max: 90000}"></form-messages>
+      </div>
+
+      <div class="form-group required" ng-class="validateField(lp, 'land_wage_rate_per_day_female')">
+        <label class="control-label" for="land_wage_rate_per_day_female" translate>
+          How much was the wage rate per day for a female labor used for land preparation?
+        </label>
+        <input type="number" class="form-control" name="land_wage_rate_per_day_female"
+          id="land_wage_rate_per_day_female" ng-model="data.wage_rate_per_day_female"
+          min="1" max="90000" required>
+        <form-messages form="lp" name="'land_wage_rate_per_day_female'" data="{min: 1, max: 90000}"></form-messages>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div ng-form="cl" novalidate>
+  <div class="form-group required" ng-class="validateField(cl, 'employment_below_18')">
+    <label class="control-label" for="employment_below_18" translate>
+      Was there any record of employment of any children below 18 years old as permanent or seasonal workers?
+    </label>
+    <div class="radio radio-success">
+      <input required type="radio"
+        id="employment_below_18_3"
+        name="employment_below_18"
+        ng-model="data.employment_below_18"
+        value="3">
+      <label class="control-label" for="employment_below_18_3" translate>
+        No children below the minimum age are working on farm, unless they are members of a small-scale family farm
+      </label>
+    </div>
+    <div ng-if="data.employment_below_18 == 3">
+      <div class="checkbox checkbox-success" ng-repeat="n in noChildrenBelowMinimumAge">
+        <input type="checkbox"
+          id="childrenMinimumWage_{{n.value}}"
+          value="other"
+          name="childrenMinimumWage_{{n.value}}"
+          ng-model="$parent.data.childrenMinimumWage[n.value]">
+        <label class="control-label" for="childrenMinimumWage_{{n.value}}" translate>{{n.name}}</label>
+      </div>
+    </div>
+    <div class="radio radio-success" ng-repeat="n in employmentBelow18">
+      <input required type="radio"
+        id="employment_below_18_{{$index}}"
+        ng-value="n.value"
+        name="employment_below_18"
+        ng-model="$parent.data.employment_below_18">
+      <label class="control-label" for="employment_below_18_{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="cl" name="'employment_below_18'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(cl, 'employment_above_18')">
+    <label class="control-label" for="employment_above_18" translate>
+      Was there any evidence of children below 18 years old employed in hazardous work?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in evidenceBelow18">
+      <input required type="radio"
+        id="employment_above_18{{$index}}"
+        ng-value="n.value"
+        name="employment_above_18"
+        ng-model="$parent.data.employment_above_18">
+      <label class="control-label" for="employment_above_18{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="cl" name="'employment_above_18'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(cl, 'school_going_children_employed')">
+    <label class="control-label" for="school_going_children_employed" translate>
+      In the farm, was any school going children employed as permanent or seasonal workers?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in schoolChildren">
+      <input required type="radio"
+        id="school_going_children_employed{{$index}}"
+        ng-value="n.value"
+        name="school_going_children_employed"
+        ng-model="$parent.data.school_going_children_employed">
+      <label class="control-label" for="school_going_children_employed{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="cl" name="'school_going_children_employed'"></form-messages>
+  </div>
+</div>

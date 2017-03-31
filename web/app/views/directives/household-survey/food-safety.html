@@ -1,0 +1,34 @@
+<div ng-form="fs" novalidate>
+  <div class="form-group required" ng-class="validateField(fs, 'aware_food_safety_risk')">
+    <label class="control-label" for="aware_food_safety_risk" translate>
+      Are you aware of any risk in food safety (risks from arsenic, cadmium, chromium, mercury, and lead)?
+    </label>
+    <select required class="form-control"
+      id="aware_food_safety_risk"
+      name="aware_food_safety_risk"
+      ng-model="data.aware_food_safety_risk"
+      ng-options="n.value as n.name for n in yesNo">
+    </select>
+    <form-messages form="fs" name="'aware_food_safety_risk'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(fs, 'heavy_metal_risk')"
+    ng-if="data.aware_food_safety_risk === 1">
+    <label class="control-label" for="heavy_metal_risk" translate>
+      Please specify which heavy metal’s risk is there?
+    </label>
+    <input required type="text" class="form-control" name="heavy_metal_risk"
+      id="heavy_metal_risk" ng-model="data.heavy_metal_risk">
+    <form-messages form="fs" name="'heavy_metal_risk'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(fs, 'soil_remediation')"
+    ng-if="data.aware_food_safety_risk === 1">
+    <label class="control-label" for="soil_remediation" translate>
+      Whether they have done any soil remediation?
+    </label>
+    <input required type="text" class="form-control" name="soil_remediation"
+      id="soil_remediation" ng-model="data.soil_remediation">
+    <form-messages form="fs" name="'soil_remediation'"></form-messages>
+  </div>
+</div>

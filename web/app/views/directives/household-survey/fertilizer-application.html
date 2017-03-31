@@ -1,0 +1,280 @@
+<div ng-form="fa" novalidate>
+  <div class="form-group required"
+    ng-class="{'has-error': (fa.$dirty || fa.$touched) && !hasSelectedFertilizerType()}">
+    <label class="control-label" for="previous_crop" translate>
+      What were the fertilizers applied during the crop growing period?
+    </label>
+    <div class="checkbox checkbox-success" ng-repeat="n in fertilizerTypes">
+      <input type="checkbox"
+        id="fertilizer_fertilizer_types{{$index}}"
+        ng-value="n.value"
+        name="fertilizer_fertilizer_types"
+        ng-model="$parent.data.fertilizers[n.value].checked"
+        ng-required="!hasSelectedFertilizerType()">
+      <label class="control-label" for="fertilizer_fertilizer_types{{$index}}">{{n.name}}</label>
+    </div>
+    <div class="checkbox checkbox-success">
+      <input type="checkbox"
+        id="fertilizer_fertilizer_types_other"
+        value="other"
+        name="fertilizer_fertilizer_types"
+        ng-model="data.otherFertilizer"
+        ng-change="uncheckOtherFertilizers()"
+        ng-required="!hasSelectedFertilizerType()">
+      <label class="control-label" for="fertilizer_fertilizer_types_other" translate>Other (specify)</label>
+    </div>
+    <div class="help-block" ng-if="(fa.$dirty || fa.$touched) &&!hasSelectedFertilizerType()">
+      <span translate>Please select at least one item.</span>
+    </div>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(fa, 'direct_sowing_method')" ng-if="data.otherFertilizer" ng-repeat="n in data.otherFertilizers">
+    <input type="text" class="form-control" ng-model="n.name"
+    id="fertilizer_other_{{$index}}"
+    ng-blur="n.value = n.name; updateOtherFertilizers(n.name, $index)"/>
+  </div>
+
+  <div ng-if="hasSelectedFertilizerType()">
+    <table class="tables tables-default no-more-tables form-group">
+      <thead>
+        <tr>
+          <th class="text-center" rowspan="2" translate>Fertilizer type</th>
+          <th class="text-center" rowspan="2" translate>Fertilizer application date</th>
+          <th class="text-center" rowspan="2" translate>Total amount of fertilizer used (kg)</th>
+          <th class="text-center" colspan="5" translate>Nutrient content in this fertilizer (%)</th>
+        </tr>
+        <tr>
+          <th class="text-center" translate>N</th>
+          <th class="text-center" translate>P205</th>
+          <th class="text-center" translate>K20</th>
+          <th class="text-center" translate>Zn</th>
+          <th class="text-center" translate>S</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tbody>
+          <tr ng-repeat="(key, fertilizer) in data.fertilizers" ng-if="fertilizer.checked === true"
+            ng-form name="ff">
+            <td data-title="{{'Fertilizer type' | translate}}">
+              {{getFertilizerName(key)}}
+            </td>
+            <td data-title="{{'Fertilizer application date' | translate}}">
+              <input type="text" class="form-control"
+                datepicker-localdate
+                uib-datepicker-popup="yyyy-MM-dd"
+                data-ng-model="data.fertilizerApplied[key].date"
+                ng-click="data.fertilizerApplied[key].date_opened = true"
+                data-is-open="data.fertilizerApplied[key].date_opened"
+                ng-value="{{formatDate(data.fertilizerApplied[key].date)}}"
+                name="application"
+                datepicker-options="{minDate: addDate(season.sowing_date, (period - 1) * 14), maxDate: addDate(season.sowing_date, period * 14)}"
+                required />
+              <form-messages form="ff"></form-messages>
+              <form-messages form="ff" name="'application'"></form-messages>
+            </td>
+            <td data-title="{{'Total amount of fertilizer used (kg)' | translate}}">
+              <input type="number" class="form-control"
+                ng-model="data.fertilizerApplied[key].amount" min="1" max="1000"
+                name="total_fertilizer" required />
+              <form-messages form="ff" name="'total_fertilizer'" data="{min: 1, max: 1000}"></form-messages>
+            </td>
+            <td data-title="{{'N' | translate}}">
+              <input type="number" class="form-control" disabled />
+            </td>
+            <td data-title="{{'P205' | translate}}">
+              <input type="number" class="form-control" size="2" style="width: 50px;" disabled />
+            </td>
+            <td data-title="{{'K20' | translate}}">
+              <input type="number" class="form-control" size="2" style="width: 50px;" disabled  />
+            </td>
+            <td data-title="{{'Zn' | translate}}">
+              <input type="number" class="form-control" size="2" style="width: 50px;" disabled />
+            </td>
+            <td data-title="{{'S' | translate}}">
+              <input type="number" class="form-control" size="2" style="width: 50px;" disabled />
+            </td>
+          </tr>
+
+          <tr ng-repeat="fertilizer in data.otherFertilizers track by $index"
+            ng-if="data.otherFertilizer && fertilizer.isChecked && fertilizer.name"
+            ng-form="ff">
+            <td data-title="{{'Fertilizer type' | translate}}">
+              {{fertilizer.name}}
+            </td>
+            <td data-title="{{'Fertilizer application date' | translate}}">
+              <input type="text" class="form-control"
+                datepicker-localdate
+                uib-datepicker-popup="yyyy-MM-dd"
+                data-ng-model="data.otherFertilizerApplied[fertilizer.value].date"
+                ng-click="data.otherFertilizerApplied[fertilizer.value].date_opened = true"
+                data-is-open="data.otherFertilizerApplied[fertilizer.value].date_opened"
+                datepicker-options="{minDate: addDate(season.sowing_date, (period - 1) * 14), maxDate: addDate(season.sowing_date, period * 14)}"
+                ng-change="data.otherFertilizerApplied[fertilizer.value].other = 1"
+                name="application"
+                ng-value="{{formatDate(data.otherFertilizerApplied[key].date)}}"
+                required />
+              <form-messages form="ff"></form-messages>
+              <form-messages form="ff" name="'application'"></form-messages>
+            </td>
+            <td data-title="{{'Total amount of fertilizer used (kg)' | translate}}">
+              <input type="number" class="form-control"
+                ng-model="data.otherFertilizerApplied[fertilizer.value].amount" min="1" max="1000"
+                ng-change="data.otherFertilizerApplied[fertilizer.value].other = 1"
+                name="total_fertilizer"
+                required />
+              <form-messages form="ff" name="'total_fertilizer'" data="{min: 1, max: 1000}"></form-messages>
+            </td>
+            <td data-title="{{'N' | translate}}">
+              <input type="number" class="form-control"
+                ng-model="data.otherFertilizerApplied[fertilizer.value].n" min="1" max="90"
+                ng-change="data.otherFertilizerApplied[fertilizer.value].other = 1" name="n"
+                required />
+              <form-messages form="ff" name="'n'" data="{min: 1, max: 90}"></form-messages>
+            </td>
+            <td data-title="{{'P205' | translate}}">
+              <input type="number" class="form-control" size="2" style="width: 50px;"
+                ng-model="data.otherFertilizerApplied[fertilizer.value].p205" min="1" max="90"
+                ng-change="data.otherFertilizerApplied[fertilizer.value].other = 1" name="p205"
+                required />
+              <form-messages form="ff" name="'p205'" data="{min: 1, max: 90}"></form-messages>
+            </td>
+            <td data-title="{{'K20' | translate}}">
+              <input type="number" class="form-control" size="2" style="width: 50px;"
+                ng-model="data.otherFertilizerApplied[fertilizer.value].k20" min="1" max="90"
+                ng-change="data.otherFertilizerApplied[fertilizer.value].other = 1"
+                name="k20"
+                required />
+              <form-messages form="ff" name="'k20'" data="{min: 1, max: 90}"></form-messages>
+            </td>
+            <td data-title="{{'Zn' | translate}}">
+              <input type="number" class="form-control" size="2" style="width: 50px;"
+                ng-model="data.otherFertilizerApplied[fertilizer.value].zn" min="1" max="90"
+                ng-change="data.otherFertilizerApplied[fertilizer.value].other = 1"
+                name="zn"
+                required />
+              <form-messages form="ff" name="'zn'" data="{min: 1, max: 90}"></form-messages>
+            </td>
+            <td data-title="{{'S' | translate}}">
+              <input type="number" class="form-control" size="2" style="width: 50px;"
+                ng-model="data.otherFertilizerApplied[fertilizer.value].s" min="1" max="90"
+                ng-change="data.otherFertilizerApplied[fertilizer.value].other = 1"
+                name="s"
+                required />
+              <form-messages form="ff" name="'s'" data="{min: 1, max: 90}"></form-messages>
+            </td>
+          </tr>
+        </tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(fa, 'fertilizer_cost')">
+    <label class="control-label" for="fertilizer_cost" translate>
+      How much was the total cost of all fertilizers applied during the crop growing period?
+    </label>
+    <input type="number" id="fertilizer_cost" name="fertilizer_cost"
+      ng-model="data.fertilizer_cost" class="form-control" required />
+    <form-messages form="fa" name="'fertilizer_cost'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(fa, 'fertilizer_labor_type')">
+    <label class="control-label" for="fertilizer_labor_type" translate>
+      Who did the fertilizer application?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in laborTypes">
+      <input type="radio"
+        id="fertilizer_labor_type_{{$index}}"
+        ng-value="n.value"
+        name="fertilizer_labor_type"
+        ng-model="$parent.data.labor_type"
+        required>
+      <label class="control-label" for="fertilizer_labor_type_{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="fa" name="'fertilizer_labor_type'"></form-messages>
+  </div>
+
+  <div ng-if="data.labor_type">
+    <div class="form-group required" ng-class="validateField(fa, 'fertilizer_male_labor')">
+      <label class="control-label" for="fertilizer_male_labor" translate>
+        How many were the male labor?
+      </label>
+      <input type="number" class="form-control" name="fertilizer_male_labor"
+        id="fertilizer_male_labor" ng-model="data.male_labor" min="0" required>
+      <form-messages form="fa" name="'fertilizer_male_labor'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(fa, 'fertilizer_female_labor')">
+      <label class="control-label" for="fertilizer_female_labor" translate>
+        How many were the female labor?
+      </label>
+      <input type="number" class="form-control" name="fertilizer_female_labor"
+        id="fertilizer_female_labor" ng-model="data.female_labor" min="0" required>
+      <form-messages form="fa" name="'fertilizer_female_labor'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(fa, 'fertilizer_above_18_years_old')">
+      <label class="control-label" for="fertilizer_above_18_years_old" translate>
+        How many were above 18 years old?
+      </label>
+      <input type="number" class="form-control" name="fertilizer_above_18_years_old"
+        id="fertilizer_above_18_years_old" ng-model="data.above_18_years_old" min="0" required>
+      <form-messages form="fa" name="'fertilizer_above_18_years_old'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(fa, 'fertilizer_below_18_years_old')">
+      <label class="control-label" for="fertilizer_below_18_years_old" translate>
+        How many were below 18 years old?
+      </label>
+      <input type="number" class="form-control" name="fertilizer_below_18_years_old"
+        id="fertilizer_below_18_years_old" ng-model="data.below_18_years_old" min="0" required>
+      <form-messages form="fa" name="'fertilizer_below_18_years_old'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(fa, 'fertilizer_labor_total_cost')">
+      <label class="control-label" for="fertilizer_labor_total_cost" translate>
+        If labor was used, how much was the labor cost paid for the labors used for fertilizer application?
+      </label>
+      <input type="number" class="form-control" name="fertilizer_labor_total_cost" min="0"
+        id="fertilizer_labor_total_cost" ng-model="data.labor_total_cost" required>
+      <form-messages form="fa" name="'fertilizer_labor_total_cost'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(fa, 'fertilizer_application')">
+      <label class="control-label" for="fertilizer_application" translate>
+        How you decided to apply these fertilizers?
+      </label>
+      <select class="form-control"
+        id="fertilizer_application"
+        name="fertilizer_application"
+        ng-model="data.fertilizer_application"
+        ng-options="n.value as n.name for n in fertilizerApplication"
+        required>
+      </select>
+      <form-messages form="fa" name="'fertilizer_application'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(fa, 'fertilizer_application_other')" ng-if="data.fertilizer_application === 6">
+      <label class="control-label" for="fertilizer_application_other" translate>
+        Other fertilizer application
+      </label>
+      <input type="text" class="form-control" name="fertilizer_application_other"
+        id="fertilizer_application_other" ng-model="data.fertilizer_application_other" required>
+      <form-messages form="fa" name="'fertilizer_application_other'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(fa, 'grain_yield_parcel')" ng-if="period > 5">
+      <label class="control-label" for="grain_yield_parcel" translate>
+        How much will be the grain yield in your surveyed parcel without any fertilizers?
+      </label>
+      <div class="input-group">
+        <input type="number" class="form-control"
+          id="grain_yield_parcel" name="grain_yield_parcel"
+          min="1" max="20000"
+          ng-model="data.grain_yield_parcel" required>
+        <div class="input-group-addon" translate>kg/ha</div>
+      </div>
+      <form-messages form="fa" name="'grain_yield_parcel'" data="{min: 1, max: 20000}"></form-messages>
+    </div>
+
+  </div>
+</div>

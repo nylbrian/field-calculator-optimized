@@ -1,0 +1,34 @@
+{
+  "name": "field-calculator",
+  "version": "1.0.0",
+  "description": "This is a website for Field Calculator",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "grunt-cli": "^1.2.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-ng-html2js": "^0.2.1",
+    "grunt-contrib-uglify": "^2.0.0"
+  },
+  "devDependencies": {
+    "grunt-angular-translate-extract": "^0.4.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-html2js": "^0.3.6",
+    "grunt-ng-annotate": "^2.0.2",
+    "html-minifier": "^3.0.2",
+    "jshint": "^2.9.3"
+  },
+  "scripts": {
+    "clean:annotate": "rm -R web/min-safe/",
+    "lint": "jshint web/app/.",
+    "build": "npm run clean:annotate --force && grunt && npm run clean:annotate --force"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/nylbrian/field-calculator-optimized.git"
+  },
+  "author": "Nyl Brian Ong",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/nylbrian/field-calculator-optimized#readme"
+}

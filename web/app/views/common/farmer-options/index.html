@@ -1,0 +1,55 @@
+<h5 class="farmer-identifier">
+  <span translate>Farmer:</span>
+  <a href="#/main/farmers/edit-farmer/{{foc.farmer.id}}">
+    {{foc.farmer.first_name}} {{foc.farmer.last_name}}
+  </a>
+</h5>
+<h3 class="page-title" translate>Questionnaires</h3>
+
+<form name="form" no-validate>
+  <div class="row table-page top-buffer">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <b translate>I want to receive</b>
+        </div>
+        <div class="panel-body padding-sides-30">
+          <div class="form-group">
+            <div class="checkbox checkbox-success">
+              <input type="checkbox" id="rcm" value="rcm"
+                name="rcm" ng-model="foc.data.rcm">
+              <label for="rcm" translate>
+                Pre-season RCM recommendation
+              </label>
+            </div>
+            <div class="radio radio-success">
+              <input type="radio" id="season-long-field" value="seasonlong"
+                name="questionnaire" ng-model="foc.data.questionnaire">
+              <label for="season-long-field" translate>
+                Season long field diary
+              </label>
+            </div>
+            <div class="radio radio-success">
+              <input type="radio" id="post-season" value="postSeason"
+                name="questionnaire" ng-model="foc.data.questionnaire">
+              <label for="post-season" translate>
+                Calculate only the selected economic and ecological indicators
+              </label>
+            </div>
+            <div class="radio radio-success">
+              <input type="radio" id="household-survey" value="householdSurvey"
+                name="questionnaire" ng-model="foc.data.questionnaire">
+              <label for="household-survey" translate>
+                Household survey
+              </label>
+            </div>
+          </div>
+          <button ng-click="foc.next()" class="btn btn-warning pull-right" translate
+            ng-disabled="!foc.data.questionnaire && !foc.data.rcm">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

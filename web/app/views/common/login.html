@@ -1,0 +1,54 @@
+<fieldset ng-disabled="lc.processing">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3 form-box">
+      <div class="alert alert-danger" role="alert" ng-if="lc.error">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only" translate>Error:</span>
+        <span>{{lc.error}}</span>
+      </div>
+      <div class="form-top">
+        <!-- <div class="form-top-left">
+          <p>Enter your username and password to log on:</p>
+        </div>
+        <div class="form-top-right">
+          <i class="fa fa-lock"></i>
+        </div> -->
+      </div>
+      <div class="form-bottom">
+        <form name="login" ng-submit="lc.login()" class="login-form">
+          <div class="form-group">
+            <label class="sr-only" for="username" translate>Username</label>
+            <input type="text" name="form-username"
+              placeholder="Username..." class="form-username form-control"
+              name="username" id="username" ng-model="lc.data.username">
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="password" translate>Password</label>
+            <input type="password" name="form-password"
+              placeholder="Password..." class="form-password form-control"
+              name="password" id="password" ng-model="lc.data.password">
+          </div>
+          <button type="submit" class="btn btn-warning" ng-click="lc.login()" translate>
+            <i ng-if="lc.processing" class='fa fa-spinner fa-spin '></i>
+            <span ng-if="!lc.processing">Sign in</span>
+          </button>
+          <div style="margin-top: 20px;">
+            <div style="text-align:center; color: #ccc;">
+              <span><input type="checkbox" id="remember" name="remember" ng-model="lc.data.remember" /></span>
+              <label for="remember" style="font-weight: normal" translate>Remember Me</label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3 social-login">
+      <div class="social-login-buttons">
+        <button class="btn btn-lg btn-success" ng-click="lc.register()" translate>
+          Register Now
+        </button>
+      </div>
+    </div>
+  </div>
+</fieldset>

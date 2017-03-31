@@ -1,0 +1,177 @@
+<div class="form-group">
+  <label for="rice_amount_wet_season" translate>
+    How much amount of rice was produced last year from all your land?
+  </label>
+</div>
+
+<div class="form-group">
+  <label for="rice_amount_wet_season" translate>
+    Wet season
+  </label>
+  <div class="input-group">
+    <input type="number" class="form-control"
+      id="rice_amount_wet_season" name="rice_amount_wet_season"
+      ng-model="data.rice_amount_wet_season">
+    <div class="input-group-addon" translate>kg</div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="rice_amount_dry_season" translate>
+    Dry season
+  </label>
+  <div class="input-group">
+    <input type="number" class="form-control"
+      id="rice_amount_dry_season" name="rice_amount_dry_season"
+      ng-model="data.rice_amount_dry_season">
+    <div class="input-group-addon" translate>kg</div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="rice_amount_wet_season" translate>
+    How much amount of un-milled rice was sold last year?
+  </label>
+</div>
+
+<div class="form-group">
+  <label for="amount_unmilled_rice_wet_season" translate>
+    Wet season
+  </label>
+  <div class="input-group">
+    <input type="number" class="form-control"
+      id="amount_unmilled_rice_wet_season" name="amount_unmilled_rice_wet_season"
+      ng-model="data.amount_unmilled_rice_wet_season">
+    <div class="input-group-addon" translate>kg</div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="amount_unmilled_rice_dry_season" translate>
+    Dry season
+  </label>
+  <div class="input-group">
+    <input type="number" class="form-control"
+      id="amount_unmilled_rice_dry_season" name="amount_unmilled_rice_dry_season"
+      ng-model="data.amount_unmilled_rice_dry_season">
+    <div class="input-group-addon" translate>kg</div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="rice_amount_wet_season" translate>
+    What was the price of the rice sold?
+  </label>
+</div>
+
+<div class="form-group">
+  <label for="price_rice_sold_wet_season" translate>
+    Wet season
+  </label>
+  <div class="input-group">
+    <input type="number" class="form-control"
+      id="price_rice_sold_wet_season" name="price_rice_sold_wet_season"
+      ng-model="data.price_rice_sold_wet_season">
+    <div class="input-group-addon" translate>kg</div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="price_rice_sold_dry_season" translate>
+    Dry season
+  </label>
+  <div class="input-group">
+    <input type="number" class="form-control"
+      id="price_rice_sold_dry_season" name="price_rice_sold_dry_season"
+      ng-model="data.price_rice_sold_dry_season">
+    <div class="input-group-addon" translate>kg</div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="purchased_rice" translate>
+    Did you purchase rice in this year (whole year)?
+  </label>
+  <select class="form-control"
+    id="purchased_rice"
+    name="purchased_rice"
+    ng-model="data.purchased_rice"
+    ng-options="n.value as n.name for n in yesNo">
+  </select>
+</div>
+
+<div ng-if="data.purchased_rice === 1">
+
+  <div class="form-group">
+    <label for="amount_milled_rice" translate>
+      What was the amount of milled rice purchased?
+    </label>
+    <div class="input-group">
+      <input type="number" class="form-control"
+        id="amount_milled_rice" name="amount_milled_rice"
+        ng-model="data.amount_milled_rice">
+      <div class="input-group-addon" translate>kg</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="amount_unmilled_rice" translate>
+      What was the amount of un-milled rice purchased?
+    </label>
+    <div class="input-group">
+      <input type="number" class="form-control"
+        id="amount_unmilled_rice" name="amount_unmilled_rice"
+        ng-model="data.amount_unmilled_rice">
+      <div class="input-group-addon" translate>kg</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="price_per_kg_milled_rice" translate>
+      What was the price per kg of milled rice purchased?
+    </label>
+    <div class="input-group">
+      <input type="number" class="form-control"
+        id="price_per_kg_milled_rice" name="price_per_kg_milled_rice"
+        ng-model="data.price_per_kg_milled_rice">
+      <div class="input-group-addon" translate>kg</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="price_per_kg_unmilled_rice" translate>
+      What was the price per kg of un-milled rice purchased?
+    </label>
+    <div class="input-group">
+      <input type="number" class="form-control"
+        id="price_per_kg_unmilled_rice" name="price_per_kg_unmilled_rice"
+        ng-model="data.price_per_kg_unmilled_rice">
+      <div class="input-group-addon" translate>kg</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="form-group">
+  <label for="members_below_12_years_old" translate>
+    In your house,
+  </label>
+</div>
+
+<div class="form-group">
+  <label for="members_below_12_years_old" translate>
+    How many members of your family is below 12 years old?
+  </label>
+  <input type="text" class="form-control"
+    id="members_below_12_years_old" name="members_below_12_years_old"
+    ng-model="data.members_below_12_years_old">
+</div>
+
+<div class="form-group">
+  <label for="members_above_12_years_old" translate>
+    How many members of your family is above 12 years old?
+  </label>
+  <input type="text" class="form-control"
+    id="members_above_12_years_old" name="members_above_12_years_old"
+    ng-model="data.members_above_12_years_old">
+</div>

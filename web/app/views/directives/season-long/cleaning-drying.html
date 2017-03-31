@@ -1,0 +1,89 @@
+<div ng-form="cd" novalidate>
+  <div class="form-group required" ng-class="validateField(cd, 'dry_threshed_grain')">
+    <label class="control-label" for="dry_threshed_grain" translate>
+      How you dry the threshed grain?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in dryThreshedGrain">
+      <input required type="radio"
+        id="dry_threshed_grain_{{$index}}"
+        ng-value="n.value"
+        name="dry_threshed_grain"
+        ng-model="data.dry_threshed_grain">
+      <label class="control-label" for="dry_threshed_grain_{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="cd" name="'dry_threshed_grain'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(cd, 'labor_count')">
+    <label class="control-label" for="labor_count" translate>
+      How many was the total number of labors used for cleaning and drying?
+    </label>
+    <input required type="text" class="form-control" name="labor_count"
+      id="labor_count" ng-model="data.labor_count">
+    <form-messages form="cd" name="'labor_count'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(cd, 'cleaning_labor_type')">
+    <label class="control-label" for="cleaning_labor_type" translate>
+      Who did cleaning and drying work?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in laborTypes">
+      <input required type="radio"
+        id="cleaning_labor_type_{{$index}}"
+        ng-value="n.value"
+        name="cleaning_labor_type"
+        ng-model="$parent.data.labor_type">
+      <label class="control-label" for="cleaning_labor_type_{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="cd" name="'cleaning_labor_type'"></form-messages>
+  </div>
+
+  <div ng-if="data.labor_type">
+
+    <div class="form-group required" ng-class="validateField(cd, 'cleaning_male_labor')">
+      <label class="control-label" for="cleaning_male_labor" translate>
+        How many were the male labor?
+      </label>
+      <input required type="number" class="form-control" name="cleaning_male_labor"
+        id="cleaning_male_labor" ng-model="data.male_labor">
+      <form-messages form="cd" name="'cleaning_male_labor'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(cd, 'cleaning_female_labor')">
+      <label class="control-label" for="cleaning_female_labor" translate>
+        How many were the female labor?
+      </label>
+      <input required type="number" class="form-control" name="cleaning_female_labor"
+        id="cleaning_female_labor" ng-model="data.female_labor">
+      <form-messages form="cd" name="'cleaning_female_labor'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(cd, 'cleaning_above_18_years_old')">
+      <label class="control-label" for="cleaning_above_18_years_old" translate>
+        How many were above 18 years old?
+      </label>
+      <input required type="number" class="form-control" name="cleaning_above_18_years_old"
+        id="cleaning_above_18_years_old" ng-model="data.above_18_years_old">
+      <form-messages form="cd" name="'cleaning_above_18_years_old'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(cd, 'cleaning_below_18_years_old')">
+      <label class="control-label" for="cleaning_below_18_years_old" translate>
+        How many were below 18 years old?
+      </label>
+      <input required type="number" class="form-control" name="cleaning_below_18_years_old"
+        id="cleaning_below_18_years_old" ng-model="data.below_18_years_old">
+      <form-messages form="cd" name="'cleaning_below_18_years_old'"></form-messages>
+    </div>
+
+    <div class="form-group required" ng-class="validateField(cd, 'cleaning_labor_total_cost')">
+      <label class="control-label" for="cleaning_labor_total_cost" translate>
+        How much was the total costs paid to the labors and other inputs for cleaning and drying?
+      </label>
+      <input required type="number" class="form-control" name="cleaning_labor_total_cost"
+        id="cleaning_labor_total_cost" ng-model="data.labor_total_cost">
+      <form-messages form="cd" name="'cleaning_labor_total_cost'"></form-messages>
+    </div>
+
+  </div>
+</div>

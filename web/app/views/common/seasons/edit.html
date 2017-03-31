@@ -1,0 +1,96 @@
+<h5 class="farmer-identifier">
+  <span translate>Farmer:</span>
+  <a href="#/main/farmers/edit-farmer/{{sc.farmer.id}}">
+    {{esc.farmer.first_name}} {{esc.farmer.last_name}}
+  </a>
+</h5>
+<h3 class="page-title" translate>Edit Season</h3>
+
+<div class="row table-page">
+  <form name="form" novalidate autocomplete="off">
+    <!-- left content -->
+    <div class="col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <fieldset>
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label for="season" class="col-sm-5 control-label" translate>
+                  Season
+                </label>
+                <div class="col-sm-5">
+                  <select class="form-control"
+                    id="season"
+                    name="season"
+                    ng-model="esc.data.seasons_id"
+                    ng-options="n.value as n.name for n in esc.seasons"
+                    required>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="year" class="col-sm-5 control-label" translate>
+                  Year
+                </label>
+                <div class="col-sm-5">
+                  <select class="form-control"
+                    id="year"
+                    name="year"
+                    ng-model="esc.data.year"
+                    ng-options="n as n for n in esc.years"
+                    required>
+                  </select>
+                  <!-- <input type="number" class="form-control"
+                    id="year"
+                    placeholder="{{'Year' | translate}}"
+                    ng-model="esc.data.year"
+                    required> -->
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="sowing_date" class="col-sm-5 control-label" translate>
+                  Sowing Date
+                </label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control"
+                    datepicker-localdate
+                    uib-datepicker-popup="yyyy-MM-dd"
+                    ng-init="esc.data.sowing_date = esc.formatDate(esc.data.sowing_date)"
+                    data-ng-model="esc.data.sowing_date"
+                    ng-click="esc.sowing_date.opened = true"
+                    data-is-open="esc.sowing_date.opened"
+                    value="{{esc.data.sowing_date}}"
+                    required />
+                </div>
+              </div>
+
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+
+    <!-- right content -->
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading" translate>
+          Actions
+        </div>
+        <div class="panel-body">
+          <button type="button"
+            class="btn btn-warning btn-block"
+            ng-disabled="!form.$valid"
+            ng-click="esc.save()"
+            translate>
+              Save
+          </button>
+          <a href="#/main/seasons/{{esc.farmer.id}}"
+            type="button"
+            class="btn btn-default btn-block" translate>
+              Cancel
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

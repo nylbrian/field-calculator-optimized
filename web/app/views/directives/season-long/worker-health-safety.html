@@ -1,0 +1,151 @@
+<div ng-form="whs" novalidate>
+  <div class="form-group required" ng-class="validateField(whs, 'work_related_injuries')">
+    <label class="control-label" for="work_related_injuries" translate>
+      During different field operations and activities, was there any work related injuries and accidents happened? See for the details.
+    </label>
+    <div class="radio radio-success" ng-repeat="n in workInjuries">
+      <input required type="radio"
+        id="work_related_injuries_{{$index}}"
+        ng-value="n.value"
+        name="work_related_injuries"
+        ng-model="$parent.data.work_related_injuries">
+      <label class="control-label" for="work_related_injuries_{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="whs" name="'work_related_injuries'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(whs, 'safety_instructions_available')">
+    <label class="control-label" for="safety_instructions_available" translate>
+      During different field operations and activities, safety instructions and first aid were in place on-farm? See for the details.
+    </label>
+    <div class="radio radio-success" ng-repeat="n in safetyActivities">
+      <input required type="radio"
+        id="safety_instructions_available{{$index}}"
+        ng-value="n.value"
+        name="safety_instructions_available"
+        ng-model="$parent.data.safety_instructions_available">
+      <label class="control-label" for="safety_instructions_available{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="whs" name="'safety_instructions_available'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(whs, 'tools_calibrated_maintained')">
+    <label class="control-label" for="tools_calibrated_maintained" translate>
+      Were the tool and equipment for farm operation and postharvest calibrated and maintained frequently?  See for the details.
+    </label>
+    <div class="radio radio-success" ng-repeat="n in toolCalibrated">
+      <input required type="radio"
+        id="tools_calibrated_maintained{{$index}}"
+        ng-value="n.value"
+        name="tools_calibrated_maintained"
+        ng-model="$parent.data.tools_calibrated_maintained">
+      <label class="control-label" for="tools_calibrated_maintained{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="whs" name="'tools_calibrated_maintained'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(whs, 'training_pesticide_applicators')">
+    <label class="control-label" for="training_pesticide_applicators" translate>
+      Was there training to the pesticide applicators for handling and use of pesticide?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in trainingPesticide">
+      <input required type="radio"
+        id="training_pesticide_applicators{{$index}}"
+        ng-value="n.value"
+        name="training_pesticide_applicators"
+        ng-model="data.training_pesticide_applicators">
+      <label class="control-label" for="training_pesticide_applicators{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="whs" name="'training_pesticide_applicators'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(whs, 'pesticide_applicator_good_quality')">
+    <label class="control-label" for="pesticide_applicator_good_quality" translate>
+      Did pesticide applicator use good quality PPE, e.g., gloves, masks, boots, and protective clothing during pesticide application?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in pesticideApplicatorUse">
+      <input required type="radio"
+        id="pesticide_applicator_good_quality{{$index}}"
+        ng-value="n.value"
+        name="pesticide_applicator_good_quality"
+        ng-model="data.pesticide_applicator_good_quality">
+      <label class="control-label" for="pesticide_applicator_good_quality{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="whs" name="'pesticide_applicator_good_quality'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(whs, 'washing_changing_facility_available')">
+    <label class="control-label" for="washing_changing_facility_available" translate>
+      Was washing and changing facility available for pesticide applicators?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in facilityApplicators">
+      <input required type="radio"
+        id="washing_changing_facility_available{{$index}}"
+        ng-value="n.value"
+        name="washing_changing_facility_available"
+        ng-model="data.washing_changing_facility_available">
+      <label class="control-label" for="washing_changing_facility_available{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="whs" name="'washing_changing_facility_available'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(whs, 'pesticide_applied_pregnant_women')">
+    <label class="control-label" for="pesticide_applied_pregnant_women" translate>
+      Was pesticide applied by pregnant or lactating women, children below 18 years or by person who suffer from chronic or respiratory diseases?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in pesticideApplied">
+      <input required type="radio"
+        id="pesticide_applied_pregnant_women{{$index}}"
+        ng-value="n.value"
+        name="pesticide_applied_pregnant_women"
+        ng-model="data.pesticide_applied_pregnant_women">
+      <label class="control-label" for="pesticide_applied_pregnant_women{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="whs" name="'pesticide_applied_pregnant_women'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(whs, 're_entry_time_48_hour')">
+    <label class="control-label" for="re_entry_time_48_hour" translate>
+      Was the recommended re-entry time of 48 hour communicated and followed?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in recommendedReEntry">
+      <input required type="radio"
+        id="re_entry_time_48_hour{{$index}}"
+        ng-value="n.value"
+        name="re_entry_time_48_hour"
+        ng-model="data.re_entry_time_48_hour">
+      <label class="control-label" for="re_entry_time_48_hour{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="whs" name="'re_entry_time_48_hour'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(whs, 'pesticide_inorganic_fertilizer_stored')">
+    <label class="control-label" for="pesticide_inorganic_fertilizer_stored" translate>
+      Was pesticide and inorganic fertilizers stored in locked place; separate from fuel and food and out of the reach of children?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in storage">
+      <input required type="radio"
+        id="pesticide_inorganic_fertilizer_stored{{$index}}"
+        ng-value="n.value"
+        name="pesticide_inorganic_fertilizer_stored"
+        ng-model="data.pesticide_inorganic_fertilizer_stored">
+      <label class="control-label" for="pesticide_inorganic_fertilizer_stored{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="whs" name="'pesticide_inorganic_fertilizer_stored'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(whs, 'empty_pesticide_disposed')">
+    <label class="control-label" for="empty_pesticide_disposed" translate>
+      Was the empty pesticide containers and obsolete pesticides properly disposed?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in pesticideDisposed">
+      <input required type="radio"
+        id="empty_pesticide_disposed{{$index}}"
+        ng-value="n.value"
+        name="empty_pesticide_disposed"
+        ng-model="data.empty_pesticide_disposed">
+      <label class="control-label" for="empty_pesticide_disposed{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="whs" name="'empty_pesticide_disposed'"></form-messages>
+  </div>
+</div>

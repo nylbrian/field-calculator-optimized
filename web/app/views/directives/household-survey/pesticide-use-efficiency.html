@@ -1,0 +1,151 @@
+<div ng-form="pue" novalidate>
+  <div class="form-group required" ng-class="validateField(pue, 'registered_products')">
+    <label class="control-label" for="registered_products" translate>
+      Use of registered products
+    </label>
+    <div class="radio radio-success" ng-repeat="n in useRegisteredProductions">
+      <input required type="radio"
+        id="registered_products{{$index}}"
+        ng-value="n.value"
+        name="registered_products"
+        ng-model="$parent.data.registered_products">
+      <label class="control-label" for="registered_products{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="pue" name="'registered_products'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(pue, 'targeted_application')">
+    <label class="control-label" for="targeted_application" translate>
+      Targeted application
+    </label>
+    <div class="radio radio-success" ng-repeat="n in targetedApplication">
+      <input required type="radio"
+        id="targeted_application{{$index}}"
+        ng-value="n.value"
+        name="targeted_application"
+        ng-model="$parent.data.targeted_application">
+      <label class="control-label" for="targeted_application{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="pue" name="'targeted_application'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(pue, 'label_instructions')">
+    <label class="control-label" for="label_instructions" translate>
+      Label instructions
+    </label>
+    <div class="radio radio-success" ng-repeat="n in labelInstructions">
+      <input required type="radio"
+        id="label_instructions{{$index}}"
+        ng-value="n.value"
+        name="label_instructions"
+        ng-model="$parent.data.label_instructions">
+      <label class="control-label" for="label_instructions{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="pue" name="'label_instructions'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(pue, 'equipment_calibrated')">
+    <label class="control-label" for="equipment_calibrated" translate>
+      Was the pesticide application equipment calibrated and maintained properly?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in pesticideEquipmentCalibrated">
+      <input required type="radio"
+        id="equipment_calibrated{{$index}}"
+        ng-value="n.value"
+        name="equipment_calibrated"
+        ng-model="$parent.data.equipment_calibrated">
+      <label class="control-label" for="equipment_calibrated{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="pue" name="'equipment_calibrated'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(pue, 'weed_management')">
+    <label class="control-label" for="weed_management" translate>
+      How was the weed management carried out?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in weedManagementCarriedOut">
+      <input required type="radio"
+        id="weed_management{{$index}}"
+        ng-value="n.value"
+        name="weed_management"
+        ng-model="$parent.data.weed_management">
+      <label class="control-label" for="weed_management{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="pue" name="'weed_management'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(pue, 'insect_management')">
+    <label class="control-label" for="insect_management" translate>
+      How was the insect management carried out?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in insectManagementCarriedOut ">
+      <input required type="radio"
+        id="insect_management{{$index}}"
+        ng-value="n.value"
+        name="insect_management"
+        ng-model="$parent.data.insect_management">
+      <label class="control-label" for="insect_management{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="pue" name="'insect_management'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(pue, 'disease_management')">
+    <label class="control-label" for="disease_management" translate>
+      How was the disease management carried out?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in diseaseManagementCarriedOut">
+      <input required type="radio"
+        id="disease_management{{$index}}"
+        ng-value="n.value"
+        name="disease_management"
+        ng-model="$parent.data.disease_management">
+      <label class="control-label" for="disease_management{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="pue" name="'disease_management'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(pue, 'mollusk_management')">
+    <label class="control-label" for="mollusk_management" translate>
+      How was the mollusk management carried out?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in molluskManagementCarriedOut">
+      <input required type="radio"
+        id="mollusk_management{{$index}}"
+        ng-value="n.value"
+        name="mollusk_management"
+        ng-model="$parent.data.mollusk_management">
+      <label class="control-label" for="mollusk_management{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="pue" name="'mollusk_management'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(pue, 'rodent_management')">
+    <label class="control-label" for="rodent_management" translate>
+      How was the rodent management carried out?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in rodentManagementCarriedOut">
+      <input required type="radio"
+        id="rodent_management{{$index}}"
+        ng-value="n.value"
+        name="rodent_management"
+        ng-model="$parent.data.rodent_management">
+      <label class="control-label" for="rodent_management{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="pue" name="'rodent_management'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(pue, 'bird_management')">
+    <label class="control-label" for="bird_management" translate>
+      How was the bird management carried out?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in birdManagementCarriedOut">
+      <input required type="radio"
+        id="bird_management{{$index}}"
+        ng-value="n.value"
+        name="bird_management"
+        ng-model="$parent.data.bird_management">
+      <label class="control-label" for="bird_management{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="pue" name="'bird_management'"></form-messages>
+  </div>
+</div>

@@ -1,0 +1,284 @@
+<div ng-form="ir" novalidate>
+  <div class="form-group  required" ng-class="validateField(ir, 'water_condition')">
+    <label class="control-label" for="irrigation_water_condition" translate>
+      What was the water condition in the field during the last 2 week period?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in waterCondition">
+      <input type="radio"
+        id="irrigation_water_condition{{$index}}"
+        ng-value="n.value"
+        name="water_condition"
+        ng-model="data.water_condition"
+        required>
+      <label class="control-label" for="irrigation_water_condition{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="ir" name="'water_condition'"></form-messages>
+  </div>
+
+  <div class="form-group  required" ng-class="validateField(ir, 'irrigation_field_count')"
+    ng-if="period == 1">
+    <label class="control-label" for="irrigation_field_count" translate>
+      How many times you irrigated the field from field preparation to sowing/transplanting?
+    </label>
+    <input type="number" class="form-control" name="irrigation_field_count" id="irrigation_field_count"
+      ng-model="data.irrigation_field_count" min="1" max="7"  required>
+    <form-messages form="ir" name="'irrigation_field_count'" data="{min: 1, max:7}"></form-messages>
+  </div>
+
+  <div class="form-group  required" ng-class="validateField(ir, 'irrigation_count')">
+    <label class="control-label" for="irrigation_count" translate>
+      How many times you irrigated during this 2 week period?
+    </label>
+    <input type="number" class="form-control" name="irrigation_count" id="irrigation_count"
+      ng-model="data.irrigation_count" min="0" max="7" required>
+    <form-messages form="ir" name="'irrigation_count'" data="{min: 1, max:7}"></form-messages>
+  </div>
+
+  <div ng-if="data.irrigation_count > 0">
+    <table class="tables tables-default no-more-tables form-group">
+      <thead>
+        <tr>
+          <th rowspan="2" class="text-center" translate>Irrigation Date</th>
+          <th colspan="2" class="text-center" translate>
+            Was there water in the field at the time of irrigation?
+          </th>
+          <th rowspan="2" class="text-center" translate>What was the depth of water after irrigation (cm)</th>
+          <th rowspan="2" class="text-center" translate>What was the source of irrigation</th>
+        </tr>
+        <tr>
+          <th translate class="text-center">Yes/No</th>
+          <th translate class="text-center">If yes, how many cm standing water was there? (cm)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tbody>
+          <tr ng-repeat="n in range(1, data.irrigation_count)" ng-form="ff">
+            <td data-title="{{'Irrigation Date' | translate }}" class="col-md-2">
+              <input type="text" class="form-control"
+                datepicker-localdate
+                uib-datepicker-popup="yyyy-MM-dd"
+                data-ng-model="$parent.data.period[$index].date"
+                ng-click="$parent.data.period[$index].date_opened = true"
+                data-is-open="$parent.data.period[$index].date_opened"
+                ng-value="{{formatDate($parent.data.period[$index].date)}}"
+                datepicker-options="{minDate: addDate(season.sowing_date, (period - 1) * 14), maxDate: addDate(season.sowing_date, period * 14)}"
+                name="date"
+                required />
+              <form-messages form="ff" name="'date'"></form-messages>
+              <form-messages form="ff"></form-messages>
+            </td>
+            <td data-title="{{'Was there water in the field at the time of irrigation?' | translate }}"
+              class="col-md-2">
+              <select class="form-control"
+                ng-model="data.period[$index].irrigated"
+                name="water"
+                ng-options="n.value as n.name for n in yesNo">
+              </select>
+              <form-messages form="ff" name="'water'"></form-messages>
+            </td>
+            <td data-title="{{'If yes, how many cm standing water was there? (cm)' | translate}}"
+              class="col-md-3">
+              <input type="number" class="form-control"
+                name="cm"
+                ng-disabled="$parent.data.period[$index].irrigated != '1'"
+                ng-model="$parent.data.period[$index].standing_water" min="1" max="50"
+                ng-required="data.period[$index].irrigated === 1"  />
+              <form-messages form="ff" name="'cm'" data="{min: 1, max: 50}"></form-messages>
+            </td>
+            <td data-title="{{'What was the depth of water after irrigation (cm)' | translate}}"
+              class="col-md-3">
+              <input type="number" class="form-control" size="6"
+                ng-model="$parent.data.period[$index].water_depth"
+                name="depth" min="1" max="40" required />
+              <form-messages form="ff" name="'depth'" data="{min: 1, max: 40}"></form-messages>
+            </td>
+            <td data-title="{{'What was the source of irrigation' | translate}}">
+              <select class="form-control"
+                name="source"
+                ng-model="data.period[$index].source"
+                ng-options="n.value as n.name for n in irrigationSource">
+              </select>
+              <form-messages form="ff" name="'source'"></form-messages>
+            </td>
+          </tr>
+        </tbody>
+      </tbody>
+    </table>
+
+    <div ng-if="isGroundWaterOrPumping() && !isCanalSelected()">
+      <div class="form-group  required" ng-class="validateField(ir, 'irrigation_energy_source')">
+        <label class="control-label" for="irrigation_energy_source" translate>
+          What was the source of energy for the irrigation pump?
+        </label>
+        <select class="form-control"
+          id="irrigation_energy_source"
+          name="irrigation_energy_source"
+          ng-model="data.irrigation_energy_source"
+          ng-options="n.value as n.name for n in irrigationPumpSource"
+          required>
+        </select>
+        <form-messages form="ir" name="'irrigation_energy_source'"></form-messages>
+      </div>
+
+      <div ng-if="data.irrigation_energy_source">
+        <div class="form-group  required" ng-class="validateField(ir, 'pump_horse_power')">
+          <label class="control-label" for="pump_horse_power" translate>
+            What is the horse power of the pump?
+          </label>
+          <div class="input-group">
+            <input type="number" class="form-control" name="pump_horse_power"
+              id="pump_horse_power" ng-model="data.pump_horse_power" required>
+            <div class="input-group-addon" translate>hp</div>
+          </div>
+          <form-messages form="ir" name="'pump_horse_power'"></form-messages>
+        </div>
+
+        <div class="form-group  required" ng-class="validateField(ir, 'hydraulic_lift_height')">
+          <label class="control-label" for="hydraulic_lift_height" translate>
+            How much was the lift height (hydraulic head)?
+          </label>
+          <div class="input-group">
+            <input type="number" class="form-control" name="hydraulic_lift_height"
+              id="hydraulic_lift_height" ng-model="data.hydraulic_lift_height"  required>
+            <div class="input-group-addon" translate>m</div>
+          </div>
+          <form-messages form="ir" name="'hydraulic_lift_height'"></form-messages>
+        </div>
+
+        <div class="form-group  required" ng-class="validateField(ir, 'pump_disharge_rate')">
+          <label class="control-label" for="pump_disharge_rate" translate>
+            How much was the discharge rate of the pump?
+          </label>
+          <div class="input-group">
+            <input type="number" class="form-control" name="pump_disharge_rate"
+              id="pump_disharge_rate" ng-model="data.pump_disharge_rate"  required>
+            <div class="input-group-addon" translate>L/S</div>
+          </div>
+          <form-messages form="ir" name="'pump_disharge_rate'"></form-messages>
+        </div>
+
+        <div class="form-group  required" ng-class="validateField(ir, 'pump_operation_hour')">
+          <label class="control-label" for="pump_operation_hour" translate>
+            How many hour the pump operated to irrigate the field?
+          </label>
+          <div class="input-group">
+            <input type="number" class="form-control" name="pump_operation_hour"
+              id="pump_operation_hour" ng-model="data.pump_operation_hour"  required>
+            <div class="input-group-addon" translate>hour(s)</div>
+          </div>
+          <form-messages form="ir" name="'pump_operation_hour'"></form-messages>
+        </div>
+
+        <div class="form-group  required" ng-class="validateField(ir, 'discharge_pipe_diameter')">
+          <label class="control-label" for="discharge_pipe_diameter" translate>
+            How much was the diameter of the discharge pipe?
+          </label>
+          <div class="input-group">
+            <input type="number" class="form-control" name="discharge_pipe_diameter"
+              id="discharge_pipe_diameter" ng-model="data.discharge_pipe_diameter"  required>
+            <div class="input-group-addon" translate>inch</div>
+          </div>
+          <form-messages form="ir" name="'discharge_pipe_diameter'"></form-messages>
+        </div>
+
+        <div class="form-group  required" ng-class="validateField(ir, 'electricity_consumed')"
+          ng-if="data.irrigation_energy_source === 1">
+          <label class="control-label" for="electricity_consumed" translate>
+            How many unit of electricity was consumed during the irrigation?
+          </label>
+          <div class="input-group">
+            <input type="number" class="form-control" name="electricity_consumed"
+              id="electricity_consumed" ng-model="data.electricity_consumed"  required>
+            <div class="input-group-addon" translate>electricity</div>
+          </div>
+          <form-messages form="ir" name="'electricity_consumed'"></form-messages>
+        </div>
+
+        <div class="form-group  required" ng-class="validateField(ir, 'diesel_consumed')"
+          ng-if="data.irrigation_energy_source === 2">
+          <label class="control-label" for="diesel_consumed" translate>
+            How many unit of diesel was consumed during the irrigation?
+          </label>
+          <div class="input-group">
+            <input type="number" class="form-control" name="diesel_consumed"
+              id="diesel_consumed" ng-model="data.diesel_consumed"  required>
+            <div class="input-group-addon" translate>litre</div>
+          </div>
+          <form-messages form="ir" name="'diesel_consumed'"></form-messages>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group  required" ng-class="validateField(ir, 'total_fuel_cost')">
+      <label class="control-label" for="total_fuel_cost" translate>
+        How much was the total cost of diesel or petrol, hired cost of pump (if hired), and other costs incurred during irrigation?
+      </label>
+      <input type="number" class="form-control" name="total_fuel_cost"
+        id="total_fuel_cost" ng-model="data.total_fuel_cost"   required>
+      <form-messages form="ir" name="'total_fuel_cost'"></form-messages>
+    </div>
+
+    <div class="form-group  required" ng-class="validateField(ir, 'irrigation_labor_type')">
+      <label class="control-label" for="irrigation_labor_type" translate>
+        Who did the irrigation work?
+      </label>
+      <div class="radio radio-success" ng-repeat="n in laborTypes">
+        <input type="radio"
+          id="irrigation_labor_type_{{$index}}"
+          ng-value="n.value"
+          name="irrigation_labor_type"
+          ng-model="data.labor_type" required>
+        <label class="control-label" for="irrigation_labor_type_{{$index}}">{{n.name}}</label>
+      </div>
+      <form-messages form="ir" name="'irrigation_labor_type'"></form-messages>
+    </div>
+
+    <div ng-if="data.labor_type">
+      <div class="form-group  required" ng-class="validateField(ir, 'irrigation_male_labor_count')">
+        <label class="control-label" for="irrigation_male_labor_count" translate>
+          How many were the male labor?
+        </label>
+        <input type="number" class="form-control" name="irrigation_male_labor_count"
+          id="irrigation_male_labor_count" ng-model="data.male_labor_count" required>
+        <form-messages form="ir" name="'irrigation_male_labor_count'"></form-messages>
+      </div>
+
+      <div class="form-group  required" ng-class="validateField(ir, 'irrigation_female_labor_count')">
+        <label class="control-label" for="irrigation_female_labor_count" translate>
+          How many were the female labor?
+        </label>
+        <input type="number" class="form-control" name="irrigation_female_labor_count"
+          id="irrigation_female_labor_count" ng-model="data.female_labor_count" required>
+        <form-messages form="ir" name="'irrigation_female_labor_count'"></form-messages>
+      </div>
+
+      <div class="form-group  required" ng-class="validateField(ir, 'irrigation_above_18_years_old_count')">
+        <label class="control-label" for="irrigation_above_18_years_old_count" translate>
+          How many were above 18 years old?
+        </label>
+        <input type="number" class="form-control" name="irrigation_above_18_years_old_count"
+          id="irrigation_above_18_years_old_count" ng-model="data.above_18_years_old_count" required>
+        <form-messages form="ir" name="'irrigation_above_18_years_old_count'"></form-messages>
+      </div>
+
+      <div class="form-group  required" ng-class="validateField(ir, 'irrigation_below_18_years_old_count')">
+        <label class="control-label" for="irrigation_below_18_years_old_count" translate>
+          How many were below 18 years old?
+        </label>
+        <input type="number" class="form-control" name="irrigation_below_18_years_old_count"
+          id="irrigation_below_18_years_old_count" ng-model="data.below_18_years_old_count" required>
+        <form-messages form="ir" name="'irrigation_below_18_years_old_count'"></form-messages>
+      </div>
+
+      <div class="form-group  required" ng-class="validateField(ir, 'irrigation_labor_total_cost')">
+        <label class="control-label" for="irrigation_labor_total_cost" translate>
+          If labor was used, how much was the labor cost paid for the labors used for irrigation?
+        </label>
+        <input type="number" class="form-control" name="irrigation_labor_total_cost"
+          id="irrigation_labor_total_cost" ng-model="data.labor_total_cost" required>
+        <form-messages form="ir" name="'irrigation_labor_total_cost'"></form-messages>
+      </div>
+
+    </div>
+  </div>
+</div>

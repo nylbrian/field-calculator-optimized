@@ -1,0 +1,83 @@
+<fieldset ng-disabled="lc.processing">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3 form-box">
+      <div class="alert alert-danger" role="alert" ng-if="lc.error">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only" translate>Error:</span>
+        <span>{{rc.error}}</span>
+      </div>
+
+      <div class="form-top"></div>
+      <div class="form-bottom">
+        <form name="register" ng-submit="rc.register()" class="login-form" novalidate autocomplete="off">
+          <div class="form-group has-success has-feedback">
+            <label class="sr-only" for="email">Email</label>
+            <input type="email" name="email" placeholder="Email..."
+              class="form-username form-control"
+              id="email" ng-model="rc.data.email">
+            <!-- <span class="glyphicon glyphicon-ok form-control-feedback"></span> -->
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="username">Username</label>
+            <input type="text" name="username" placeholder="Username..."
+              class="form-username form-control"
+              ng-model="rc.data.username" id="username">
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="password">Password</label>
+            <input type="password" name="password"
+              placeholder="Password..." class="form-password form-control"
+              ng-model="rc.data.password" id="password">
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="confirm-password">Confirm Password</label>
+            <input type="password" name="confirm-password"
+              placeholder="Confirm Password..." class="form-password form-control"
+              ng-model="rc.data.confirmPassword" id="confirm-password">
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="country">Country</label>
+            <select class="form-control"
+              id="country"
+              name="country"
+              ng-model="rc.data.countries_id"
+              class="form-password form-control"
+              required>
+              <option value=''>Country...</option>
+              <option ng-repeat="n in rc.countries | orderObjectBy:'name':false" value="{{n.id}}">
+                {{n.name}}
+              </option>
+            </select>
+            <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="profession">Profession</label>
+            <input type="text" name="profession"
+              placeholder="Profession..." class="form-username form-control"
+              ng-model="rc.data.profession" id="profession">
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="organization">Organization</label>
+            <input type="text" name="organization"
+              placeholder="Organization..." class="form-username form-control"
+              ng-model="rc.data.organization" id="organization">
+          </div>
+          <button class="btn btn-success" ng-click="rc.save()">
+            <i ng-if="rc.processing" class='fa fa-spinner fa-spin '></i>
+            <span ng-if="!rc.processing">Register Now</span>
+
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3 social-login">
+      <div class="social-login-buttons">
+        <button class="btn btn-lg btn-warning" ng-click="rc.back()" translate>
+          Login Here
+        </button>
+      </div>
+    </div>
+  </div>
+</fieldset>

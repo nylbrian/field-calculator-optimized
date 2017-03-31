@@ -1,0 +1,108 @@
+<h5 class="farmer-identifier">
+  <span translate>Farmer:</span>
+  <a href="#/main/farmers/edit-farmer/{{sc.farmer.id}}">
+    {{sc.farmer.first_name}} {{sc.farmer.last_name}}
+  </a>
+</h5>
+<h3 class="page-title">Seasons</h3>
+<div class="row table-page">
+  <!-- left content -->
+  <div class="col-md-9">
+    <div ng-if="!sc.data.length" translate>
+      No seasons added for this farmer.
+    </div>
+    <div ng-if="sc.data.length" class="table-container animated">
+      <div class="row table-fields">
+        <div class="col-sm-9">
+          <div class="input-group">
+            <label class="sr-only" for="search-field">Search field</label>
+            <input type="text" class="form-control" id="search-field"
+              ng-change="reset()" ng-model="sc.search"
+              placeholder="{{'Enter year or season' | translate}}">
+              <span class="input-group-btn">
+                <button class="btn btn-default"
+                  title="{{'Search this table' | translate}}">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+              </span>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <select class="form-control" id="show-pages" ng-model="sc.items"
+            title="{{'Show results by this count' | translate}}" ng-change="sc.reset()">
+            <option ng-value="10">Show 10</option>
+            <option ng-value="20">Show 20</option>
+            <option ng-value="50">Show 50</option>
+          </select>
+        </div>
+        <div class="col-sm-1">
+          <div class="input-group btn-block">
+            <button type="submit" class="btn btn-default btn-block"
+              title="{{'Refresh this table' | translate}}">
+              <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="tables tables-default no-more-tables">
+          <thead>
+            <tr>
+              <th translate>Season</th>
+              <th translate>Year</th>
+              <th translate>Sowing Date</th>
+              <th style="width: 150px;" translate>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="season in filterData = (sc.data | filter:sc.filterTable) | limitTo:sc.items:sc.items*(sc.start-1)">
+              <td data-title="{{'Season' | translate}}">{{sc.getSeason(season.seasons_id)}}</td>
+              <td data-title="{{'Year' | translate}}">{{season.year}}</td>
+              <td data-title="{{'Sowing Date' | translate}}">{{season.sowing_date}}</td>
+              <td data-title="{{'Actions' | translate}}">
+                <button class="btn btn-xs btn-danger" title="{{'Delete' | translate}}">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+                <a href="#/main/seasons/edit-season/{{sc.farmer.id}}/{{season.id}}" title="{{'Edit' | translate}}"
+                  class="btn btn-xs btn-info">
+                  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </a>
+                <a href="#/main/farmer-options/{{sc.farmer.id}}/{{season.id}}" title="{{'Select' | translate}}"
+                  class="btn btn-xs btn-success">
+                  <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-right">
+          <ul uib-pagination total-items="sc.count"
+            ng-model="sc.start"
+            items-per-page="sc.items"
+            previous-text="Prev"
+            next-text="Next"
+            class="pagination-md"
+            title="{{'Navigate this table by page count'}}"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- right content -->
+  <div class="col-md-3 side-helper table-page">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <a href="#/main/seasons/new-season/{{sc.farmer.id}}"
+          class="btn btn-warning btn-block" translate>
+            New Season
+        </a>
+        <div class="panel-alternate last">
+          <div class="panel-alternate-content" translate>
+            Let's add a season for this farmer.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

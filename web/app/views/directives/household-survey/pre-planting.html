@@ -1,0 +1,402 @@
+<div ng-form="ppi" novalidate>
+  <div class="form-group required" ng-class="validateField(ppi, 'rice_area')">
+    <label class="control-label" for="rice_area">
+      <span translate>
+        For how much rice area you are going to maintain this season-long field diary?
+      </span>
+    </label>
+    <span class="label-note" translate>
+      Note: Please maintain this diary in the biggest parcel / plot
+    </span>
+    <div class="input-group">
+      <input type="number" class="form-control"
+        id="rice_area" name="rice_area"
+        ng-model="data.rice_area"
+        min="0.001" max="20"
+        required>
+      <div class="input-group-addon" translate>ha</div>
+    </div>
+    <form-messages form="ppi" name="'rice_area'" data="{min: 0.001, max: 20}"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'parcel_has_treatment')">
+    <label class="control-label" for="parcel_has_treatment" translate>
+      Does this parcel have any particular treatment name?
+    </label>
+    <select class="form-control"
+      id="parcel_has_treatment"
+      name="parcel_has_treatment"
+      ng-model="data.parcel_has_treatment"
+      ng-options="n.value as n.name for n in yesNo"
+      required>
+    </select>
+    <form-messages form="ppi" name="'parcel_has_treatment'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'treatment_name')"
+    ng-if="data.parcel_has_treatment === 1">
+    <label class="control-label" for="treatment_name" translate>
+      What is the treatment name?
+    </label>
+    <select class="form-control"
+      id="treatment_name"
+      name="treatment_name"
+      ng-model="data.treatment_name"
+      ng-options="n.value as n.name for n in treatment"
+      required>
+    </select>
+    <form-messages form="ppi" name="'treatment_name'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'treatment_name_other')"
+    ng-if="data.treatment_name === 'Other' && data.parcel_has_treatment === 1">
+    <label class="control-label" for="treatment_name_other" translate>
+      Other treatment name
+    </label>
+    <input type="text" class="form-control" name="treatment_name_other"
+      id="treatment_name_other" ng-model="data.treatment_name_other" required>
+    <form-messages form="ppi" name="'treatment_name_other'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'land_rental')">
+    <label class="control-label" for="previous_crop" translate>
+      This is your own land or rented?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in landRental">
+      <input type="radio"
+        id="land_rental{{$index}}"
+        ng-value="n.value"
+        name="land_rental"
+        ng-model="data.land_rental"
+        required>
+      <label class="control-label" for="land_rental{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="ppi" name="'land_rental'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'rent_cost')"
+    ng-if="data.land_rental === 1 || data.land_rental === 3">
+    <label class="control-label" for="rent_cost" translate>
+      How much rent was paid for this season rice production?
+    </label>
+    <input type="text" class="form-control" name="rent_cost" id="rent_cost"
+      ng-model="data.rent_cost">
+    <form-messages form="ppi" name="'rent_cost'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'previous_crop')">
+    <label class="control-label" for="previous_crop" translate>
+      What was the previous crop in this field / plot / parcel?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in previousCrop">
+      <input type="radio"
+        id="previous_crop_{{$index}}"
+        ng-value="n.value"
+        name="previous_crop"
+        ng-model="data.previous_crop"
+        required>
+      <label class="control-label" for="previous_crop_{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="ppi" name="'previous_crop'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'cropping_system')">
+    <label class="control-label" for="cropping_system" translate>
+      What was the cropping system in this field?
+    </label>
+    <input type="text" class="form-control" name="cropping_system" id="cropping_system"
+      ng-model="data.cropping_system" required>
+    <form-messages form="ppi" name="'cropping_system'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'previous_crop_harvested')">
+    <label class="control-label" for="previous_crop_harvested" translate>
+      When was this previous crop harvested?
+    </label>
+    <input type="text" class="form-control"
+      id="previous_crop_harvested"
+      name="previous_crop_harvested"
+      datepicker-localdate
+      uib-datepicker-popup="yyyy-MM-dd"
+      data-ng-model="data.previous_crop_harvested"
+      ng-click="previous_crop_harvested.opened = true"
+      data-is-open="previous_crop_harvested.opened"
+      ng-value="{{formatDate(data.previous_crop_harvested)}}"
+      datepicker-options="{minDate: addDate(season.sowing_date, -100), maxDate: addDate(season.sowing_date, 0)}"
+      required />
+    <form-messages form="ppi" name="'previous_crop_harvested'"></form-messages>
+    <form-messages form="ppi"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'grain_yield_previous')">
+    <label class="control-label" for="grain_yield_previous" translate>
+      How much was the grain yield of the previous crop in this land/parcel?
+    </label>
+    <div class="input-group">
+      <input type="number" class="form-control"
+        id="grain_yield_previous" name="grain_yield_previous"
+        ng-model="data.grain_yield_previous" min="100" max="50000" required>
+      <div class="input-group-addon" translate>kg</div>
+    </div>
+    <form-messages form="ppi" name="'grain_yield_previous'" data="{min: 100, max: 50000}"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'straw_previous_crop_managed')">
+    <label class="control-label" for="straw_previous_crop_managed" translate>
+      How the straw of the previous crop was managed in this parcel?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in riceStrawHarvestManagement">
+      <input type="radio"
+        id="straw_previous_crop_managed{{$index}}"
+        ng-value="n.value"
+        name="straw_previous_crop_managed"
+        ng-model="data.straw_previous_crop_managed"
+        required>
+      <label class="control-label" for="straw_previous_crop_managed{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="ppi" name="'straw_previous_crop_managed'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'straw_burned')">
+    <label class="control-label" for="straw_burned" translate>
+      In case of burning, how many percentage of the straw was burned?
+    </label>
+    <div class="input-group">
+      <input type="number" class="form-control"
+        id="straw_burned" name="straw_burned"
+        ng-model="data.straw_burned"
+        ng-min="data.straw_previous_crop_managed == 1 ? 0 : 1" ng-max="100"
+        required>
+      <div class="input-group-addon" translate>%</div>
+    </div>
+    <form-messages form="ppi" name="'straw_burned'"
+      data="{min: data.straw_previous_crop_managed == 1 ? 0 : 1, max: 100}"></form-messages>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="gps_north" translate>
+      GPS ID of the field
+    </label>
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="number" class="form-control"
+            id="gps_north" name="gps_north"
+            ng-model="data.gps_north">
+          <div class="input-group-addon" translate>N</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="number" class="form-control"
+            id="gps_east" name="gps_east"
+            ng-model="data.gps_east">
+          <div class="input-group-addon" translate>E</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'incorporate_organic_material')">
+    <label class="control-label" for="incorporate_organic_material" translate>
+      Did you incorporate organic materials like compost, livestock manure, green manure etc in this field at the time of land preparation?
+    </label>
+    <select class="form-control"
+      id="incorporate_organic_material"
+      name="incorporate_organic_material"
+      ng-model="data.incorporate_organic_material"
+      ng-options="n.value as n.name for n in yesNo"
+      required>
+    </select>
+    <form-messages form="ppi" name="'incorporate_organic_material'"></form-messages>
+  </div>
+
+  <div class="form-group" ng-if="data.incorporate_organic_material === 1">
+    <table class="tables tables-default no-more-tables">
+      <thead>
+        <tr>
+          <th translate>Organic Material</th>
+          <th translate>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="n in organicMaterials">
+          <td data-title="Organic Material">
+            <div class="checkbox checkbox-success">
+              <input type="checkbox"
+                id="organic_materials_{{$index}}"
+                ng-value="n.value"
+                name="organic_materials_{{$index}}"
+                ng-model="data.organic_materials[n.real_name].checked">
+              <label class="control-label" for="organic_materials_{{$index}}">{{n.name}}</label>
+            </div>
+          </td>
+          <td data-title="Amount">
+            <input type="number" class="form-control"
+              min="1"
+              max="50000"
+              ng-model="data.organic_materials[n.real_name].amount"
+              ng-disabled="!data.organic_materials[n.real_name].checked ||
+              ((data.previous_crop === 1 || data.previous_crop === 2) &&
+                n.name === 'Previous crop\'s straw')">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'organic_materials_incorporated')"
+    ng-if="data.incorporate_organic_material === 1">
+    <label class="control-label" for="organic_materials_incorporated" translate>
+      When these organic materials were incorporated in this parcel?
+    </label>
+    <input type="text" class="form-control"
+      id="organic_materials_incorporated"
+      name="organic_materials_incorporated"
+      datepicker-localdate
+      uib-datepicker-popup="yyyy-MM-dd"
+      data-ng-model="data.organic_materials_incorporated"
+      ng-click="organic_materials_incorporated.opened = true"
+      data-is-open="organic_materials_incorporated.opened"
+      ng-value="{{formatDate(data.organic_materials_incorporated)}}"
+      datepicker-options="{minDate: addDate(season.sowing_date, -100), maxDate: addDate(season.sowing_date, 0)}"
+      required />
+    <form-messages form="ppi" name="'organic_materials_incorporated'"></form-messages>
+    <form-messages form="ppi"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'organic_material_cost')"
+     ng-if="data.incorporate_organic_material === 1">
+    <label class="control-label" for="organic_material_cost" translate>
+      How much was the total cost of the organic material and labor for the application and transportation?
+    </label>
+    <input type="number" class="form-control" name="organic_material_cost" id="organic_material_cost"
+      ng-model="data.organic_material_cost" required>
+    <form-messages form="ppi" name="'organic_material_cost'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'water_regime')">
+    <table class="tables tables-default no-more-tables">
+      <thead>
+        <tr>
+          <th translate>Water regime prior to rice cultivation</th>
+          <th translate>Please see figure for help</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="n in waterRegime">
+          <td data-title="Water regime prior to rice cultivation">
+            <div class="radio radio-success">
+              <input type="radio"
+                id="water_regime_{{$index}}"
+                ng-value="n.value"
+                name="water_regime"
+                ng-model="$parent.data.water_regime"
+                required>
+              <label class="control-label" for="water_regime_{{$index}}">{{n.name}}</label>
+            </div>
+          </td>
+          <td data-title="Please see figure for help">
+            <image src="assets/images/{{n.image}}" ng-if="n.image !== null" style="width: 250px;" />
+            <span ng-if="n.image === null">&nbsp;</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <form-messages form="ppi" name="'water_regime'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'rice_variety_name')">
+    <label class="control-label" for="rice_variety_name" translate>
+      What was the name of the rice variety growing in this parcel of land?
+    </label>
+    <input type="text" class="form-control" name="rice_variety_name"
+      id="rice_variety_name" ng-model="data.rice_variety_name" required>
+    <form-messages form="ppi" name="'rice_variety_name'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'seed_count')">
+    <label class="control-label" for="seed_count" translate>
+      How much seed was used for this parcel of land?
+    </label>
+    <div class="input-group">
+      <input type="number" class="form-control" name="seed_count"
+        id="seed_count" ng-model="data.seed_count"
+        min="1" max="2000" required>
+      <div class="input-group-addon" translate>kg</div>
+    </div>
+    <form-messages form="ppi" name="'seed_count'" data="{min: 1, max: 2000}"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'seed_type')">
+    <label class="control-label" for="seed_type" translate>
+      What type of seed was used?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in seedTypes">
+      <input type="radio"
+        id="seed_type{{$index}}"
+        ng-value="n.value"
+        name="seed_type"
+        ng-model="$parent.data.seed_type"
+        required>
+      <label class="control-label" for="seed_type{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="ppi" name="'seed_type'"></form-messages>
+  </div>
+
+  <!-- <div class="form-group" ng-if="data.seed_type === 6">
+    <label class="control-label" for="seed_type_other" translate>
+      Other seed type
+    </label>
+    <div>
+      <input type="text" class="form-control" name="seed_type_other"
+        id="seed_type_other" ng-model="data.seed_type_other" required>
+    </div>
+  </div> -->
+
+  <div class="form-group required" ng-class="validateField(ppi, 'seed_certified')">
+    <label class="control-label" for="seed_certified" translate>
+      Was the seed used certified?
+    </label>
+    <select class="form-control"
+      id="seed_certified"
+      name="seed_certified"
+      ng-model="data.seed_certified"
+      ng-options="n.value as n.name for n in yesNo"
+      required>
+    </select>
+    <form-messages form="ppi" name="'seed_certified'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'soil_fertility')">
+    <label class="control-label" for="soil_fertility" translate>
+      How was the soil fertility condition in this field/parcel?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in soilFertility">
+      <input type="radio"
+        id="soil_fertility{{$index}}"
+        ng-value="n.value"
+        name="soil_fertility"
+        ng-model="$parent.data.soil_fertility"
+        required>
+      <label class="control-label" for="soil_fertility{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="ppi" name="'soil_fertility'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(ppi, 'irrigation_regime')">
+    <label class="control-label" for="irrigation_regime" translate>
+      How was the irrigation condition in this field/parcel?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in irrigationRegime">
+      <input type="radio"
+        id="irrigation_regime{{$index}}"
+        ng-value="n.value"
+        name="irrigation_regime"
+        ng-model="$parent.data.irrigation_regime"
+        required>
+      <label class="control-label" for="irrigation_regime{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="ppi" name="'irrigation_regime'"></form-messages>
+  </div>
+</div>

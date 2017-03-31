@@ -1,0 +1,171 @@
+<h3 class="page-title" translate>Update Farmer</h3>
+
+<div class="row table-page">
+  <form name="form" novalidate autocomplete="off">
+    <!-- left content -->
+    <div class="col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <fieldset>
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label for="first_name" class="col-sm-5 control-label" translate>
+                  First Name
+                </label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control"
+                    id="first_name"
+                    placeholder="{{'First Name' | translate}}"
+                    ng-model="efc.data.first_name"
+                    ng-class="{'has-error': form.first_name.$error}"
+                    required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="last_name" class="col-sm-5 control-label" translate>
+                  Last Name
+                </label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control"
+                    id="last_name" placeholder="{{'Last Name' | translate}}"
+                    ng-model="efc.data.last_name" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="country" class="col-sm-5 control-label" translate>
+                  Country
+                </label>
+                <div class="col-sm-5">
+                  <select class="form-control"
+                    id="country"
+                    name="country"
+                    ng-model="efc.data.country_id"
+                    ng-change="efc.changeCountry()"
+                    ng-options="n.id as n.name for n in efc.countries | orderObjectBy:'name':false"
+                    required>
+                    <!-- <option translate value="0">Other</option> -->
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group" ng-if="efc.data.country_id === '0'">
+                <label for="other" class="col-sm-5 control-label" translate>
+                  Specify Country
+                </label>
+                <div class="col-sm-5">
+                  <input type="text" id="other" class="form-control"
+                    ng-model="efc.data.other_country"
+                    placeholder="{{'Other country' | translate}}"
+                    required/>
+                </div>
+              </div>
+
+              <div class="form-group" ng-if="efc.data.country_id">
+                <label for="region" class="col-sm-5 control-label" translate>
+                  Region / Province
+                </label>
+                <div class="col-sm-5">
+                  <select class="form-control"
+                    ng-if="efc.regions"
+                    id="region"
+                    name="region"
+                    ng-model="efc.data.region_id"
+                    required>
+                    <option ng-repeat="n in efc.regions" value="{{n.id}}">
+                      {{n.name}}
+                    </option>
+                  </select>
+                  <input type="text" id="region" name="otherRegion"
+                    ng-if="!efc.regions"
+                    ng-model="efc.data.other_region"
+                    class="form-control"
+                    required />
+                  <input type="hidden" ng-model="efc.data.region_id" value="0" />
+                </div>
+              </div>
+
+              <div class="form-group"
+                ng-if="(efc.data.country_id || efc.data.other_country) &&
+                  (efc.data.region_id || efc.data.other_region)">
+                <label for="province" class="col-sm-5 control-label" translate>
+                  Province / District / State / Cities
+                </label>
+                <div class="col-sm-5">
+                  <select class="form-control"
+                    id="province"
+                    name="province"
+                    ng-model="efc.data.province_id"
+                    ng-if="efc.provinces"
+                    required>
+                    <option ng-repeat="n in efc.provinces" value="{{n.id}}">
+                      {{n.name}}
+                    </option>
+                  </select>
+                  <input type="text" class="form-control"
+                    id="province"
+                    name="other_province"
+                    ng-model="efc.data.other_province"
+                    ng-if="!efc.provinces"
+                    required />
+                  <input type="hidden" name="province_id"
+                    ng-model="efc.data.province_id" value="0" />
+                </div>
+              </div>
+
+              <div ng-if="efc.data.province_id || efc.data.other_province"
+                class="form-group">
+                <label for="district" class="col-sm-5 control-label" translate>
+                  District / Sub-district / Municipality / Township
+                </label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control"
+                    id="district"
+                    name="district"
+                    ng-model="efc.data.district"
+                    required />
+                </div>
+              </div>
+
+              <div ng-if="efc.data.district"
+                class="form-group">
+                <label for="village" class="col-sm-5 control-label" translate>
+                  Village
+                </label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control"
+                    id="village"
+                    name="village"
+                    ng-model="efc.data.village"
+                    required />
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+
+    <!-- right content -->
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading" translate>
+          Actions
+        </div>
+        <div class="panel-body">
+          <button type="button"
+            class="btn btn-warning btn-block"
+            ng-disabled="!form.$valid"
+            ng-click="efc.save()"
+            translate>
+              Save
+          </button>
+          <a href="#/main/farmers"
+            type="button"
+            class="btn btn-default btn-block" translate>
+              Cancel
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

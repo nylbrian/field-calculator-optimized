@@ -1,0 +1,141 @@
+<h5 class="farmer-identifier">
+  <span translate>Farmer:</span>
+  <a href="#/main/farmers/edit-farmer/{{hsc.farmer.id}}">
+    {{hsc.farmer.first_name}} {{hsc.farmer.last_name}}
+  </a>
+</h5>
+<h3 class="page-title" translate>Household Survey</h3>
+
+<fieldset ng-disabled="hsc.processing" ng-form="parentform">
+  <div style="margin-bottom: 10px;" ng-if="hsc.loading === false" translate>General information</div>
+  <div class="row table-page" ng-if="hsc.loading === false">
+    <!-- left content -->
+    <div class="col-md-9">
+      <uib-accordion close-others="oneAtATime">
+        <div uib-accordion-group
+          class="panel-success"
+          id="seasonLong{{form.id}}"
+          ng-repeat="form in hsc.forms"
+          is-open="form.opened"
+          ng-init="form.opened = false">
+          <uib-accordion-heading>
+            <div>
+              <span>{{form.label}}</span>
+              <i class="pull-right glyphicon"
+                ng-class="{'glyphicon-chevron-down': form.opened,
+                  'glyphicon-chevron-right': !form.opened}">
+              </i>
+            </div>
+          </uib-accordion-heading>
+          <uib-accordion-body ng-switch="form.id">
+            <general-information-household data="form.data" ng-switch-when="gi"></general-information-household>
+            <pre-planting-household data="form.data" farmer="hsc.farmer" ng-switch-when="ppi"
+              period="hsc.period"
+              season="hsc.season">
+            </pre-planting-household>
+            <land-preparation-household data="form.data" ng-switch-when="lp"
+              period="hsc.period"
+              season="hsc.season">
+            </land-preparation-household>
+            <sowing-transplanting-household data="form.data" land-preparation="hsc.forms.landPreparation.data"
+              ng-switch-when="sot" period="hsc.period"
+              season="hsc.season">
+            </sowing-transplanting-household>
+            <irrigation-household data="form.data" period="hsc.period" ng-switch-when="ir"
+              period="hsc.period"
+              season="hsc.season">
+            </irrigation-household>
+            <fertilizer-application-household data="form.data" period="hsc.period" ng-switch-when="fa"
+              period="hsc.period"
+              season="hsc.season">
+            </fertilizer-application-household>
+            <weeding-and-herbicide-application-household data="form.data" ng-switch-when="waha"
+              period="hsc.period"
+              season="hsc.season">
+            </weeding-and-herbicide-application-household>
+            <pesticide-application-household data="form.data" ng-switch-when="pa"
+              period="hsc.period"
+              season="hsc.season">
+            </pesticide-application-household>
+            <harvesting-threshing-household data="form.data" ng-switch-when="har"
+              period="hsc.period"
+              season="hsc.season">
+            </harvesting-threshing-household>
+            <cleaning-drying-household data="form.data" ng-switch-when="cd">
+            </cleaning-drying-household>
+            <grain-and-straw-yield-household data="form.data" ng-switch-when="gstry">
+            </grain-and-straw-yield-household>
+            <food-safety-household data="form.data" ng-switch-when="fs">
+            </food-safety-household>
+            <worker-health-safety-household data="form.data" ng-switch-when="whs">
+            </worker-health-safety-household>
+            <child-labor-household data="form.data" ng-switch-when="cl">
+            </child-labor-household>
+            <women-empowerment-household data="form.data" ng-switch-when="we">
+            </women-empowerment-household>
+            <food-security-household data="form.data" ng-switch-when="fse">
+            </food-security-household>
+            <pesticide-use-efficiency-household data="form.data" ng-switch-when="pue">
+            </pesticide-use-efficiency-household>
+
+            <div ng-switch-default>
+              Form does not exist
+            </div>
+          </uib-accordion-body>
+        </div>
+      </uib-accordion>
+
+      <div class="panel panel-default visible-xs visible-sm">
+        <div class="panel-heading" translate>
+          Actions
+        </div>
+        <div class="panel-body">
+          <button type="button" ng-click="hsc.save(parentform)" ng-disabled="hsc.processing"
+            class="btn btn-warning btn-block" translate>
+              Save
+          </button>
+          <a href="#/main/farmer-options/{{hsc.farmer.id}}/{{hsc.season.id}}"
+            class="btn btn-default btn-block" translate>
+              Cancel
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- right content -->
+    <div class="col-md-3">
+      <nav class="bs-docs-sidebar hidden-print hidden-sm hidden-xs affix">
+        <div class="panel panel-default">
+          <div class="panel-heading" translate>
+            Actions
+          </div>
+          <div class="panel-body">
+            <button type="button" ng-click="hsc.save(parentform)"
+              class="btn btn-warning btn-block" translate>
+                Save
+            </button>
+            <a href="#/main/farmer-options/{{hsc.farmer.id}}/{{hsc.season.id}}"
+              class="btn btn-default btn-block" translate>
+                Cancel
+            </a>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" translate>
+            Navigation
+          </div>
+          <div class="panel-body">
+            <ul class="nav nav bs-docs-sidenav list-unstyled">
+              <li ng-repeat="form in hsc.forms">
+                <a href="#seasonLong{{form.id}}" ng-click="form.opened = true"
+                  du-smooth-scroll du-scrollspy offset="90">
+                  {{form.label}}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</fieldset>

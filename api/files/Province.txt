@@ -1,0 +1,34 @@
+Anhui 
+Fujian 
+Gansu 
+Guangdong 
+Guizhou 
+Hainan 
+Hebei 
+Heilongjiang 
+Henan 
+Hubei 
+Hunan 
+Jiangsu 
+Jiangxi 
+Jilin 
+Liaoning 
+Qinghai 
+Shaanxi 
+Shandong 
+Shanxi 
+Sichuan 
+Yunnan 
+Zhejiang 
+ Guangxi Zhuang
+Inner Mongolia 
+Ningxia Hui
+Xinjiang Uighur
+Tibet 
+Beijing Municipality 
+Chongqing Municipality 
+Shanghai Municipality 
+Tianjin Municipality 
+Hong Kong 
+Macau 
+Wolong 

@@ -1,0 +1,233 @@
+<h3 class="page-title" translate>Household Survey - Graphical Display</h3>
+
+<fieldset ng-disabled="gc.loading">
+  <form name="form" novalidate autocomplete="off">
+    <div class="row table-page" ng-if="!gc.displayGraph">
+      <!-- left content -->
+      <div class="col-md-9">
+        <div class="panel panel-default graphics-main">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h5 class="graphics-title" translate>Categories to be compared</h5>
+
+                <div class="panel panel-default">
+
+                  <div class="panel-body">
+                    <div class="form-horizontal">
+                      <div class="form-group">
+                        <label class="col-md-5 control-label" for="category_name" translate>
+                          Category names
+                        </label>
+                        <div class="col-md-7 ">
+                          <select class="form-control"
+                            id="category_name"
+                            name="category_name"
+                            ng-model="gc.data.category_name"
+                            ng-options="n.value as n.name for n in gc.categoryNames"
+                            required>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-md-5 control-label" for="country" translate>
+                          Country
+                        </label>
+                        <div class="col-md-7 ">
+                          <multiselect ng-model="gc.data.country"
+                            options="item.id as item.name for item in gc.countries | orderObjectBy:'name':false"
+                            data-compare-by="id"
+                            data-multiple="true"
+                            scroll-after-rows="5"
+                            filter-after-rows="5"
+                            max-width="100">
+                          </multiselect>
+                          <!-- <select class="form-control"
+                            id="country"
+                            name="country"
+                            ng-model="gc.data.country"
+                            ng-options="n.id as n.name for n in gc.countries | orderObjectBy:'name':false">
+                            <option value="" translate>- None -</option>
+                          </select> -->
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-md-5 control-label" for="year" translate>
+                          Year
+                        </label>
+                        <div class="col-md-7 ">
+                          <multiselect ng-model="gc.data.year"
+                            options="item for item in gc.years | orderObjectBy:'name':false"
+                            data-multiple="true"
+                            scroll-after-rows="5"
+                            filter-after-rows="5"
+                            max-width="100">
+                          </multiselect>
+                          <!-- <select class="form-control"
+                            id="year"
+                            name="year"
+                            ng-model="gc.data.year"
+                            ng-options="n as n for n in gc.years">
+                            <option value="" translate>- None -</option>
+                          </select> -->
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-md-5 control-label" for="season" translate>
+                          Season
+                        </label>
+                        <div class="col-md-7 ">
+                          <multiselect ng-model="gc.data.season"
+                            options="item.value as item.name for item in gc.seasons | orderObjectBy:'name':false"
+                            data-compare-by="value"
+                            data-multiple="true"
+                            scroll-after-rows="5"
+                            filter-after-rows="5"
+                            max-width="100">
+                          </multiselect>
+                          <!-- <select class="form-control"
+                            id="season"
+                            name="season"
+                            ng-model="gc.data.season"
+                            ng-options="n.value as n.name for n in gc.seasons | orderObjectBy:'name':false">
+                            <option value="" translate>- None -</option>
+                          </select> -->
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <h5 class="graphics-title" translate>Graph Type</h5>
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <div class="radio radio-success" ng-repeat="n in gc.graphTypes">
+                        <input type="radio"
+                          id="graphType{{$index}}"
+                          ng-value="n.value"
+                          name="graphType"
+                          ng-model="gc.data.graphType" required>
+                        <label for="graphType{{$index}}">{{n.name}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-6">
+                <h5 class="graphics-title" translate>Sustainability indicators</h5>
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <div class="checkbox checkbox-success" ng-repeat="n in gc.sustainabilityIndicators">
+                        <input type="checkbox"
+                          id="yValues{{n.value}}"
+                          name="yValues{{n.value}}"
+                          ng-model="gc.data.yValues[n.value]">
+                        <label for="yValues{{n.value}}" translate>{{n.name}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h5 class="graphics-title" translate>Input information</h5>
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <div class="checkbox checkbox-success" ng-repeat="n in gc.inputInformation">
+                        <input type="checkbox"
+                          id="yValues{{n.value}}"
+                          name="yValues{{n.value}}"
+                          ng-model="gc.data.yValues[n.value]">
+                        <label for="yValues{{n.value}}" translate>{{n.name}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- right content -->
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-heading" translate>
+            Options
+          </div>
+          <div class="panel-body">
+            <button type="button" ng-disabled="!gc.canDisplay() || !form.$valid" ng-click="gc.display()"
+              class="btn btn-warning btn-block" translate>
+                Display
+            </button>
+            <a href="#/main"
+              class="btn btn-default btn-block" translate>
+                Cancel
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row table-page" ng-if="gc.displayGraph">
+      <!-- left content -->
+      <div class="col-md-9">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div ng-if="gc.graphType == 'radar'" ng-repeat="item in gc.graphs">
+              <h4>{{item.countryName}}</h4>
+              <canvas class="chart chart-radar"
+                chart-data="item.graphData"
+                chart-options="item.graphOptions"
+                chart-labels="item.graphLabels"
+                chart-series="item.graphSeries"
+                chart-colours="item.graphColours"></canvas>
+            </div>
+
+            <div ng-if="gc.graphType == 'bar' && gc.graphDisplay === 'single'"
+              ng-repeat="item in gc.graphs">
+              <canvas class="chart chart-bar"
+                chart-data="item.graphData"
+                chart-options="item.graphOptions"
+                chart-labels="item.graphLabels"
+                chart-series="item.graphSeries"
+                chart-colours="item.graphColours"></canvas>
+            </div>
+
+            <div ng-if="gc.graphType == 'bar' && gc.graphDisplay === 'multiple'"
+              ng-repeat="item in gc.graphs">
+              <h4>{{item.graphLabel}}</h4>
+              <canvas class="chart chart-bar"
+                chart-data="item.graphData"
+                chart-options="item.graphOptions"
+                chart-labels="item.graphLabels"
+                chart-series="item.graphSeries"
+                chart-colours="item.graphColours"></canvas>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- right content -->
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-heading" translate>
+            Options
+          </div>
+          <div class="panel-body">
+            <span ng-click="gc.hideGraph()"
+              class="btn btn-default btn-block" translate>
+                Back
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</fieldset>

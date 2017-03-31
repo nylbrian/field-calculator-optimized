@@ -1,0 +1,151 @@
+<div ng-form="we" novalidate>
+  <div class="form-group required" ng-class="validateField(we, 'womens_decision')">
+    <label class="control-label" for="womens_decision" translate>
+      In your house, how is the women's control over decisions regarding household agricultural production?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in womenDecision">
+      <input required type="radio"
+        id="womens_decision{{$index}}"
+        ng-value="n.value"
+        name="womens_decision"
+        ng-model="$parent.data.womens_decision">
+      <label class="control-label" for="womens_decision{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="we" name="'womens_decision'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(we, 'womens_control_over_decision')">
+    <label class="control-label" for="womens_control_over_decision" translate>
+      How is the women's control over decision regarding their own labor input?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in womenDecision">
+      <input required type="radio"
+        id="womens_control_over_decision{{$index}}"
+        ng-value="n.value"
+        name="womens_control_over_decision"
+        ng-model="$parent.data.womens_control_over_decision">
+      <label class="control-label" for="womens_control_over_decision{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="we" name="'womens_control_over_decision'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(we, 'womens_satisfaction_labor_input')">
+    <label class="control-label" for="womens_satisfaction_labor_input" translate>
+      How is the women's satisfaction regarding their labor input?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in womenSatisfaction">
+      <input required type="radio"
+        id="womens_satisfaction_labor_input{{$index}}"
+        ng-value="n.value"
+        name="womens_satisfaction_labor_input"
+        ng-model="$parent.data.womens_satisfaction_labor_input">
+      <label class="control-label" for="womens_satisfaction_labor_input{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="we" name="'womens_satisfaction_labor_input'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(we, 'womens_access_information')">
+    <label class="control-label" for="womens_access_information" translate>
+      How is the women's access to information and capacity building?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in womenAccess">
+      <input required type="radio"
+        id="womens_access_information{{$index}}"
+        ng-value="n.value"
+        name="womens_access_information"
+        ng-model="$parent.data.womens_access_information">
+      <label class="control-label" for="womens_access_information{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="we" name="'womens_access_information'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(we, 'womens_access_seasonal_resources')">
+    <label class="control-label" for="womens_access_seasonal_resources" translate>
+      How is the women's access to seasonal resources for farm activities?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in womenSeasonalResources">
+      <input required type="radio"
+        id="womens_access_seasonal_resources{{$index}}"
+        ng-value="n.value"
+        name="womens_access_seasonal_resources"
+        ng-model="$parent.data.womens_access_seasonal_resources">
+      <label class="control-label" for="womens_access_seasonal_resources{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="we" name="'womens_access_seasonal_resources'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(we, 'womens_control_long_term_resources')">
+    <label class="control-label" for="womens_control_long_term_resources" translate>
+      How is the women's control over long-term resources for farm activities?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in womenSeasonalResources">
+      <input required type="radio"
+        id="womens_control_long_term_resources{{$index}}"
+        ng-value="n.value"
+        name="womens_control_long_term_resources"
+        ng-model="$parent.data.womens_control_long_term_resources">
+      <label class="control-label" for="womens_control_long_term_resources{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="we" name="'womens_control_long_term_resources'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(we, 'womens_control_decision_making_household')">
+    <label class="control-label" for="womens_control_decision_making_household" translate>
+      How is the women's control over decision-making regarding household income?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in womenControlDecisionMaking">
+      <input required type="radio"
+        id="womens_control_decision_making_household{{$index}}"
+        ng-value="n.value"
+        name="womens_control_decision_making_household"
+        ng-model="$parent.data.womens_control_decision_making_household">
+      <label class="control-label" for="womens_control_decision_making_household{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="we" name="'womens_control_decision_making_household'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(we, 'womens_control_personal_income')">
+    <label class="control-label" for="womens_control_personal_income" translate>
+      How is the women's control over their personal income?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in womenControlPersonalIncome">
+      <input required type="radio"
+        id="womens_control_personal_income{{$index}}"
+        ng-value="n.value"
+        name="womens_control_personal_income"
+        ng-model="$parent.data.womens_control_personal_income">
+      <label class="control-label" for="womens_control_personal_income{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="we" name="'womens_control_personal_income'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(we, 'womens_participation_decision_making')">
+    <label class="control-label" for="womens_participation_decision_making" translate>
+      How is the women's participation in collective decision-making?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in womenParticipationDecision">
+      <input required type="radio"
+        id="womens_participation_decision_making{{$index}}"
+        ng-value="n.value"
+        name="womens_participation_decision_making"
+        ng-model="$parent.data.womens_participation_decision_making">
+      <label class="control-label" for="womens_participation_decision_making{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="we" name="'womens_participation_decision_making'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(we, 'violence_against_women')">
+    <label class="control-label" for="violence_against_women" translate>
+      Is there any case of violence against women in your house?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in womenViolence">
+      <input required type="radio"
+        id="violence_against_women{{$index}}"
+        ng-value="n.value"
+        name="violence_against_women"
+        ng-model="$parent.data.violence_against_women">
+      <label class="control-label" for="violence_against_women{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="we" name="'violence_against_women'"></form-messages>
+  </div>
+</div>

@@ -1,0 +1,148 @@
+<h5 class="farmer-identifier">
+  <span translate>Farmer:</span>
+  <a href="#/main/farmers/edit-farmer/{{sc.farmer.id}}">
+    {{sc.farmer.first_name}} {{sc.farmer.last_name}}
+  </a>
+</h5>
+<h3 class="page-title" translate>Season Long</h3>
+
+<fieldset ng-disabled="sc.processing" ng-form="parentform">
+  <div style="margin-bottom: 10px;" ng-if="sc.loading === false">
+    What operations you did between {{1 + ((sc.period - 1) * 14)}} to {{14 * sc.period}} days
+    [{{sc.displayDate(sc.season.sowing_date, ((sc.period - 1) * 14))}} - {{sc.displayDate(sc.season.sowing_date, 14 * sc.period)}}] of sowing/transplanting?</div>
+  <div class="row table-page" ng-if="sc.loading === false">
+    <!-- left content -->
+    <div class="col-md-9">
+      <uib-accordion close-others="oneAtATime">
+        <div uib-accordion-group
+          class="panel-success"
+          id="seasonLong{{form.id}}"
+          ng-repeat="form in sc.forms"
+          is-open="form.opened"
+          ng-init="form.opened = false">
+          <uib-accordion-heading>
+            <div>
+              <span>{{form.label}}</span>
+              <i class="pull-right glyphicon"
+                ng-class="{'glyphicon-chevron-down': form.opened,
+                  'glyphicon-chevron-right': !form.opened}">
+              </i>
+            </div>
+          </uib-accordion-heading>
+          <uib-accordion-body ng-switch="form.id">
+            <general-information data="form.data" ng-switch-when="gi">
+            </general-information>
+            <pre-planting
+              data="form.data"
+              farmer="sc.farmer"
+              ng-switch-when="ppi"
+              period="sc.period"
+              season="sc.season"></pre-planting>
+            <land-preparation
+              data="form.data"
+              ng-switch-when="lp"
+              period="sc.period"
+              season="sc.season">
+            </land-preparation>
+            <sowing-transplanting data="form.data"
+              land-preparation="sc.forms.landPreparation.data"
+              ng-switch-when="sot"
+              period="sc.period"
+              season="sc.season"></sowing-transplanting>
+            <irrigation
+              data="form.data"
+              period="sc.period"
+              season="sc.season"
+              ng-switch-when="ir">
+            </irrigation>
+            <fertilizer-application
+              season="sc.season"
+              data="form.data"
+              period="sc.period"
+              ng-switch-when="fa">
+            </fertilizer-application>
+            <weeding-and-herbicide-application
+              data="form.data"
+              ng-switch-when="waha"
+              season="sc.season"
+              period="sc.period">
+            </weeding-and-herbicide-application>
+            <pesticide-application data="form.data" ng-switch-when="pa"
+              season="sc.season"
+              period="sc.period"></pesticide-application>
+            <harvesting-threshing
+              season="sc.season"
+              period="sc.period"
+              data="form.data"
+              ng-switch-when="har"></harvesting-threshing>
+            <cleaning-drying data="form.data" ng-switch-when="cd"></cleaning-drying>
+            <grain-and-straw-yield data="form.data" ng-switch-when="gstry">
+            </grain-and-straw-yield>
+            <food-safety data="form.data" ng-switch-when="fs"></food-safety>
+            <worker-health-safety data="form.data" ng-switch-when="whs"></worker-health-safety>
+            <child-labor data="form.data" ng-switch-when="cl"></child-labor>
+            <women-empowerment data="form.data" ng-switch-when="we"></women-empowerment>
+            <food-security data="form.data" ng-switch-when="fse"></food-security>
+            <pesticide-use-efficiency data="form.data" ng-switch-when="pue"></pesticide-use-efficiency>
+
+            <div ng-switch-default>
+              Form does not exist
+            </div>
+          </uib-accordion-body>
+        </div>
+      </uib-accordion>
+
+      <div class="panel panel-default visible-xs visible-sm">
+        <div class="panel-heading" translate>
+          Actions
+        </div>
+        <div class="panel-body">
+          <button type="button" ng-click="sc.save(parentform)" ng-disabled="sc.processing"
+            class="btn btn-warning btn-block" translate>
+              Save
+          </button>
+          <a href="#/main/farmer-options/{{sc.farmer.id}}/{{sc.season.id}}"
+            class="btn btn-default btn-block" translate>
+              Cancel
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- right content -->
+    <div class="col-md-3">
+      <nav class="bs-docs-sidebar hidden-print hidden-sm hidden-xs affix">
+        <div class="panel panel-default">
+          <div class="panel-heading" translate>
+            Actions
+          </div>
+          <div class="panel-body">
+            <button type="button" ng-click="sc.save(parentform)"
+              class="btn btn-warning btn-block" translate>
+                Save
+            </button>
+            <a href="#/main/farmer-options/{{sc.farmer.id}}/{{sc.season.id}}"
+              class="btn btn-default btn-block" translate>
+                Cancel
+            </a>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" translate>
+            Navigation
+          </div>
+          <div class="panel-body">
+            <ul class="nav nav bs-docs-sidenav list-unstyled">
+              <li ng-repeat="form in sc.forms">
+                <a href="#seasonLong{{form.id}}" ng-click="form.opened = true"
+                  du-smooth-scroll du-scrollspy offset="90">
+                  {{form.label}}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</fieldset>

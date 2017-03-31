@@ -1,0 +1,330 @@
+<div ng-form="gi" novalidate>
+  <div class="form-group required" ng-class="validateField(gi, 'gender')">
+    <label class="control-label" for="ge_gender" translate>
+      Gender of the household head?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in gender">
+      <input type="radio"
+        id="ge_gender{{$index}}"
+        ng-value="n.value"
+        name="gender"
+        ng-model="data.gender" required>
+      <label for="ge_gender{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gi" name="'gender'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'age')">
+    <label class="control-label" for="ge_age" translate>
+      What is the age of the household head?
+    </label>
+    <input type="number" class="form-control" id="ge_age" name="age" ng-model="data.age"
+      min="16" max="100" required>
+    <form-messages form="gi" name="'age'" data="{min: 16, max: 100}"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'marital_status')">
+    <label class="control-label" for="marital_status" translate>
+      What is the marital status of the household head?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in maritalStatus">
+      <input type="radio"
+        id="marital_status{{$index}}"
+        ng-value="n.value"
+        name="marital_status"
+        ng-model="data.marital_status"
+        required>
+      <label class="control-label" for="marital_status{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gi" name="'marital_status'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'literacy')">
+    <label class="control-label" for="literacy" translate>
+      What is the literacy level of the household head?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in literacy">
+      <input type="radio"
+        id="literacy{{$index}}"
+        ng-value="n.value"
+        name="literacy"
+        ng-model="data.literacy"
+        required>
+      <label class="control-label" for="literacy{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gi" name="'literacy'"></form-messages>
+  </div>
+
+  <div class="form-group" ng-if="data.literacy === 3 || data.literacy === 4">
+    <label class="control-label" for="years_schooling" translate>
+      How many years of schooling the household head has?
+    </label>
+    <input type="number" class="form-control"
+      id="years_schooling" name="years_schooling"
+      ng-model="data.years_schooling" >
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'primary_occupation')">
+    <label class="control-label" for="primary_occupation" translate>
+      What is the primary occupation of the household head?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in primaryOccupation">
+      <input type="radio"
+        id="primary_occupation{{$index}}"
+        ng-value="n.value"
+        name="primary_occupation"
+        ng-model="data.primary_occupation"
+        required>
+      <label class="control-label" for="primary_occupation{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gi" name="'primary_occupation'"></form-messages>
+  </div>
+
+  <div class="form-group required"
+    ng-class="validateField(gi, 'primary_occupation_others')"
+    ng-if="data.primary_occupation === 10">
+    <label class="control-label" for="primary_occupation_others" translate>
+      Other primary occupation
+    </label>
+    <input type="text" class="form-control"
+      id="primary_occupation_others" name="primary_occupation_others"
+      ng-model="data.primary_occupation_others" required>
+    <form-messages form="gi" name="'primary_occupation_others'"></form-messages>
+  </div>
+
+  <div class="form-group required"
+    ng-class="validateField(gi, 'secondary_occupation')">
+    <label class="control-label" for="secondary_occupation" translate>
+      What is the secondary occupation of the household head?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in secondaryOccupation">
+      <input type="radio"
+        id="secondary_occupation{{$index}}"
+        ng-value="n.value"
+        name="secondary_occupation"
+        ng-model="data.secondary_occupation" required>
+      <label class="control-label" for="secondary_occupation{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gi" name="'secondary_occupation'"></form-messages>
+  </div>
+
+  <div class="form-group required"
+    ng-class="validateField(gi, 'secondary_occupation_others')"
+    ng-if="data.secondary_occupation === 10">
+    <label class="control-label" for="years_schooling" translate>
+      Other secondary occupation
+    </label>
+    <input type="text" class="form-control"
+      id="secondary_occupation_others" name="secondary_occupation_others"
+      ng-model="data.secondary_occupation_others" required>
+    <form-messages form="gi" name="'secondary_occupation_others'"></form-messages>
+  </div>
+
+  <div class="form-group required"
+    ng-class="validateField(gi, 'religion')">
+    <label class="control-label" for="religion" translate>
+      What is the religion of the household head?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in religion">
+      <input type="radio"
+        id="religion{{$index}}"
+        ng-value="n.value"
+        name="religion"
+        ng-model="data.religion" required>
+      <label class="control-label" for="religion{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gi" name="'religion'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'religion_others')"
+    ng-if="data.religion === 6">
+    <label class="control-label" for="religion_others" translate>
+      Other religion
+    </label>
+    <input type="text" class="form-control"
+      id="religion_others" name="religion_others"
+      ng-model="data.religion_others" required>
+    <form-messages form="gi" name="'religion_others'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'contact_number')" >
+    <label class="control-label" for="contact_number" translate>
+      What is the contact number (cellphone number) of the household head?
+    </label>
+    <input type="number" class="form-control"
+      id="contact_number" name="contact_number"
+      ng-model="data.contact_number" required>
+    <form-messages form="gi" name="'contact_number'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'attended_training')">
+    <label class="control-label" for="attended_training" translate>
+      Did household head attended in any training during the last 6 months?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in yesNo">
+      <input type="radio"
+        id="attended_training{{$index}}"
+        ng-value="n.value"
+        name="attended_training"
+        ng-model="data.attended_training"
+        required>
+      <label class="control-label" for="attended_training{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gi" name="'attended_training'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'training')"
+    ng-if="data.attended_training === 1">
+    <label class="control-label" for="training" translate>
+      About what the training was related with?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in householdTraining">
+      <input type="radio"
+        id="training{{$index}}"
+        ng-value="n.value"
+        name="training"
+        ng-model="data.training"
+        required>
+      <label class="control-label" for="training{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gi" name="'training'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'training_others')"
+    ng-if="data.attended_training === 1 && data.training === 5">
+    <label class="control-label" for="training_others" translate>
+      Other training related
+    </label>
+    <input type="text" class="form-control"
+      id="training_others" name="training_others"
+      ng-model="data.training_others" required>
+    <form-messages form="gi" name="'training_others'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'training_duration')">
+    <label class="control-label" for="training_duration" translate>
+      How many times the household head attended in training during the last 6 months?
+    </label>
+    <input type="number" class="form-control"
+      id="training_duration" name="training_duration" min="0"
+      ng-model="data.training_duration" required>
+    <form-messages form="gi" name="'training_duration'" data="{min: 0}"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'total_income_farm')">
+    <label class="control-label" for="total_income_farm" translate>
+      In this household, how much is the total income from farm in a year?
+    </label>
+    <input type="number" class="form-control"
+      id="total_income_farm" name="total_income_farm" min="0"
+      ng-model="data.total_income_farm" required>
+    <form-messages form="gi" name="'total_income_farm'" data="{min: 0}"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'total_income_non_farm')">
+    <label class="control-label" for="total_income_non_farm" translate>
+      In this household, how much is the total non-farm income in a year?
+    </label>
+    <input type="number" class="form-control"
+      id="total_income_non_farm" name="total_income_non_farm"
+      ng-model="data.total_income_non_farm" required min="0">
+    <form-messages form="gi" name="'total_income_non_farm'" data="{min: 0}"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'farming_years')">
+    <label class="control-label" for="farming_years" translate>
+      From how many years the household head is involved in rice cultivation/farming?
+    </label>
+    <input type="number" class="form-control"
+      id="farming_years" name="farming_years"
+      ng-model="data.farming_years" required min="0">
+    <form-messages form="gi" name="'farming_years'" data="{min: 0}"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'machineries')">
+    <label class="control-label" for="machineries" translate>
+      What machineries the household owns?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in machineries">
+      <input type="radio"
+        id="machineries{{$index}}"
+        ng-value="n.value"
+        name="machineries"
+        ng-model="data.machineries"
+        required>
+      <label class="control-label" for="machineries{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gi" name="'machineries'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'ownership')">
+    <label class="control-label" for="ownership" translate>
+      What is the ownership status of the land?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in ownershipStatus">
+      <input type="radio"
+        id="ownership{{$index}}"
+        ng-value="n.value"
+        name="ownership"
+        ng-model="data.ownership"
+        required>
+      <label class="control-label" for="ownership{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gi" name="'ownership'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'economic_condition')">
+    <label class="control-label" for="economic_condition" translate>
+      How do you assess your economic condition?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in economicCondition">
+      <input type="radio"
+        id="economic_condition{{$index}}"
+        ng-value="n.value"
+        name="economic_condition"
+        ng-model="data.economic_condition"
+        required>
+      <label class="control-label" for="economic_condition{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gi" name="'economic_condition'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="validateField(gi, 'economic_condition_change')">
+    <label class="control-label" for="economic_condition_change" translate>
+      Did your economic condition change in the last 3 years?
+    </label>
+    <div class="radio radio-success" ng-repeat="n in economicCondition3Years">
+      <input type="radio"
+        id="economic_condition_change{{$index}}"
+        ng-value="n.value"
+        name="economic_condition_change"
+        ng-model="data.economic_condition_change" required>
+      <label class="control-label" for="economic_condition_change{{$index}}">{{n.name}}</label>
+    </div>
+    <form-messages form="gi" name="'economic_condition_change'"></form-messages>
+  </div>
+
+  <div class="form-group required" ng-class="{'has-error': (gi.$dirty || gi.$touched) && !hasSuppliedProblem()}">
+    <label class="control-label" for="economic_condition_change" translate>
+      What are the major problems in rice production? Please mention the most important problem in the beginning.
+    </label>
+    <table class="tables tables-default no-more-tables form-group">
+      <thead>
+        <tr>
+          <th class="text-center" translate>Problems</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="n in range(1, 5)">
+          <td data-title="{{'Problems' | translate}}">
+            <input type="text" ng-model="data.problems[$index].problem" name="problems_rice" class="form-control" ng-required="!hasSuppliedProblem()" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="help-block" ng-if="(gi.$dirty || gi.$touched) && !hasSuppliedProblem()">
+      <span translate>Please specify at least one problem.</span>
+    </div>
+
+  </div>
+</div>
